@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../resources/app_colors.dart';
-import '../resources/app_images.dart';
-import '../resources/app_text_size.dart';
-import '../widgets/bottom_nav_bar.dart';
+import '../../resources/app_colors.dart';
+import '../../resources/app_images.dart';
+import '../../resources/app_text_size.dart';
+import '../../widgets/bottom_nav_bar.dart';
 
 class CustomerHomeScreen extends StatefulWidget {
   const CustomerHomeScreen({super.key});
