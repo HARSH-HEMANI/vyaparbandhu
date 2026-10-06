@@ -13,7 +13,7 @@ class ProductListingScreen extends StatefulWidget {
 }
 
 class _ProductListingScreenState extends State<ProductListingScreen> {
-  int _currentIndex = 0;
+  final int _currentIndex = 0;
   int _selectedFilter = 0;
 
   final TextEditingController _searchController = TextEditingController();
@@ -65,9 +65,31 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
   }
 
   void _onBottomNavTap(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
+    if (index == _currentIndex) {
+      return;
+    }
+
+    switch (index) {
+      case 0:
+        Navigator.pushReplacementNamed(context, '/owner-home');
+        break;
+
+      case 1:
+        Navigator.pushReplacementNamed(context, '/order-history');
+        break;
+
+      case 2:
+        Navigator.pushReplacementNamed(context, '/vendor-list');
+        break;
+
+      case 3:
+        Navigator.pushReplacementNamed(context, '/owner-profile');
+        break;
+    }
+  }
+
+  void _openProductDetails(Map<String, String> product) {
+    Navigator.pushNamed(context, '/product-details', arguments: product);
   }
 
   void _showMessage(String message) {
@@ -284,97 +306,103 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
         borderRadius: BorderRadius.circular(AppSizes.cardRadius),
         side: const BorderSide(color: AppColors.borderColor),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(AppSizes.paddingMedium),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            _buildProductImage(),
-            const SizedBox(width: AppSizes.spacingMedium),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    product['name']!,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      color: AppColors.primaryTextColor,
-                      fontSize: AppSizes.mediumText,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: AppSizes.spacingSmall),
-                  Text(
-                    product['brand']!,
-                    style: const TextStyle(
-                      color: AppColors.secondaryTextColor,
-                      fontSize: AppSizes.smallText,
-                    ),
-                  ),
-                  const SizedBox(height: AppSizes.spacingSmall),
-                  Row(
-                    children: [
-                      Text(
-                        product['price']!,
-                        style: const TextStyle(
-                          color: AppColors.priceColor,
-                          fontSize: AppSizes.bodyText,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(width: AppSizes.spacingSmall),
-                      Text(
-                        product['mrp']!,
-                        style: const TextStyle(
-                          color: AppColors.secondaryTextColor,
-                          fontSize: AppSizes.smallText,
-                          decoration: TextDecoration.lineThrough,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(width: AppSizes.spacingSmall),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                SizedBox(
-                  width: 54,
-                  height: 34,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      _showMessage('${product['name']} added to order');
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primaryColor,
-                      foregroundColor: AppColors.whiteColor,
-                      elevation: 0,
-                      padding: EdgeInsets.zero,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                          AppSizes.radiusSmall,
-                        ),
-                      ),
-                    ),
-                    child: const Text(
-                      'ADD',
-                      style: TextStyle(
-                        fontSize: AppSizes.smallText,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(AppSizes.cardRadius),
+        onTap: () {
+          _openProductDetails(product);
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(AppSizes.paddingMedium),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              _buildProductImage(),
+              const SizedBox(width: AppSizes.spacingMedium),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      product['name']!,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        color: AppColors.primaryTextColor,
+                        fontSize: AppSizes.mediumText,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                  ),
+                    const SizedBox(height: AppSizes.spacingSmall),
+                    Text(
+                      product['brand']!,
+                      style: const TextStyle(
+                        color: AppColors.secondaryTextColor,
+                        fontSize: AppSizes.smallText,
+                      ),
+                    ),
+                    const SizedBox(height: AppSizes.spacingSmall),
+                    Row(
+                      children: [
+                        Text(
+                          product['price']!,
+                          style: const TextStyle(
+                            color: AppColors.priceColor,
+                            fontSize: AppSizes.bodyText,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(width: AppSizes.spacingSmall),
+                        Text(
+                          product['mrp']!,
+                          style: const TextStyle(
+                            color: AppColors.secondaryTextColor,
+                            fontSize: AppSizes.smallText,
+                            decoration: TextDecoration.lineThrough,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-                const SizedBox(height: AppSizes.spacingSmall),
-                _buildSizeDropdown(product['size']!),
-              ],
-            ),
-          ],
+              ),
+              const SizedBox(width: AppSizes.spacingSmall),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  SizedBox(
+                    width: 54,
+                    height: 34,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        _showMessage('${product['name']} added to order');
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.primaryColor,
+                        foregroundColor: AppColors.whiteColor,
+                        elevation: 0,
+                        padding: EdgeInsets.zero,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                            AppSizes.radiusSmall,
+                          ),
+                        ),
+                      ),
+                      child: const Text(
+                        'ADD',
+                        style: TextStyle(
+                          fontSize: AppSizes.smallText,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: AppSizes.spacingSmall),
+                  _buildSizeDropdown(product['size']!),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

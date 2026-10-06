@@ -32,6 +32,34 @@ class _VendorDetailsScreenState extends State<VendorDetailsScreen> {
     {'name': 'Tiger Glucose', 'price': '₹20', 'category': 'Biscuits & Cookies'},
   ];
 
+  void _openProductDetails(Map<String, String> product) {
+    Navigator.pushNamed(context, '/product-details', arguments: product);
+  }
+
+  void _onBottomNavTap(int index) {
+    if (index == currentIndex) {
+      return;
+    }
+
+    switch (index) {
+      case 0:
+        Navigator.pushReplacementNamed(context, '/owner-home');
+        break;
+
+      case 1:
+        Navigator.pushReplacementNamed(context, '/order-history');
+        break;
+
+      case 2:
+        Navigator.pushReplacementNamed(context, '/vendor-list');
+        break;
+
+      case 3:
+        Navigator.pushReplacementNamed(context, '/owner-profile');
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,11 +92,7 @@ class _VendorDetailsScreenState extends State<VendorDetailsScreen> {
       bottomNavigationBar: BottomNavBar(
         currentIndex: currentIndex,
         isOwner: true,
-        onTap: (index) {
-          setState(() {
-            currentIndex = index;
-          });
-        },
+        onTap: _onBottomNavTap,
       ),
     );
   }
@@ -250,63 +274,72 @@ class _VendorDetailsScreenState extends State<VendorDetailsScreen> {
         borderRadius: BorderRadius.circular(AppSizes.cardRadius),
         border: Border.all(color: AppColors.borderColor),
       ),
-      child: Row(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(AppSizes.radiusMedium),
-            child: Image.network(
-              AppImages.placeholder,
-              width: AppSizes.productImageSize,
-              height: AppSizes.productImageSize,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                return Container(
-                  width: AppSizes.productImageSize,
-                  height: AppSizes.productImageSize,
-                  color: AppColors.inputBackgroundColor,
-                  child: const Icon(
-                    Icons.inventory_2_outlined,
-                    color: AppColors.secondaryTextColor,
-                  ),
-                );
-              },
+      child: InkWell(
+        borderRadius: BorderRadius.circular(AppSizes.cardRadius),
+        onTap: () {
+          _openProductDetails(product);
+        },
+        child: Row(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(AppSizes.radiusMedium),
+              child: Image.network(
+                AppImages.placeholder,
+                width: AppSizes.productImageSize,
+                height: AppSizes.productImageSize,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    width: AppSizes.productImageSize,
+                    height: AppSizes.productImageSize,
+                    color: AppColors.inputBackgroundColor,
+                    child: const Icon(
+                      Icons.inventory_2_outlined,
+                      color: AppColors.secondaryTextColor,
+                    ),
+                  );
+                },
+              ),
             ),
-          ),
-          const SizedBox(width: AppSizes.spacingMedium),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  product['name']!,
-                  style: const TextStyle(
-                    color: AppColors.primaryTextColor,
-                    fontSize: AppSizes.mediumText,
-                    fontWeight: FontWeight.w600,
+            const SizedBox(width: AppSizes.spacingMedium),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    product['name']!,
+                    style: const TextStyle(
+                      color: AppColors.primaryTextColor,
+                      fontSize: AppSizes.mediumText,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                ),
-                const SizedBox(height: AppSizes.spacingSmall),
-                Text(
-                  product['category']!,
-                  style: const TextStyle(
-                    color: AppColors.secondaryTextColor,
-                    fontSize: AppSizes.smallText,
+                  const SizedBox(height: AppSizes.spacingSmall),
+                  Text(
+                    product['category']!,
+                    style: const TextStyle(
+                      color: AppColors.secondaryTextColor,
+                      fontSize: AppSizes.smallText,
+                    ),
                   ),
-                ),
-                const SizedBox(height: AppSizes.spacingSmall),
-                Text(
-                  product['price']!,
-                  style: const TextStyle(
-                    color: AppColors.priceColor,
-                    fontSize: AppSizes.mediumText,
-                    fontWeight: FontWeight.bold,
+                  const SizedBox(height: AppSizes.spacingSmall),
+                  Text(
+                    product['price']!,
+                    style: const TextStyle(
+                      color: AppColors.priceColor,
+                      fontSize: AppSizes.mediumText,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          const Icon(Icons.chevron_right, color: AppColors.secondaryTextColor),
-        ],
+            const Icon(
+              Icons.chevron_right,
+              color: AppColors.secondaryTextColor,
+            ),
+          ],
+        ),
       ),
     );
   }

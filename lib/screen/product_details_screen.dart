@@ -13,15 +13,33 @@ class ProductDetailsScreen extends StatefulWidget {
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
-  int _currentIndex = 0;
+  final int _currentIndex = 0;
   int _selectedVariant = 0;
 
   final List<String> _variants = ['100 g', '200 g', '500 g'];
 
   void _onBottomNavTap(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
+    if (index == _currentIndex) {
+      return;
+    }
+
+    switch (index) {
+      case 0:
+        Navigator.pushReplacementNamed(context, '/owner-home');
+        break;
+
+      case 1:
+        Navigator.pushReplacementNamed(context, '/order-history');
+        break;
+
+      case 2:
+        Navigator.pushReplacementNamed(context, '/vendor-list');
+        break;
+
+      case 3:
+        Navigator.pushReplacementNamed(context, '/owner-profile');
+        break;
+    }
   }
 
   void _showMessage(String message) {
