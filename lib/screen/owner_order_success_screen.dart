@@ -13,12 +13,37 @@ class OwnerOrderSuccessScreen extends StatefulWidget {
 }
 
 class _OwnerOrderSuccessScreenState extends State<OwnerOrderSuccessScreen> {
-  int _currentIndex = 1;
+  final int _currentIndex = 1;
+
+  void _downloadOrder() {
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('Order download started')));
+  }
+
+  void _goToDashboard() {
+    Navigator.pushReplacementNamed(context, '/owner-home');
+  }
 
   void _onBottomNavTap(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
+    if (index == _currentIndex) {
+      return;
+    }
+
+    switch (index) {
+      case 0:
+        Navigator.pushReplacementNamed(context, '/owner-home');
+        break;
+      case 1:
+        Navigator.pushReplacementNamed(context, '/order-history');
+        break;
+      case 2:
+        Navigator.pushReplacementNamed(context, '/vendor-list');
+        break;
+      case 3:
+        Navigator.pushReplacementNamed(context, '/owner-profile');
+        break;
+    }
   }
 
   @override
@@ -70,7 +95,7 @@ class _OwnerOrderSuccessScreenState extends State<OwnerOrderSuccessScreen> {
               width: double.infinity,
               height: AppSizes.buttonHeight,
               child: ElevatedButton.icon(
-                onPressed: () {},
+                onPressed: _downloadOrder,
                 icon: const Icon(
                   Icons.download_outlined,
                   size: AppSizes.iconMedium,
@@ -97,9 +122,7 @@ class _OwnerOrderSuccessScreenState extends State<OwnerOrderSuccessScreen> {
               width: double.infinity,
               height: AppSizes.buttonHeight,
               child: OutlinedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
+                onPressed: _goToDashboard,
                 style: OutlinedButton.styleFrom(
                   foregroundColor: AppColors.primaryColor,
                   side: const BorderSide(color: AppColors.primaryColor),
