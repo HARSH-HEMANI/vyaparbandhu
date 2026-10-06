@@ -35,7 +35,9 @@ class _VendorListScreenState extends State<VendorListScreen> {
   @override
   void initState() {
     super.initState();
+
     filteredVendors = vendors;
+
     searchController.addListener(_searchVendors);
   }
 
@@ -54,6 +56,40 @@ class _VendorListScreenState extends State<VendorListScreen> {
         return vendor.toLowerCase().contains(query);
       }).toList();
     });
+  }
+
+  void _openAddVendor() {
+    Navigator.pushNamed(context, '/add-vendor');
+  }
+
+  void _openVendorDetails(String vendor) {
+    Navigator.pushNamed(context, '/vendor-details', arguments: vendor);
+  }
+
+  void _onBottomNavTap(int index) {
+    if (index == currentIndex) {
+      return;
+    }
+
+    switch (index) {
+      case 0:
+        Navigator.pushReplacementNamed(context, '/owner-home');
+        break;
+
+      case 1:
+        Navigator.pushReplacementNamed(context, '/order-history');
+        break;
+
+      case 2:
+        setState(() {
+          currentIndex = 2;
+        });
+        break;
+
+      case 3:
+        Navigator.pushReplacementNamed(context, '/owner-profile');
+        break;
+    }
   }
 
   @override
@@ -75,19 +111,13 @@ class _VendorListScreenState extends State<VendorListScreen> {
       body: Column(
         children: [
           _buildSearchSection(),
-          Expanded(
-            child: _buildVendorList(),
-          ),
+          Expanded(child: _buildVendorList()),
         ],
       ),
       bottomNavigationBar: BottomNavBar(
         currentIndex: currentIndex,
         isOwner: true,
-        onTap: (index) {
-          setState(() {
-            currentIndex = index;
-          });
-        },
+        onTap: _onBottomNavTap,
       ),
     );
   }
@@ -127,45 +157,26 @@ class _VendorListScreenState extends State<VendorListScreen> {
                 vertical: AppSizes.paddingMedium,
               ),
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(
-                  AppSizes.inputRadius,
-                ),
-                borderSide: const BorderSide(
-                  color: AppColors.borderColor,
-                ),
+                borderRadius: BorderRadius.circular(AppSizes.inputRadius),
+                borderSide: const BorderSide(color: AppColors.borderColor),
               ),
               enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(
-                  AppSizes.inputRadius,
-                ),
-                borderSide: const BorderSide(
-                  color: AppColors.borderColor,
-                ),
+                borderRadius: BorderRadius.circular(AppSizes.inputRadius),
+                borderSide: const BorderSide(color: AppColors.borderColor),
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(
-                  AppSizes.inputRadius,
-                ),
-                borderSide: const BorderSide(
-                  color: AppColors.primaryColor,
-                ),
+                borderRadius: BorderRadius.circular(AppSizes.inputRadius),
+                borderSide: const BorderSide(color: AppColors.primaryColor),
               ),
             ),
           ),
-
-          const SizedBox(
-            height: AppSizes.spacingMedium,
-          ),
-
+          const SizedBox(height: AppSizes.spacingMedium),
           SizedBox(
             width: double.infinity,
             height: AppSizes.buttonHeight,
             child: OutlinedButton.icon(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.add,
-                size: AppSizes.iconMedium,
-              ),
+              onPressed: _openAddVendor,
+              icon: const Icon(Icons.add, size: AppSizes.iconMedium),
               label: const Text(
                 'Add Vendor/Brand',
                 style: TextStyle(
@@ -175,13 +186,9 @@ class _VendorListScreenState extends State<VendorListScreen> {
               ),
               style: OutlinedButton.styleFrom(
                 foregroundColor: AppColors.primaryColor,
-                side: const BorderSide(
-                  color: AppColors.primaryColor,
-                ),
+                side: const BorderSide(color: AppColors.primaryColor),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(
-                    AppSizes.buttonRadius,
-                  ),
+                  borderRadius: BorderRadius.circular(AppSizes.buttonRadius),
                 ),
               ),
             ),
@@ -208,11 +215,7 @@ class _VendorListScreenState extends State<VendorListScreen> {
             fontWeight: FontWeight.w600,
           ),
         ),
-
-        const SizedBox(
-          height: AppSizes.spacingSmall,
-        ),
-
+        const SizedBox(height: AppSizes.spacingSmall),
         const Text(
           'Explore various Distributors and Brands',
           style: TextStyle(
@@ -220,34 +223,22 @@ class _VendorListScreenState extends State<VendorListScreen> {
             fontSize: AppSizes.bodyText,
           ),
         ),
-
-        const SizedBox(
-          height: AppSizes.spacingLarge,
-        ),
-
+        const SizedBox(height: AppSizes.spacingLarge),
         if (filteredVendors.isEmpty)
           _buildEmptyState()
         else
-          ...filteredVendors.map(
-            (vendor) => _buildVendorCard(vendor),
-          ),
+          ...filteredVendors.map((vendor) => _buildVendorCard(vendor)),
       ],
     );
   }
 
   Widget _buildVendorCard(String vendor) {
     return Container(
-      margin: const EdgeInsets.only(
-        bottom: AppSizes.spacingMedium,
-      ),
+      margin: const EdgeInsets.only(bottom: AppSizes.spacingMedium),
       decoration: BoxDecoration(
         color: AppColors.cardColor,
-        borderRadius: BorderRadius.circular(
-          AppSizes.cardRadius,
-        ),
-        border: Border.all(
-          color: AppColors.borderColor,
-        ),
+        borderRadius: BorderRadius.circular(AppSizes.cardRadius),
+        border: Border.all(color: AppColors.borderColor),
         boxShadow: [
           BoxShadow(
             color: AppColors.blackColor.withValues(alpha: 0.04),
@@ -266,9 +257,7 @@ class _VendorListScreenState extends State<VendorListScreen> {
           height: 46,
           decoration: BoxDecoration(
             color: AppColors.primaryColor.withValues(alpha: 0.12),
-            borderRadius: BorderRadius.circular(
-              AppSizes.radiusMedium,
-            ),
+            borderRadius: BorderRadius.circular(AppSizes.radiusMedium),
           ),
           child: const Icon(
             Icons.store_outlined,
@@ -295,16 +284,16 @@ class _VendorListScreenState extends State<VendorListScreen> {
           Icons.chevron_right,
           color: AppColors.secondaryTextColor,
         ),
-        onTap: () {},
+        onTap: () {
+          _openVendorDetails(vendor);
+        },
       ),
     );
   }
 
   Widget _buildEmptyState() {
     return const Padding(
-      padding: EdgeInsets.only(
-        top: AppSizes.paddingExtraLarge,
-      ),
+      padding: EdgeInsets.only(top: AppSizes.paddingExtraLarge),
       child: Center(
         child: Text(
           'No vendors found',
