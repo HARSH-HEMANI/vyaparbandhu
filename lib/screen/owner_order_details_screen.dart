@@ -37,6 +37,39 @@ class _OwnerOrderDetailsScreenState extends State<OwnerOrderDetailsScreen> {
     },
   ];
 
+  void _cancelOrder() {
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('Order cancelled')));
+  }
+
+  void _completeOrder() {
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('Order marked as completed')));
+  }
+
+  void _onBottomNavTap(int index) {
+    if (index == currentIndex) {
+      return;
+    }
+
+    switch (index) {
+      case 0:
+        Navigator.pushReplacementNamed(context, '/owner-home');
+        break;
+      case 1:
+        Navigator.pushReplacementNamed(context, '/order-history');
+        break;
+      case 2:
+        Navigator.pushReplacementNamed(context, '/vendor-list');
+        break;
+      case 3:
+        Navigator.pushReplacementNamed(context, '/owner-profile');
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,11 +127,7 @@ class _OwnerOrderDetailsScreenState extends State<OwnerOrderDetailsScreen> {
       bottomNavigationBar: BottomNavBar(
         currentIndex: currentIndex,
         isOwner: true,
-        onTap: (index) {
-          setState(() {
-            currentIndex = index;
-          });
-        },
+        onTap: _onBottomNavTap,
       ),
     );
   }
@@ -397,7 +426,7 @@ class _OwnerOrderDetailsScreenState extends State<OwnerOrderDetailsScreen> {
       children: [
         Expanded(
           child: OutlinedButton(
-            onPressed: () {},
+            onPressed: _cancelOrder,
             style: OutlinedButton.styleFrom(
               foregroundColor: AppColors.errorColor,
               minimumSize: const Size(double.infinity, AppSizes.buttonHeight),
@@ -420,7 +449,7 @@ class _OwnerOrderDetailsScreenState extends State<OwnerOrderDetailsScreen> {
 
         Expanded(
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: _completeOrder,
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.successColor,
               foregroundColor: AppColors.whiteColor,
