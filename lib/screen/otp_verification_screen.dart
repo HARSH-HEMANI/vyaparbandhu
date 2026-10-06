@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../resources/app_colors.dart';
 import '../resources/app_images.dart';
 import '../resources/app_text_size.dart';
@@ -44,11 +45,14 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     }
   }
 
+  void _verifyCode() {
+    Navigator.pushNamed(context, '/create-new-password');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
-
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(
@@ -59,9 +63,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildLogo(),
-
               const SizedBox(height: AppSizes.spacingExtraLarge),
-
               Text(
                 'Check Your Email',
                 style: TextStyle(
@@ -70,9 +72,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                   color: AppColors.primaryTextColor,
                 ),
               ),
-
               const SizedBox(height: AppSizes.spacingSmall),
-
               Text(
                 'Verify the Code sent to your email',
                 style: TextStyle(
@@ -80,13 +80,9 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                   color: AppColors.secondaryTextColor,
                 ),
               ),
-
               const SizedBox(height: AppSizes.spacingExtraLarge),
-
               _buildOtpContainer(),
-
               const SizedBox(height: AppSizes.spacingSmall),
-
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
@@ -101,9 +97,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                   ),
                 ),
               ),
-
               const SizedBox(height: AppSizes.spacingSmall),
-
               _buildVerifyButton(),
             ],
           ),
@@ -141,9 +135,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
               color: AppColors.secondaryTextColor,
             ),
           ),
-
           const SizedBox(height: AppSizes.spacingMedium),
-
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: List.generate(6, (index) {
@@ -156,36 +148,29 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                   keyboardType: TextInputType.number,
                   textAlign: TextAlign.center,
                   maxLength: 1,
-
                   style: TextStyle(
                     fontSize: AppSizes.mediumText,
                     fontWeight: FontWeight.w600,
                     color: AppColors.primaryTextColor,
                   ),
-
                   onChanged: (value) {
                     _moveToNextField(index, value);
                   },
-
                   decoration: InputDecoration(
                     counterText: '',
                     hintText: '_',
                     hintStyle: TextStyle(color: AppColors.hintTextColor),
                     filled: true,
                     fillColor: AppColors.inputBackgroundColor,
-
                     contentPadding: EdgeInsets.zero,
-
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(AppSizes.inputRadius),
                       borderSide: BorderSide(color: AppColors.borderColor),
                     ),
-
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(AppSizes.inputRadius),
                       borderSide: BorderSide(color: AppColors.borderColor),
                     ),
-
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(AppSizes.inputRadius),
                       borderSide: BorderSide(color: AppColors.primaryColor),
@@ -205,7 +190,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
       width: double.infinity,
       height: AppSizes.buttonHeight,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: _verifyCode,
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primaryColor,
           foregroundColor: AppColors.whiteColor,
@@ -224,9 +209,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                 fontWeight: FontWeight.w600,
               ),
             ),
-
             const SizedBox(width: AppSizes.spacingMedium),
-
             const Icon(Icons.arrow_forward, size: AppSizes.iconMedium),
           ],
         ),
