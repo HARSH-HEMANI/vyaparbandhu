@@ -6,7 +6,10 @@ import '../resources/app_text_size.dart';
 import '../widgets/bottom_nav_bar.dart';
 
 class ProductListingScreen extends StatefulWidget {
-  const ProductListingScreen({super.key});
+  final String? category;
+  final bool isOwner;
+
+  const ProductListingScreen({super.key, this.category, this.isOwner = true});
 
   @override
   State<ProductListingScreen> createState() => _ProductListingScreenState();
@@ -69,6 +72,10 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
       return;
     }
 
+    if (!widget.isOwner) {
+      return;
+    }
+
     switch (index) {
       case 0:
         Navigator.pushReplacementNamed(context, '/owner-home');
@@ -89,7 +96,11 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
   }
 
   void _openProductDetails(Map<String, String> product) {
-    Navigator.pushNamed(context, '/product-details', arguments: product);
+    Navigator.pushNamed(
+      context,
+      '/product-details',
+      arguments: {...product, 'isOwner': widget.isOwner},
+    );
   }
 
   void _showMessage(String message) {
@@ -143,9 +154,9 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
             size: AppSizes.iconMedium,
           ),
         ),
-        title: const Text(
-          'Biscuits & Cookies',
-          style: TextStyle(
+        title: Text(
+          widget.category ?? 'Biscuits & Cookies',
+          style: const TextStyle(
             color: AppColors.whiteColor,
             fontSize: AppSizes.mediumText,
             fontWeight: FontWeight.w600,
@@ -167,7 +178,7 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
       bottomNavigationBar: BottomNavBar(
         currentIndex: _currentIndex,
         onTap: _onBottomNavTap,
-        isOwner: true,
+        isOwner: widget.isOwner,
       ),
     );
   }
@@ -375,7 +386,11 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                     height: 34,
                     child: ElevatedButton(
                       onPressed: () {
-                        _showMessage('${product['name']} added to order');
+                        if (widget.isOwner) {
+                          _showMessage('${product['name']} added to order');
+                        } else {
+                          _showMessage('${product['name']} added to cart');
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primaryColor,
@@ -388,9 +403,9 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                           ),
                         ),
                       ),
-                      child: const Text(
+                      child: Text(
                         'ADD',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: AppSizes.smallText,
                           fontWeight: FontWeight.w600,
                         ),
