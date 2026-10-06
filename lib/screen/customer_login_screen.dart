@@ -24,13 +24,25 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
     super.dispose();
   }
 
+  // ============================================================
+  // CUSTOMER LOGIN
+  // ============================================================
+
   void _login() {
     Navigator.pushReplacementNamed(context, '/customer-home');
   }
 
+  // ============================================================
+  // CUSTOMER CREATE ACCOUNT
+  // ============================================================
+
   void _createAccount() {
     Navigator.pushNamed(context, '/customer-create-account');
   }
+
+  // ============================================================
+  // OWNER LOGIN
+  // ============================================================
 
   void _ownerLogin() {
     Navigator.pushReplacementNamed(context, '/owner-login');
@@ -50,7 +62,9 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildLogo(),
+
               const SizedBox(height: AppSizes.spacingLarge),
+
               Text(
                 'Welcome Back!',
                 style: TextStyle(
@@ -59,7 +73,9 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
                   color: AppColors.primaryTextColor,
                 ),
               ),
+
               const SizedBox(height: AppSizes.spacingSmall),
+
               Text(
                 'Sign in to continue shopping',
                 style: TextStyle(
@@ -67,9 +83,13 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
                   color: AppColors.secondaryTextColor,
                 ),
               ),
+
               const SizedBox(height: AppSizes.spacingExtraLarge),
+
               _buildLoginForm(),
+
               const SizedBox(height: AppSizes.spacingSmall),
+
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
@@ -84,13 +104,24 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
                   ),
                 ),
               ),
+
               const SizedBox(height: AppSizes.spacingSmall),
+
               _buildLoginButton(),
+
               const SizedBox(height: AppSizes.spacingLarge),
+
               _buildOrDivider(),
+
               const SizedBox(height: AppSizes.spacingLarge),
+
               _buildCreateAccountButton(),
+
               const SizedBox(height: AppSizes.spacingLarge),
+
+              // ==================================================
+              // OWNER LOGIN LINK
+              // ==================================================
               Center(
                 child: TextButton(
                   onPressed: _ownerLogin,
@@ -111,6 +142,10 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
     );
   }
 
+  // ============================================================
+  // LOGO
+  // ============================================================
+
   Widget _buildLogo() {
     return Center(
       child: Image.asset(
@@ -121,6 +156,10 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
       ),
     );
   }
+
+  // ============================================================
+  // LOGIN FORM
+  // ============================================================
 
   Widget _buildLoginForm() {
     return Container(
@@ -140,14 +179,18 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
               color: AppColors.secondaryTextColor,
             ),
           ),
+
           const SizedBox(height: AppSizes.spacingSmall),
+
           _buildTextField(
             controller: emailController,
             hintText: 'Enter your email',
             icon: Icons.email_outlined,
             keyboardType: TextInputType.emailAddress,
           ),
+
           const SizedBox(height: AppSizes.spacingMedium),
+
           Text(
             'Password',
             style: TextStyle(
@@ -155,7 +198,9 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
               color: AppColors.secondaryTextColor,
             ),
           ),
+
           const SizedBox(height: AppSizes.spacingSmall),
+
           _buildTextField(
             controller: passwordController,
             hintText: 'Enter your password',
@@ -180,6 +225,10 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
       ),
     );
   }
+
+  // ============================================================
+  // TEXT FIELD
+  // ============================================================
 
   Widget _buildTextField({
     required TextEditingController controller,
@@ -233,6 +282,10 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
     );
   }
 
+  // ============================================================
+  // LOGIN BUTTON
+  // ============================================================
+
   Widget _buildLoginButton() {
     return SizedBox(
       width: double.infinity,
@@ -257,7 +310,9 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
                 fontWeight: FontWeight.w600,
               ),
             ),
+
             const SizedBox(width: AppSizes.spacingMedium),
+
             const Icon(Icons.arrow_forward, size: AppSizes.iconMedium),
           ],
         ),
@@ -265,10 +320,15 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
     );
   }
 
+  // ============================================================
+  // OR DIVIDER
+  // ============================================================
+
   Widget _buildOrDivider() {
     return Row(
       children: [
         Expanded(child: Divider(color: AppColors.borderColor)),
+
         Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: AppSizes.paddingMedium,
@@ -282,10 +342,15 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
             ),
           ),
         ),
+
         Expanded(child: Divider(color: AppColors.borderColor)),
       ],
     );
   }
+
+  // ============================================================
+  // CREATE ACCOUNT BUTTON
+  // ============================================================
 
   Widget _buildCreateAccountButton() {
     return SizedBox(

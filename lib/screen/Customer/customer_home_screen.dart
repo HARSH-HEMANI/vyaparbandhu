@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../resources/app_colors.dart';
 import '../../resources/app_images.dart';
 import '../../resources/app_text_size.dart';
@@ -32,42 +33,51 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
     'Disposables',
   ];
 
+  // ============================================================
+  // CUSTOMER NAVIGATION
+  // ============================================================
+
   void _openBrowseProducts() {
-    Navigator.pushNamed(context, '/sub-categories');
+    Navigator.pushNamed(context, '/customer-sub-categories');
   }
 
   void _openCart() {
-    // Cart screen will be connected when the customer cart screen is integrated.
+    Navigator.pushNamed(context, '/customer-cart');
   }
 
   void _openOrders() {
-    // Customer order screen will be connected when that screen is integrated.
+    Navigator.pushNamed(context, '/customer-orders');
   }
 
   void _openProfile() {
-    // Customer profile screen will be connected when that screen is integrated.
+    Navigator.pushNamed(context, '/customer-profile');
   }
 
   void _openCategory(String category) {
     if (category == 'Biscuits, Drinks &\nPacked Food') {
-      Navigator.pushNamed(context, '/sub-categories');
+      Navigator.pushNamed(context, '/customer-sub-categories');
     } else {
-      Navigator.pushNamed(context, '/product-listing', arguments: category);
+      Navigator.pushNamed(context, '/customer-product-listing');
     }
   }
 
   void _onBottomNavTap(int index) {
-    if (index == currentIndex) return;
+    if (index == currentIndex) {
+      return;
+    }
 
     switch (index) {
       case 0:
         break;
+
       case 1:
         _openOrders();
         break;
+
       case 2:
         _openCart();
         break;
+
       case 3:
         _openProfile();
         break;
@@ -78,6 +88,10 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
+
+      // ========================================================
+      // APP BAR
+      // ========================================================
       appBar: AppBar(
         backgroundColor: AppColors.primaryColor,
         elevation: 0,
@@ -106,7 +120,9 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                 ),
               ),
             ),
+
             const SizedBox(width: AppSizes.spacingMedium),
+
             Text(
               'Hello, Jay',
               style: TextStyle(
@@ -117,6 +133,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
             ),
           ],
         ),
+
         actions: [
           IconButton(
             onPressed: () {},
@@ -132,15 +149,23 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
           const SizedBox(width: AppSizes.paddingSmall),
         ],
       ),
+
+      // ========================================================
+      // BODY
+      // ========================================================
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(AppSizes.paddingLarge),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildSearchBar(),
+
             const SizedBox(height: AppSizes.spacingLarge),
+
             _buildActionGrid(),
+
             const SizedBox(height: AppSizes.spacingLarge),
+
             Text(
               'Categories',
               style: TextStyle(
@@ -149,17 +174,27 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                 color: AppColors.primaryTextColor,
               ),
             ),
+
             const SizedBox(height: AppSizes.spacingMedium),
+
             _buildCategoryGrid(),
           ],
         ),
       ),
+
+      // ========================================================
+      // CUSTOMER BOTTOM NAVIGATION
+      // ========================================================
       bottomNavigationBar: BottomNavBar(
         currentIndex: currentIndex,
         onTap: _onBottomNavTap,
       ),
     );
   }
+
+  // ============================================================
+  // SEARCH BAR
+  // ============================================================
 
   Widget _buildSearchBar() {
     return Container(
@@ -198,6 +233,10 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
     );
   }
 
+  // ============================================================
+  // ACTION GRID
+  // ============================================================
+
   Widget _buildActionGrid() {
     return GridView.builder(
       shrinkWrap: true,
@@ -219,6 +258,10 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
     );
   }
 
+  // ============================================================
+  // ACTION CARD
+  // ============================================================
+
   Widget _buildActionCard(String title, IconData icon, int index) {
     return InkWell(
       onTap: () {
@@ -226,12 +269,15 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
           case 0:
             _openBrowseProducts();
             break;
+
           case 1:
             _openCart();
             break;
+
           case 2:
             _openOrders();
             break;
+
           case 3:
             _openProfile();
             break;
@@ -260,7 +306,9 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                 size: AppSizes.iconMedium,
               ),
             ),
+
             const SizedBox(height: AppSizes.spacingSmall),
+
             Text(
               title,
               textAlign: TextAlign.center,
@@ -275,6 +323,10 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
       ),
     );
   }
+
+  // ============================================================
+  // CATEGORY GRID
+  // ============================================================
 
   Widget _buildCategoryGrid() {
     return GridView.builder(
@@ -292,6 +344,10 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
       },
     );
   }
+
+  // ============================================================
+  // CATEGORY CARD
+  // ============================================================
 
   Widget _buildCategoryCard(String category) {
     return InkWell(
@@ -333,6 +389,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                 ),
               ),
             ),
+
             Padding(
               padding: const EdgeInsets.all(AppSizes.paddingSmall),
               child: Row(
@@ -348,6 +405,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                       ),
                     ),
                   ),
+
                   Icon(
                     Icons.chevron_right,
                     size: AppSizes.iconSmall,

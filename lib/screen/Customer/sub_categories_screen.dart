@@ -9,57 +9,72 @@ class SubCategoriesScreen extends StatelessWidget {
   const SubCategoriesScreen({super.key});
 
   static const List<_SubCategory> _subCategories = [
-    _SubCategory(
-      title: 'Biscuits & Cookies',
-      icon: Icons.cookie_outlined,
-    ),
-    _SubCategory(
-      title: 'Chips & Namkeen',
-      icon: Icons.fastfood_outlined,
-    ),
-    _SubCategory(
-      title: 'Beverages & Juices',
-      icon: Icons.local_drink_outlined,
-    ),
-    _SubCategory(
-      title: 'Chocolates & Candies',
-      icon: Icons.cake_outlined,
-    ),
-    _SubCategory(
-      title: 'Noodles & Pasta',
-      icon: Icons.ramen_dining_outlined,
-    ),
-    _SubCategory(
-      title: 'Sauces & Ketchup',
-      icon: Icons.liquor_outlined,
-    ),
-    _SubCategory(
-      title: 'Tea & Coffee',
-      icon: Icons.coffee_outlined,
-    ),
-    _SubCategory(
-      title: 'Pickles & Chutney',
-      icon: Icons.shopping_bag_outlined,
-    ),
+    _SubCategory(title: 'Biscuits & Cookies', icon: Icons.cookie_outlined),
+    _SubCategory(title: 'Chips & Namkeen', icon: Icons.fastfood_outlined),
+    _SubCategory(title: 'Beverages & Juices', icon: Icons.local_drink_outlined),
+    _SubCategory(title: 'Chocolates & Candies', icon: Icons.cake_outlined),
+    _SubCategory(title: 'Noodles & Pasta', icon: Icons.ramen_dining_outlined),
+    _SubCategory(title: 'Sauces & Ketchup', icon: Icons.liquor_outlined),
+    _SubCategory(title: 'Tea & Coffee', icon: Icons.coffee_outlined),
+    _SubCategory(title: 'Pickles & Chutney', icon: Icons.shopping_bag_outlined),
     _SubCategory(
       title: 'Breakfast Cereals',
       icon: Icons.breakfast_dining_outlined,
     ),
-    _SubCategory(
-      title: 'Instant Mixes',
-      icon: Icons.menu_book_outlined,
-    ),
+    _SubCategory(title: 'Instant Mixes', icon: Icons.menu_book_outlined),
   ];
 
-  void _onBottomNavTap(BuildContext context, int index) {
-    if (index == 0) {
-      Navigator.pop(context);
-      return;
-    }
+  // ============================================================
+  // CUSTOMER NAVIGATION
+  // ============================================================
 
-    // Other bottom navigation screens will be connected here.
-    // We will add Orders, Cart and Profile navigation later.
+  void _openHome(BuildContext context) {
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      '/customer-home',
+      (route) => false,
+    );
   }
+
+  void _openOrders(BuildContext context) {
+    Navigator.pushNamed(context, '/customer-orders');
+  }
+
+  void _openCart(BuildContext context) {
+    Navigator.pushNamed(context, '/customer-cart');
+  }
+
+  void _openProfile(BuildContext context) {
+    Navigator.pushNamed(context, '/customer-profile');
+  }
+
+  void _openProductListing(BuildContext context, String category) {
+    Navigator.pushNamed(context, '/customer-product-listing');
+  }
+
+  void _onBottomNavTap(BuildContext context, int index) {
+    switch (index) {
+      case 0:
+        _openHome(context);
+        break;
+
+      case 1:
+        _openOrders(context);
+        break;
+
+      case 2:
+        _openCart(context);
+        break;
+
+      case 3:
+        _openProfile(context);
+        break;
+    }
+  }
+
+  // ============================================================
+  // BUILD
+  // ============================================================
 
   @override
   Widget build(BuildContext context) {
@@ -72,9 +87,7 @@ class SubCategoriesScreen extends StatelessWidget {
           children: [
             _buildAppBar(context),
 
-            Expanded(
-              child: _buildContent(),
-            ),
+            Expanded(child: _buildContent(context)),
           ],
         ),
       ),
@@ -87,6 +100,10 @@ class SubCategoriesScreen extends StatelessWidget {
       ),
     );
   }
+
+  // ============================================================
+  // APP BAR
+  // ============================================================
 
   Widget _buildAppBar(BuildContext context) {
     return Container(
@@ -121,7 +138,11 @@ class SubCategoriesScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildContent() {
+  // ============================================================
+  // CONTENT
+  // ============================================================
+
+  Widget _buildContent(BuildContext context) {
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       padding: const EdgeInsets.fromLTRB(
@@ -142,9 +163,7 @@ class SubCategoriesScreen extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(
-            height: AppSizes.spacingSmall,
-          ),
+          const SizedBox(height: AppSizes.spacingSmall),
 
           const Text(
             'Explore premium selections of packed food and drinks.',
@@ -156,18 +175,14 @@ class SubCategoriesScreen extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(
-            height: AppSizes.spacingLarge,
-          ),
+          const SizedBox(height: AppSizes.spacingLarge),
 
           ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemCount: _subCategories.length,
             separatorBuilder: (_, _) {
-              return const SizedBox(
-                height: AppSizes.spacingMedium,
-              );
+              return const SizedBox(height: AppSizes.spacingMedium);
             },
             itemBuilder: (context, index) {
               final category = _subCategories[index];
@@ -175,7 +190,7 @@ class SubCategoriesScreen extends StatelessWidget {
               return _SubCategoryCard(
                 category: category,
                 onTap: () {
-                  // Product listing navigation will be added here.
+                  _openProductListing(context, category.title);
                 },
               );
             },
@@ -186,14 +201,15 @@ class SubCategoriesScreen extends StatelessWidget {
   }
 }
 
+// ============================================================
+// SUB-CATEGORY CARD
+// ============================================================
+
 class _SubCategoryCard extends StatelessWidget {
   final _SubCategory category;
   final VoidCallback onTap;
 
-  const _SubCategoryCard({
-    required this.category,
-    required this.onTap,
-  });
+  const _SubCategoryCard({required this.category, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -201,34 +217,24 @@ class _SubCategoryCard extends StatelessWidget {
       color: AppColors.cardColor,
       elevation: AppSizes.cardElevation,
       shadowColor: Colors.black.withValues(alpha: 0.10),
-      borderRadius: BorderRadius.circular(
-        AppSizes.cardRadius,
-      ),
+      borderRadius: BorderRadius.circular(AppSizes.cardRadius),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(
-          AppSizes.cardRadius,
-        ),
+        borderRadius: BorderRadius.circular(AppSizes.cardRadius),
         child: Container(
           height: 56,
           padding: const EdgeInsets.symmetric(
             horizontal: AppSizes.paddingMedium,
           ),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(
-              AppSizes.cardRadius,
-            ),
-            border: Border.all(
-              color: AppColors.borderColor,
-            ),
+            borderRadius: BorderRadius.circular(AppSizes.cardRadius),
+            border: Border.all(color: AppColors.borderColor),
           ),
           child: Row(
             children: [
               _buildIcon(),
 
-              const SizedBox(
-                width: AppSizes.spacingMedium,
-              ),
+              const SizedBox(width: AppSizes.spacingMedium),
 
               Expanded(
                 child: Text(
@@ -259,9 +265,7 @@ class _SubCategoryCard extends StatelessWidget {
       height: 38,
       decoration: BoxDecoration(
         color: AppColors.inputBackgroundColor,
-        borderRadius: BorderRadius.circular(
-          AppSizes.radiusMedium,
-        ),
+        borderRadius: BorderRadius.circular(AppSizes.radiusMedium),
       ),
       child: Icon(
         category.icon,
@@ -272,12 +276,13 @@ class _SubCategoryCard extends StatelessWidget {
   }
 }
 
+// ============================================================
+// SUB-CATEGORY MODEL
+// ============================================================
+
 class _SubCategory {
   final String title;
   final IconData icon;
 
-  const _SubCategory({
-    required this.title,
-    required this.icon,
-  });
+  const _SubCategory({required this.title, required this.icon});
 }
