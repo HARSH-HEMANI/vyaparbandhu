@@ -13,18 +13,24 @@ class OwnerProfileScreen extends StatefulWidget {
 }
 
 class _OwnerProfileScreenState extends State<OwnerProfileScreen> {
-  int _currentIndex = 3;
+  final int _currentIndex = 3;
 
   void _onBottomNavTap(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-  }
+    if (index == _currentIndex) return;
 
-  void _showMessage(String message) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(message)));
+    switch (index) {
+      case 0:
+        Navigator.pushReplacementNamed(context, '/owner-home');
+        break;
+      case 1:
+        Navigator.pushReplacementNamed(context, '/order-history');
+        break;
+      case 2:
+        Navigator.pushReplacementNamed(context, '/vendor-list');
+        break;
+      case 3:
+        break;
+    }
   }
 
   @override
@@ -76,13 +82,17 @@ class _OwnerProfileScreenState extends State<OwnerProfileScreen> {
               _buildProfileOption(
                 icon: Icons.info_outline,
                 title: 'About VyaparBandhu',
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(context, '/about');
+                },
               ),
               const SizedBox(height: AppSizes.spacingSmall),
               _buildProfileOption(
                 icon: Icons.help_outline,
                 title: 'Help & Support',
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(context, '/help-support');
+                },
               ),
               const SizedBox(height: AppSizes.spacingLarge),
               _buildLogoutOption(),
@@ -206,7 +216,11 @@ class _OwnerProfileScreenState extends State<OwnerProfileScreen> {
   Widget _buildLogoutOption() {
     return InkWell(
       onTap: () {
-        _showMessage('Logged out successfully');
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          '/owner-login',
+          (route) => false,
+        );
       },
       borderRadius: BorderRadius.circular(AppSizes.cardRadius),
       child: Padding(
