@@ -51,6 +51,41 @@ class _VendorOrderGenerationScreenState
     });
   }
 
+  void _openAddProduct() {
+    Navigator.pushNamed(context, '/add-product');
+  }
+
+  void _saveAsDraft() {
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('Order saved as draft')));
+  }
+
+  void _generateOrder() {
+    Navigator.pushNamed(context, '/order-success');
+  }
+
+  void _onBottomNavTap(int index) {
+    if (index == currentIndex) {
+      return;
+    }
+
+    switch (index) {
+      case 0:
+        Navigator.pushReplacementNamed(context, '/owner-home');
+        break;
+      case 1:
+        Navigator.pushReplacementNamed(context, '/order-history');
+        break;
+      case 2:
+        Navigator.pushReplacementNamed(context, '/vendor-list');
+        break;
+      case 3:
+        Navigator.pushReplacementNamed(context, '/owner-profile');
+        break;
+    }
+  }
+
   int get totalItems {
     return products.length;
   }
@@ -91,7 +126,9 @@ class _VendorOrderGenerationScreenState
           ),
         ),
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
           icon: const Icon(Icons.arrow_back),
         ),
       ),
@@ -140,11 +177,7 @@ class _VendorOrderGenerationScreenState
       bottomNavigationBar: BottomNavBar(
         currentIndex: currentIndex,
         isOwner: true,
-        onTap: (index) {
-          setState(() {
-            currentIndex = index;
-          });
-        },
+        onTap: _onBottomNavTap,
       ),
     );
   }
@@ -276,7 +309,7 @@ class _VendorOrderGenerationScreenState
       width: double.infinity,
       height: AppSizes.buttonHeight,
       child: ElevatedButton.icon(
-        onPressed: () {},
+        onPressed: _openAddProduct,
         icon: const Icon(Icons.add, size: AppSizes.iconMedium),
         label: const Text(
           'Add Product',
@@ -526,7 +559,7 @@ class _VendorOrderGenerationScreenState
       children: [
         Expanded(
           child: OutlinedButton(
-            onPressed: () {},
+            onPressed: _saveAsDraft,
             style: OutlinedButton.styleFrom(
               foregroundColor: AppColors.primaryColor,
               minimumSize: const Size(double.infinity, AppSizes.buttonHeight),
@@ -549,7 +582,7 @@ class _VendorOrderGenerationScreenState
 
         Expanded(
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: _generateOrder,
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primaryColor,
               foregroundColor: AppColors.whiteColor,
