@@ -15,9 +15,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
   int currentIndex = 0;
 
   final TextEditingController productNameController = TextEditingController();
-
   final TextEditingController priceController = TextEditingController();
-
   final TextEditingController mrpController = TextEditingController();
 
   String? selectedBrand;
@@ -54,6 +52,35 @@ class _AddProductScreenState extends State<AddProductScreen> {
     priceController.dispose();
     mrpController.dispose();
     super.dispose();
+  }
+
+  void _addProduct() {
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('Product added successfully')));
+
+    Navigator.pushReplacementNamed(context, '/product-listing');
+  }
+
+  void _onBottomNavTap(int index) {
+    if (index == currentIndex) {
+      return;
+    }
+
+    switch (index) {
+      case 0:
+        Navigator.pushReplacementNamed(context, '/owner-home');
+        break;
+      case 1:
+        Navigator.pushReplacementNamed(context, '/order-history');
+        break;
+      case 2:
+        Navigator.pushReplacementNamed(context, '/vendor-list');
+        break;
+      case 3:
+        Navigator.pushReplacementNamed(context, '/owner-profile');
+        break;
+    }
   }
 
   @override
@@ -162,7 +189,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
               width: double.infinity,
               height: AppSizes.buttonHeight,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: _addProduct,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primaryColor,
                   foregroundColor: AppColors.whiteColor,
@@ -188,11 +215,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
       bottomNavigationBar: BottomNavBar(
         currentIndex: currentIndex,
         isOwner: true,
-        onTap: (index) {
-          setState(() {
-            currentIndex = index;
-          });
-        },
+        onTap: _onBottomNavTap,
       ),
     );
   }
