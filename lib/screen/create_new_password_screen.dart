@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../resources/app_colors.dart';
 import '../resources/app_images.dart';
 import '../resources/app_text_size.dart';
@@ -13,7 +14,6 @@ class CreateNewPasswordScreen extends StatefulWidget {
 
 class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
   final TextEditingController passwordController = TextEditingController();
-
   final TextEditingController confirmPasswordController =
       TextEditingController();
 
@@ -27,11 +27,18 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
     super.dispose();
   }
 
+  void _login() {
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      '/customer-login',
+      (route) => false,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
-
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(
@@ -42,9 +49,7 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildLogo(),
-
               const SizedBox(height: AppSizes.spacingExtraLarge),
-
               Text(
                 'Create New Password',
                 style: TextStyle(
@@ -53,9 +58,7 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
                   color: AppColors.primaryTextColor,
                 ),
               ),
-
               const SizedBox(height: AppSizes.spacingSmall),
-
               Text(
                 'Forgot Password? No Worries...',
                 style: TextStyle(
@@ -63,17 +66,11 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
                   color: AppColors.secondaryTextColor,
                 ),
               ),
-
               const SizedBox(height: AppSizes.spacingExtraLarge),
-
               _buildPasswordForm(),
-
               const SizedBox(height: AppSizes.spacingMedium),
-
               _buildRememberPassword(),
-
               const SizedBox(height: AppSizes.spacingLarge),
-
               _buildLoginButton(),
             ],
           ),
@@ -111,9 +108,7 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
               color: AppColors.secondaryTextColor,
             ),
           ),
-
           const SizedBox(height: AppSizes.spacingSmall),
-
           _buildPasswordField(
             controller: passwordController,
             hintText: 'Enter new password',
@@ -124,9 +119,7 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
               });
             },
           ),
-
           const SizedBox(height: AppSizes.spacingMedium),
-
           Text(
             'Re-enter New Password',
             style: TextStyle(
@@ -134,9 +127,7 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
               color: AppColors.secondaryTextColor,
             ),
           ),
-
           const SizedBox(height: AppSizes.spacingSmall),
-
           _buildPasswordField(
             controller: confirmPasswordController,
             hintText: 'Re-enter new password',
@@ -163,29 +154,23 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
       child: TextField(
         controller: controller,
         obscureText: obscureText,
-
         style: TextStyle(
           fontSize: AppSizes.bodyText,
           color: AppColors.primaryTextColor,
         ),
-
         decoration: InputDecoration(
           filled: true,
           fillColor: AppColors.inputBackgroundColor,
-
           hintText: hintText,
-
           hintStyle: TextStyle(
             fontSize: AppSizes.bodyText,
             color: AppColors.hintTextColor,
           ),
-
           prefixIcon: Icon(
             Icons.lock_outline,
             color: AppColors.secondaryTextColor,
             size: AppSizes.iconMedium,
           ),
-
           suffixIcon: IconButton(
             onPressed: onToggle,
             icon: Icon(
@@ -196,21 +181,17 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
               size: AppSizes.iconMedium,
             ),
           ),
-
           contentPadding: const EdgeInsets.symmetric(
             horizontal: AppSizes.paddingMedium,
           ),
-
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(AppSizes.inputRadius),
             borderSide: BorderSide(color: AppColors.borderColor),
           ),
-
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(AppSizes.inputRadius),
             borderSide: BorderSide(color: AppColors.borderColor),
           ),
-
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(AppSizes.inputRadius),
             borderSide: BorderSide(color: AppColors.primaryColor),
@@ -229,7 +210,6 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
           activeColor: AppColors.primaryColor,
           visualDensity: VisualDensity.compact,
         ),
-
         Text(
           'Remember Password?',
           style: TextStyle(
@@ -246,7 +226,7 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
       width: double.infinity,
       height: AppSizes.buttonHeight,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: _login,
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primaryColor,
           foregroundColor: AppColors.whiteColor,
@@ -265,9 +245,7 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
                 fontWeight: FontWeight.w600,
               ),
             ),
-
             const SizedBox(width: AppSizes.spacingMedium),
-
             const Icon(Icons.arrow_forward, size: AppSizes.iconMedium),
           ],
         ),

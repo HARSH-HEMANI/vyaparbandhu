@@ -12,16 +12,12 @@ class AddVendorScreen extends StatefulWidget {
 }
 
 class _AddVendorScreenState extends State<AddVendorScreen> {
-  int currentIndex = 0;
+  int currentIndex = 2;
 
   final TextEditingController vendorNameController = TextEditingController();
-
   final TextEditingController contactPersonController = TextEditingController();
-
   final TextEditingController mobileController = TextEditingController();
-
   final TextEditingController emailController = TextEditingController();
-
   final TextEditingController gstController = TextEditingController();
 
   @override
@@ -32,6 +28,35 @@ class _AddVendorScreenState extends State<AddVendorScreen> {
     emailController.dispose();
     gstController.dispose();
     super.dispose();
+  }
+
+  void _addVendor() {
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('Vendor added successfully')));
+
+    Navigator.pushReplacementNamed(context, '/vendor-list');
+  }
+
+  void _onBottomNavTap(int index) {
+    if (index == currentIndex) {
+      return;
+    }
+
+    switch (index) {
+      case 0:
+        Navigator.pushReplacementNamed(context, '/owner-home');
+        break;
+      case 1:
+        Navigator.pushReplacementNamed(context, '/order-history');
+        break;
+      case 2:
+        Navigator.pushReplacementNamed(context, '/vendor-list');
+        break;
+      case 3:
+        Navigator.pushReplacementNamed(context, '/owner-profile');
+        break;
+    }
   }
 
   @override
@@ -106,7 +131,7 @@ class _AddVendorScreenState extends State<AddVendorScreen> {
               width: double.infinity,
               height: AppSizes.buttonHeight,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: _addVendor,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primaryColor,
                   foregroundColor: AppColors.whiteColor,
@@ -132,11 +157,7 @@ class _AddVendorScreenState extends State<AddVendorScreen> {
       bottomNavigationBar: BottomNavBar(
         currentIndex: currentIndex,
         isOwner: true,
-        onTap: (index) {
-          setState(() {
-            currentIndex = index;
-          });
-        },
+        onTap: _onBottomNavTap,
       ),
     );
   }
