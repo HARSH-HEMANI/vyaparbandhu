@@ -16,13 +16,61 @@ class _OwnerHomeScreenState extends State<OwnerHomeScreen> {
   int currentIndex = 0;
 
   final List<Map<String, dynamic>> menuItems = [
-    {'title': 'Browse Products', 'icon': Icons.inventory_2_outlined},
-    {'title': 'View Vendors', 'icon': Icons.store_outlined},
-    {'title': 'View Orders', 'icon': Icons.receipt_long_outlined},
-    {'title': 'View Customers', 'icon': Icons.people_outline},
-    {'title': 'View Vendor Orders', 'icon': Icons.local_shipping_outlined},
-    {'title': 'Owner Information', 'icon': Icons.person_outline},
+    {
+      'title': 'Browse Products',
+      'icon': Icons.inventory_2_outlined,
+      'route': '/product-listing',
+    },
+    {
+      'title': 'View Vendors',
+      'icon': Icons.store_outlined,
+      'route': '/vendor-list',
+    },
+    {
+      'title': 'View Orders',
+      'icon': Icons.receipt_long_outlined,
+      'route': '/order-history',
+    },
+    {
+      'title': 'View Customers',
+      'icon': Icons.people_outline,
+      'route': '/customer-management',
+    },
+    {
+      'title': 'View Vendor Orders',
+      'icon': Icons.local_shipping_outlined,
+      'route': '/vendor-order',
+    },
+    {
+      'title': 'Owner Information',
+      'icon': Icons.person_outline,
+      'route': '/owner-profile',
+    },
   ];
+
+  void _onBottomNavTap(int index) {
+    setState(() {
+      currentIndex = index;
+    });
+
+    switch (index) {
+      case 0:
+        break;
+      case 1:
+        Navigator.pushNamed(context, '/order-history');
+        break;
+      case 2:
+        Navigator.pushNamed(context, '/vendor-list');
+        break;
+      case 3:
+        Navigator.pushNamed(context, '/owner-profile');
+        break;
+    }
+  }
+
+  void _openMenuItem(String route) {
+    Navigator.pushNamed(context, route);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,11 +99,7 @@ class _OwnerHomeScreenState extends State<OwnerHomeScreen> {
       bottomNavigationBar: BottomNavBar(
         currentIndex: currentIndex,
         isOwner: true,
-        onTap: (index) {
-          setState(() {
-            currentIndex = index;
-          });
-        },
+        onTap: _onBottomNavTap,
       ),
     );
   }
@@ -170,14 +214,24 @@ class _OwnerHomeScreenState extends State<OwnerHomeScreen> {
       itemBuilder: (context, index) {
         final item = menuItems[index];
 
-        return _buildMenuCard(title: item['title'], icon: item['icon']);
+        return _buildMenuCard(
+          title: item['title'] as String,
+          icon: item['icon'] as IconData,
+          onTap: () {
+            _openMenuItem(item['route'] as String);
+          },
+        );
       },
     );
   }
 
-  Widget _buildMenuCard({required String title, required IconData icon}) {
+  Widget _buildMenuCard({
+    required String title,
+    required IconData icon,
+    required VoidCallback onTap,
+  }) {
     return InkWell(
-      onTap: () {},
+      onTap: onTap,
       borderRadius: BorderRadius.circular(AppSizes.cardRadius),
       child: Container(
         padding: const EdgeInsets.all(AppSizes.paddingLarge),
