@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../resources/app_colors.dart';
 import '../resources/app_images.dart';
-// import '../resources/app_strings.dart';
 import '../resources/app_text_size.dart';
 import '../widgets/bottom_nav_bar.dart';
 
@@ -15,11 +14,22 @@ class CustomerHomeScreen extends StatefulWidget {
 class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
   int currentIndex = 0;
 
+  final List<Map<String, dynamic>> actions = [
+    {'title': 'Browse Products', 'icon': Icons.shopping_bag_outlined},
+    {'title': 'View Cart', 'icon': Icons.shopping_cart_outlined},
+    {'title': 'My Orders', 'icon': Icons.receipt_long_outlined},
+    {'title': 'My Profile', 'icon': Icons.person_outline},
+  ];
+
   final List<String> categories = [
-    'Biscuits & Cookies',
-    'Drinks',
-    'Packed Food',
+    'Biscuits, Drinks &\nPacked Food',
+    'Cooking\nEssentials',
     'Personal Care',
+    'Beauty',
+    'Mom & Baby Care',
+    'Home Care',
+    'Pooja Needs',
+    'Disposables',
   ];
 
   @override
@@ -28,32 +38,64 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
       backgroundColor: AppColors.backgroundColor,
 
       appBar: AppBar(
-        backgroundColor: AppColors.backgroundColor,
+        backgroundColor: AppColors.primaryColor,
         elevation: 0,
+
         titleSpacing: AppSizes.paddingLarge,
 
-        title: Text(
-          'Hello, Jay',
-          style: TextStyle(
-            fontSize: AppSizes.titleText,
-            fontWeight: FontWeight.bold,
-            color: AppColors.primaryTextColor,
-          ),
+        title: Row(
+          children: [
+            Container(
+              height: 32,
+              width: 32,
+              decoration: BoxDecoration(
+                color: AppColors.whiteColor,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: Image.asset(
+                  AppImages.logo,
+                  fit: BoxFit.contain,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Icon(
+                      Icons.person,
+                      size: AppSizes.iconMedium,
+                      color: AppColors.primaryColor,
+                    );
+                  },
+                ),
+              ),
+            ),
+
+            const SizedBox(width: AppSizes.spacingMedium),
+
+            Text(
+              'Hello, Jay',
+              style: TextStyle(
+                fontSize: AppSizes.mediumText,
+                fontWeight: FontWeight.w600,
+                color: AppColors.whiteColor,
+              ),
+            ),
+          ],
         ),
 
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: AppSizes.paddingLarge),
-            child: CircleAvatar(
-              radius: 20,
-              backgroundColor: AppColors.inputBackgroundColor,
-              child: Icon(
-                Icons.person_outline,
-                color: AppColors.primaryColor,
-                size: AppSizes.iconMedium,
-              ),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.search, color: AppColors.whiteColor),
+          ),
+
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.notifications_none,
+              color: AppColors.whiteColor,
             ),
           ),
+
+          const SizedBox(width: AppSizes.paddingSmall),
         ],
       ),
 
@@ -66,66 +108,22 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
 
             const SizedBox(height: AppSizes.spacingLarge),
 
-            Row(
-              children: [
-                Expanded(
-                  child: _buildActionCard(
-                    title: 'Browse Products',
-                    icon: Icons.shopping_bag_outlined,
-                  ),
-                ),
-                const SizedBox(width: AppSizes.spacingMedium),
-                Expanded(
-                  child: _buildActionCard(
-                    title: 'View Cart',
-                    icon: Icons.shopping_cart_outlined,
-                  ),
-                ),
-              ],
-            ),
+            _buildActionGrid(),
 
-            const SizedBox(height: AppSizes.spacingExtraLarge),
+            const SizedBox(height: AppSizes.spacingLarge),
 
             Text(
               'Categories',
               style: TextStyle(
                 fontSize: AppSizes.headingText,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
                 color: AppColors.primaryTextColor,
               ),
             ),
 
             const SizedBox(height: AppSizes.spacingMedium),
 
-            SizedBox(
-              height: 120,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: categories.length,
-                itemBuilder: (context, index) {
-                  return _buildCategoryCard(categories[index]);
-                },
-              ),
-            ),
-
-            const SizedBox(height: AppSizes.spacingExtraLarge),
-
-            Text(
-              'Popular Products',
-              style: TextStyle(
-                fontSize: AppSizes.headingText,
-                fontWeight: FontWeight.bold,
-                color: AppColors.primaryTextColor,
-              ),
-            ),
-
-            const SizedBox(height: AppSizes.spacingMedium),
-
-            _buildProductCard('Good Day Cashew', '₹120'),
-
-            const SizedBox(height: AppSizes.spacingMedium),
-
-            _buildProductCard('Parle-G Biscuits', '₹60'),
+            _buildCategoryGrid(),
           ],
         ),
       ),
@@ -145,40 +143,89 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
     return Container(
       height: AppSizes.inputHeight,
       decoration: BoxDecoration(
-        color: AppColors.inputBackgroundColor,
+        color: AppColors.cardColor,
         borderRadius: BorderRadius.circular(AppSizes.inputRadius),
         border: Border.all(color: AppColors.borderColor),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.blackColor.withValues(alpha: 0.04),
+            blurRadius: 5,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
       child: TextField(
         decoration: InputDecoration(
-          hintText: 'Search products',
+          hintText: 'Search products, brands or categories',
           hintStyle: TextStyle(
             color: AppColors.hintTextColor,
-            fontSize: AppSizes.bodyText,
+            fontSize: AppSizes.smallText,
           ),
-          prefixIcon: Icon(Icons.search, color: AppColors.secondaryTextColor),
+
+          prefixIcon: Icon(
+            Icons.search,
+            color: AppColors.secondaryTextColor,
+            size: AppSizes.iconMedium,
+          ),
+
           border: InputBorder.none,
+
           contentPadding: const EdgeInsets.symmetric(
             vertical: AppSizes.paddingMedium,
+            horizontal: AppSizes.paddingSmall,
           ),
         ),
       ),
     );
   }
 
-  Widget _buildActionCard({required String title, required IconData icon}) {
+  Widget _buildActionGrid() {
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+
+      itemCount: actions.length,
+
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: AppSizes.spacingMedium,
+        mainAxisSpacing: AppSizes.spacingMedium,
+        childAspectRatio: 1.45,
+      ),
+
+      itemBuilder: (context, index) {
+        return _buildActionCard(
+          actions[index]['title'],
+          actions[index]['icon'],
+        );
+      },
+    );
+  }
+
+  Widget _buildActionCard(String title, IconData icon) {
     return Container(
-      height: 100,
-      padding: const EdgeInsets.all(AppSizes.paddingMedium),
       decoration: BoxDecoration(
         color: AppColors.cardColor,
         borderRadius: BorderRadius.circular(AppSizes.cardRadius),
         border: Border.all(color: AppColors.borderColor),
       ),
+
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(icon, color: AppColors.primaryColor, size: AppSizes.iconLarge),
+          Container(
+            height: 38,
+            width: 38,
+            decoration: BoxDecoration(
+              color: AppColors.primaryColor.withValues(alpha: 0.12),
+              borderRadius: BorderRadius.circular(AppSizes.radiusSmall),
+            ),
+            child: Icon(
+              icon,
+              color: AppColors.primaryColor,
+              size: AppSizes.iconMedium,
+            ),
+          ),
 
           const SizedBox(height: AppSizes.spacingSmall),
 
@@ -186,103 +233,96 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
             title,
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: AppSizes.bodyText,
-              fontWeight: FontWeight.w600,
+              fontSize: AppSizes.smallText,
+              fontWeight: FontWeight.w500,
               color: AppColors.primaryTextColor,
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildCategoryGrid() {
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+
+      itemCount: categories.length,
+
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: AppSizes.spacingMedium,
+        mainAxisSpacing: AppSizes.spacingMedium,
+        childAspectRatio: 0.82,
+      ),
+
+      itemBuilder: (context, index) {
+        return _buildCategoryCard(categories[index]);
+      },
     );
   }
 
   Widget _buildCategoryCard(String category) {
     return Container(
-      width: 120,
-      margin: const EdgeInsets.only(right: AppSizes.spacingMedium),
-      padding: const EdgeInsets.all(AppSizes.paddingSmall),
       decoration: BoxDecoration(
         color: AppColors.cardColor,
         borderRadius: BorderRadius.circular(AppSizes.cardRadius),
         border: Border.all(color: AppColors.borderColor),
       ),
+
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.network(
-            AppImages.placeholder,
-            height: 55,
-            width: 55,
-            fit: BoxFit.cover,
-          ),
-
-          const SizedBox(height: AppSizes.spacingSmall),
-
-          Text(
-            category,
-            textAlign: TextAlign.center,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              fontSize: AppSizes.smallText,
-              color: AppColors.primaryTextColor,
+          Expanded(
+            child: ClipRRect(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(AppSizes.cardRadius),
+                topRight: Radius.circular(AppSizes.cardRadius),
+              ),
+              child: SizedBox(
+                width: double.infinity,
+                child: Image.network(
+                  AppImages.placeholder,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      color: AppColors.inputBackgroundColor,
+                      child: Icon(
+                        Icons.image_outlined,
+                        size: AppSizes.iconLarge,
+                        color: AppColors.hintTextColor,
+                      ),
+                    );
+                  },
+                ),
+              ),
             ),
           ),
-        ],
-      ),
-    );
-  }
 
-  Widget _buildProductCard(String productName, String price) {
-    return Container(
-      padding: const EdgeInsets.all(AppSizes.paddingMedium),
-      decoration: BoxDecoration(
-        color: AppColors.cardColor,
-        borderRadius: BorderRadius.circular(AppSizes.cardRadius),
-        border: Border.all(color: AppColors.borderColor),
-      ),
-      child: Row(
-        children: [
-          Image.network(
-            AppImages.placeholder,
-            height: AppSizes.productImageSize,
-            width: AppSizes.productImageSize,
-            fit: BoxFit.cover,
-          ),
-
-          const SizedBox(width: AppSizes.spacingMedium),
-
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          Padding(
+            padding: const EdgeInsets.all(AppSizes.paddingSmall),
+            child: Row(
               children: [
-                Text(
-                  productName,
-                  style: TextStyle(
-                    fontSize: AppSizes.mediumText,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.primaryTextColor,
+                Expanded(
+                  child: Text(
+                    category,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: AppSizes.smallText,
+                      color: AppColors.primaryTextColor,
+                    ),
                   ),
                 ),
 
-                const SizedBox(height: AppSizes.spacingSmall),
-
-                Text(
-                  price,
-                  style: TextStyle(
-                    fontSize: AppSizes.mediumText,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.priceColor,
-                  ),
+                Icon(
+                  Icons.chevron_right,
+                  size: AppSizes.iconSmall,
+                  color: AppColors.secondaryTextColor,
                 ),
               ],
             ),
-          ),
-
-          Icon(
-            Icons.arrow_forward_ios,
-            size: AppSizes.iconSmall,
-            color: AppColors.secondaryTextColor,
           ),
         ],
       ),
