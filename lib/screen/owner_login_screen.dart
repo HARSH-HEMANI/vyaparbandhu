@@ -223,7 +223,9 @@ class _OwnerLoginScreenState extends State<OwnerLoginScreen> {
       width: double.infinity,
       height: AppSizes.buttonHeight,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushReplacementNamed(context, '/owner-home');
+        },
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primaryColor,
           foregroundColor: AppColors.whiteColor,
