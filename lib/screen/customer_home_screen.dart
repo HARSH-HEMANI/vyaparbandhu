@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../resources/app_colors.dart';
 import '../resources/app_images.dart';
 import '../resources/app_text_size.dart';
@@ -12,7 +13,7 @@ class CustomerHomeScreen extends StatefulWidget {
 }
 
 class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
-  int currentIndex = 0;
+  final int currentIndex = 0;
 
   final List<Map<String, dynamic>> actions = [
     {'title': 'Browse Products', 'icon': Icons.shopping_bag_outlined},
@@ -32,17 +33,56 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
     'Disposables',
   ];
 
+  void _openBrowseProducts() {
+    Navigator.pushNamed(context, '/sub-categories');
+  }
+
+  void _openCart() {
+    // Cart screen will be connected when the customer cart screen is integrated.
+  }
+
+  void _openOrders() {
+    // Customer order screen will be connected when that screen is integrated.
+  }
+
+  void _openProfile() {
+    // Customer profile screen will be connected when that screen is integrated.
+  }
+
+  void _openCategory(String category) {
+    if (category == 'Biscuits, Drinks &\nPacked Food') {
+      Navigator.pushNamed(context, '/sub-categories');
+    } else {
+      Navigator.pushNamed(context, '/product-listing', arguments: category);
+    }
+  }
+
+  void _onBottomNavTap(int index) {
+    if (index == currentIndex) return;
+
+    switch (index) {
+      case 0:
+        break;
+      case 1:
+        _openOrders();
+        break;
+      case 2:
+        _openCart();
+        break;
+      case 3:
+        _openProfile();
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
-
       appBar: AppBar(
         backgroundColor: AppColors.primaryColor,
         elevation: 0,
-
         titleSpacing: AppSizes.paddingLarge,
-
         title: Row(
           children: [
             Container(
@@ -67,9 +107,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                 ),
               ),
             ),
-
             const SizedBox(width: AppSizes.spacingMedium),
-
             Text(
               'Hello, Jay',
               style: TextStyle(
@@ -80,13 +118,11 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
             ),
           ],
         ),
-
         actions: [
           IconButton(
             onPressed: () {},
             icon: const Icon(Icons.search, color: AppColors.whiteColor),
           ),
-
           IconButton(
             onPressed: () {},
             icon: const Icon(
@@ -94,24 +130,18 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
               color: AppColors.whiteColor,
             ),
           ),
-
           const SizedBox(width: AppSizes.paddingSmall),
         ],
       ),
-
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(AppSizes.paddingLarge),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildSearchBar(),
-
             const SizedBox(height: AppSizes.spacingLarge),
-
             _buildActionGrid(),
-
             const SizedBox(height: AppSizes.spacingLarge),
-
             Text(
               'Categories',
               style: TextStyle(
@@ -120,21 +150,14 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                 color: AppColors.primaryTextColor,
               ),
             ),
-
             const SizedBox(height: AppSizes.spacingMedium),
-
             _buildCategoryGrid(),
           ],
         ),
       ),
-
       bottomNavigationBar: BottomNavBar(
         currentIndex: currentIndex,
-        onTap: (index) {
-          setState(() {
-            currentIndex = index;
-          });
-        },
+        onTap: _onBottomNavTap,
       ),
     );
   }
@@ -161,15 +184,12 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
             color: AppColors.hintTextColor,
             fontSize: AppSizes.smallText,
           ),
-
           prefixIcon: Icon(
             Icons.search,
             color: AppColors.secondaryTextColor,
             size: AppSizes.iconMedium,
           ),
-
           border: InputBorder.none,
-
           contentPadding: const EdgeInsets.symmetric(
             vertical: AppSizes.paddingMedium,
             horizontal: AppSizes.paddingSmall,
@@ -183,62 +203,76 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-
       itemCount: actions.length,
-
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: AppSizes.spacingMedium,
         mainAxisSpacing: AppSizes.spacingMedium,
         childAspectRatio: 1.45,
       ),
-
       itemBuilder: (context, index) {
         return _buildActionCard(
-          actions[index]['title'],
-          actions[index]['icon'],
+          actions[index]['title'] as String,
+          actions[index]['icon'] as IconData,
+          index,
         );
       },
     );
   }
 
-  Widget _buildActionCard(String title, IconData icon) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.cardColor,
-        borderRadius: BorderRadius.circular(AppSizes.cardRadius),
-        border: Border.all(color: AppColors.borderColor),
-      ),
-
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            height: 38,
-            width: 38,
-            decoration: BoxDecoration(
-              color: AppColors.primaryColor.withValues(alpha: 0.12),
-              borderRadius: BorderRadius.circular(AppSizes.radiusSmall),
+  Widget _buildActionCard(String title, IconData icon, int index) {
+    return InkWell(
+      onTap: () {
+        switch (index) {
+          case 0:
+            _openBrowseProducts();
+            break;
+          case 1:
+            _openCart();
+            break;
+          case 2:
+            _openOrders();
+            break;
+          case 3:
+            _openProfile();
+            break;
+        }
+      },
+      borderRadius: BorderRadius.circular(AppSizes.cardRadius),
+      child: Container(
+        decoration: BoxDecoration(
+          color: AppColors.cardColor,
+          borderRadius: BorderRadius.circular(AppSizes.cardRadius),
+          border: Border.all(color: AppColors.borderColor),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              height: 38,
+              width: 38,
+              decoration: BoxDecoration(
+                color: AppColors.primaryColor.withValues(alpha: 0.12),
+                borderRadius: BorderRadius.circular(AppSizes.radiusSmall),
+              ),
+              child: Icon(
+                icon,
+                color: AppColors.primaryColor,
+                size: AppSizes.iconMedium,
+              ),
             ),
-            child: Icon(
-              icon,
-              color: AppColors.primaryColor,
-              size: AppSizes.iconMedium,
+            const SizedBox(height: AppSizes.spacingSmall),
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: AppSizes.smallText,
+                fontWeight: FontWeight.w500,
+                color: AppColors.primaryTextColor,
+              ),
             ),
-          ),
-
-          const SizedBox(height: AppSizes.spacingSmall),
-
-          Text(
-            title,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: AppSizes.smallText,
-              fontWeight: FontWeight.w500,
-              color: AppColors.primaryTextColor,
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -247,16 +281,13 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-
       itemCount: categories.length,
-
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: AppSizes.spacingMedium,
         mainAxisSpacing: AppSizes.spacingMedium,
         childAspectRatio: 0.82,
       ),
-
       itemBuilder: (context, index) {
         return _buildCategoryCard(categories[index]);
       },
@@ -264,67 +295,70 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
   }
 
   Widget _buildCategoryCard(String category) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.cardColor,
-        borderRadius: BorderRadius.circular(AppSizes.cardRadius),
-        border: Border.all(color: AppColors.borderColor),
-      ),
-
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(AppSizes.cardRadius),
-                topRight: Radius.circular(AppSizes.cardRadius),
-              ),
-              child: SizedBox(
-                width: double.infinity,
-                child: Image.network(
-                  AppImages.placeholder,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Container(
-                      color: AppColors.inputBackgroundColor,
-                      child: Icon(
-                        Icons.image_outlined,
-                        size: AppSizes.iconLarge,
-                        color: AppColors.hintTextColor,
-                      ),
-                    );
-                  },
+    return InkWell(
+      onTap: () {
+        _openCategory(category);
+      },
+      borderRadius: BorderRadius.circular(AppSizes.cardRadius),
+      child: Container(
+        decoration: BoxDecoration(
+          color: AppColors.cardColor,
+          borderRadius: BorderRadius.circular(AppSizes.cardRadius),
+          border: Border.all(color: AppColors.borderColor),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(AppSizes.cardRadius),
+                  topRight: Radius.circular(AppSizes.cardRadius),
                 ),
-              ),
-            ),
-          ),
-
-          Padding(
-            padding: const EdgeInsets.all(AppSizes.paddingSmall),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    category,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontSize: AppSizes.smallText,
-                      color: AppColors.primaryTextColor,
-                    ),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: Image.network(
+                    AppImages.placeholder,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        color: AppColors.inputBackgroundColor,
+                        child: Icon(
+                          Icons.image_outlined,
+                          size: AppSizes.iconLarge,
+                          color: AppColors.hintTextColor,
+                        ),
+                      );
+                    },
                   ),
                 ),
-
-                Icon(
-                  Icons.chevron_right,
-                  size: AppSizes.iconSmall,
-                  color: AppColors.secondaryTextColor,
-                ),
-              ],
+              ),
             ),
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.all(AppSizes.paddingSmall),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      category,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: AppSizes.smallText,
+                        color: AppColors.primaryTextColor,
+                      ),
+                    ),
+                  ),
+                  Icon(
+                    Icons.chevron_right,
+                    size: AppSizes.iconSmall,
+                    color: AppColors.secondaryTextColor,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
