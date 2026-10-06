@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../resources/app_colors.dart';
 import '../resources/app_images.dart';
 import '../resources/app_text_size.dart';
@@ -27,11 +28,24 @@ class _CustomerCreateAccountScreenState
     super.dispose();
   }
 
+  void _createAccount() {
+    Navigator.pushNamed(
+      context,
+      '/otp-verification',
+    );
+  }
+
+  void _login() {
+    Navigator.pushReplacementNamed(
+      context,
+      '/customer-login',
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
-
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(
@@ -42,9 +56,7 @@ class _CustomerCreateAccountScreenState
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildLogo(),
-
               const SizedBox(height: AppSizes.spacingLarge),
-
               Text(
                 'Welcome!',
                 style: TextStyle(
@@ -53,9 +65,7 @@ class _CustomerCreateAccountScreenState
                   color: AppColors.primaryTextColor,
                 ),
               ),
-
               const SizedBox(height: AppSizes.spacingSmall),
-
               Text(
                 'Create Account',
                 style: TextStyle(
@@ -63,17 +73,13 @@ class _CustomerCreateAccountScreenState
                   color: AppColors.secondaryTextColor,
                 ),
               ),
-
               const SizedBox(height: AppSizes.spacingExtraLarge),
-
               _buildAccountForm(),
-
               const SizedBox(height: AppSizes.spacingSmall),
-
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: _login,
                   child: RichText(
                     text: TextSpan(
                       text: 'Already have an account? ',
@@ -94,9 +100,7 @@ class _CustomerCreateAccountScreenState
                   ),
                 ),
               ),
-
               const SizedBox(height: AppSizes.spacingSmall),
-
               _buildCreateAccountButton(),
             ],
           ),
@@ -134,17 +138,13 @@ class _CustomerCreateAccountScreenState
               color: AppColors.secondaryTextColor,
             ),
           ),
-
           const SizedBox(height: AppSizes.spacingSmall),
-
           _buildTextField(
             controller: nameController,
             hintText: 'Enter your name',
             icon: Icons.person_outline,
           ),
-
           const SizedBox(height: AppSizes.spacingMedium),
-
           Text(
             'Email Address',
             style: TextStyle(
@@ -152,18 +152,14 @@ class _CustomerCreateAccountScreenState
               color: AppColors.secondaryTextColor,
             ),
           ),
-
           const SizedBox(height: AppSizes.spacingSmall),
-
           _buildTextField(
             controller: emailController,
             hintText: 'Enter your email',
             icon: Icons.email_outlined,
             keyboardType: TextInputType.emailAddress,
           ),
-
           const SizedBox(height: AppSizes.spacingMedium),
-
           Text(
             'Password',
             style: TextStyle(
@@ -171,9 +167,7 @@ class _CustomerCreateAccountScreenState
               color: AppColors.secondaryTextColor,
             ),
           ),
-
           const SizedBox(height: AppSizes.spacingSmall),
-
           _buildTextField(
             controller: passwordController,
             hintText: 'Enter your password',
@@ -256,7 +250,7 @@ class _CustomerCreateAccountScreenState
       width: double.infinity,
       height: AppSizes.buttonHeight,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: _createAccount,
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primaryColor,
           foregroundColor: AppColors.whiteColor,
