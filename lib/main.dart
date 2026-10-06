@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
+import 'screen/customer_home_screen.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(const VyaparBandhuApp());
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class VyaparBandhuApp extends StatelessWidget {
+  const VyaparBandhuApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'VyaparBandhu',
+
+      theme: ThemeData(
+        fontFamily: 'Roboto',
+        scaffoldBackgroundColor: Colors.white,
+        useMaterial3: true,
       ),
+
+      home: const CustomerHomeScreen(),
     );
   }
 }
