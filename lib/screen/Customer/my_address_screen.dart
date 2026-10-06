@@ -39,8 +39,23 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
       return;
     }
 
-    // Other customer navigation screens
-    // will be connected with the main navigation flow.
+    switch (index) {
+      case 0:
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          '/customer-home',
+          (route) => false,
+        );
+        break;
+      case 1:
+        Navigator.pushReplacementNamed(context, '/customer-orders');
+        break;
+      case 2:
+        Navigator.pushReplacementNamed(context, '/customer-cart');
+        break;
+      case 3:
+        break;
+    }
   }
 
   // ============================================================

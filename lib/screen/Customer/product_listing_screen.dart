@@ -6,7 +6,8 @@ import '../../resources/app_text_size.dart';
 import '../../widgets/bottom_nav_bar.dart';
 
 class ProductListingScreen extends StatefulWidget {
-  const ProductListingScreen({super.key});
+  final String? category;
+  const ProductListingScreen({super.key, this.category});
 
   @override
   State<ProductListingScreen> createState() =>
@@ -69,17 +70,24 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
   ];
 
   void _onBottomNavTap(int index) {
-    if (index == 0) {
-      Navigator.popUntil(
-        context,
-        (route) => route.isFirst,
-      );
-      return;
+    switch (index) {
+      case 0:
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          '/customer-home',
+          (route) => false,
+        );
+        break;
+      case 1:
+        Navigator.pushNamed(context, '/customer-orders');
+        break;
+      case 2:
+        Navigator.pushNamed(context, '/customer-cart');
+        break;
+      case 3:
+        Navigator.pushNamed(context, '/customer-profile');
+        break;
     }
-
-    // Orders, Cart and Profile navigation
-    // will be connected with the existing
-    // customer navigation flow.
   }
 
   @override
@@ -109,6 +117,10 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
   // ============================================================
 
   Widget _buildAppBar() {
+    final String title = widget.category ??
+        (ModalRoute.of(context)?.settings.arguments as String?) ??
+        'Biscuits & Cookies';
+
     return Container(
       height: AppSizes.appBarHeight,
       width: double.infinity,
@@ -125,14 +137,24 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
               size: AppSizes.iconMedium,
             ),
           ),
-          const Expanded(
+          Expanded(
             child: Text(
-              'Biscuits & Cookies',
-              style: TextStyle(
+              title,
+              style: const TextStyle(
                 color: AppColors.whiteColor,
                 fontSize: AppSizes.headingText,
                 fontWeight: FontWeight.w600,
               ),
+            ),
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/customer-cart');
+            },
+            icon: const Icon(
+              Icons.shopping_cart_outlined,
+              color: AppColors.whiteColor,
+              size: AppSizes.iconMedium,
             ),
           ),
         ],
@@ -349,38 +371,50 @@ class _ProductCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(
         AppSizes.cardRadius,
       ),
-      child: Container(
-        height: 106,
-        padding: const EdgeInsets.all(
-          AppSizes.paddingSmall,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(
+          AppSizes.cardRadius,
         ),
-        decoration: BoxDecoration(
-          color: AppColors.cardColor,
-          borderRadius: BorderRadius.circular(
-            AppSizes.cardRadius,
+        onTap: () {
+          Navigator.pushNamed(
+            context,
+            '/customer-product-details',
+            arguments: product.name,
+          );
+        },
+        child: Container(
+          height: 106,
+          padding: const EdgeInsets.all(
+            AppSizes.paddingSmall,
           ),
-          border: Border.all(
-            color: AppColors.borderColor,
+          decoration: BoxDecoration(
+            color: AppColors.cardColor,
+            borderRadius: BorderRadius.circular(
+              AppSizes.cardRadius,
+            ),
+            border: Border.all(
+              color: AppColors.borderColor,
+            ),
           ),
-        ),
-        child: Row(
-          children: [
-            _buildPlaceholderImage(),
+          child: Row(
+            children: [
+              _buildPlaceholderImage(),
 
-            const SizedBox(
-              width: AppSizes.spacingMedium,
-            ),
+              const SizedBox(
+                width: AppSizes.spacingMedium,
+              ),
 
-            Expanded(
-              child: _buildProductInformation(),
-            ),
+              Expanded(
+                child: _buildProductInformation(),
+              ),
 
-            const SizedBox(
-              width: AppSizes.spacingSmall,
-            ),
+              const SizedBox(
+                width: AppSizes.spacingSmall,
+              ),
 
-            _buildAddButton(),
-          ],
+              _buildAddButton(),
+            ],
+          ),
         ),
       ),
     );

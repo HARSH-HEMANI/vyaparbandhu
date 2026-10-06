@@ -62,6 +62,18 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    color: AppColors.primaryTextColor,
+                  ),
+                ),
+              ),
               _buildLogo(),
               const SizedBox(height: AppSizes.spacingExtraLarge),
               Text(

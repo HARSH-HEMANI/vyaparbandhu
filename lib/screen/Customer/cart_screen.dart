@@ -79,8 +79,23 @@ class _CartScreenState extends State<CartScreen> {
       return;
     }
 
-    // Other customer navigation screens
-    // will be connected with the main navigation flow.
+    switch (index) {
+      case 0:
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          '/customer-home',
+          (route) => false,
+        );
+        break;
+      case 1:
+        Navigator.pushReplacementNamed(context, '/customer-orders');
+        break;
+      case 2:
+        break;
+      case 3:
+        Navigator.pushReplacementNamed(context, '/customer-profile');
+        break;
+    }
   }
 
   void _increaseQuantity(int index) {
@@ -523,20 +538,7 @@ class _CartScreenState extends State<CartScreen> {
           onPressed: _cartItems.isEmpty
               ? null
               : () {
-                  ScaffoldMessenger.of(context)
-                    ..hideCurrentSnackBar()
-                    ..showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                          'Order placed successfully',
-                        ),
-                        duration: Duration(
-                          milliseconds: 1200,
-                        ),
-                        behavior:
-                            SnackBarBehavior.floating,
-                      ),
-                    );
+                  Navigator.pushNamed(context, '/customer-order-status');
                 },
           icon: const Icon(
             Icons.check_circle_outline,

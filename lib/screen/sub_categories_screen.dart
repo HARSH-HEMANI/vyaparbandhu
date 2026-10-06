@@ -32,15 +32,20 @@ class _SubCategoriesScreenState extends State<SubCategoriesScreen> {
 
     switch (index) {
       case 0:
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          '/customer-home',
+          (route) => false,
+        );
         break;
       case 1:
-        setState(() {});
+        Navigator.pushReplacementNamed(context, '/customer-orders');
         break;
       case 2:
-        setState(() {});
+        Navigator.pushReplacementNamed(context, '/customer-cart');
         break;
       case 3:
-        setState(() {});
+        Navigator.pushReplacementNamed(context, '/customer-profile');
         break;
     }
   }
@@ -57,6 +62,16 @@ class _SubCategoriesScreenState extends State<SubCategoriesScreen> {
         backgroundColor: AppColors.primaryColor,
         elevation: 0,
         toolbarHeight: 64,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+            color: AppColors.whiteColor,
+            size: AppSizes.iconMedium,
+          ),
+        ),
         title: const Text(
           'Biscuits, Drinks &\nPacked Food',
           style: TextStyle(

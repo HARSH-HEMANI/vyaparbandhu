@@ -20,6 +20,7 @@ import 'screen/help_support_screen.dart';
 import 'screen/owner_order_success_screen.dart';
 import 'screen/product_details_screen.dart';
 import 'screen/product_listing_screen.dart';
+import 'screen/sub_categories_screen.dart' as owner_sub_categories;
 
 // ============================================================
 // CUSTOMER AUTHENTICATION
@@ -96,8 +97,18 @@ class VyaparBandhuApp extends StatelessWidget {
         '/customer-sub-categories': (context) =>
             const customer_sub_categories.SubCategoriesScreen(),
 
-        '/customer-product-listing': (context) =>
-            const customer_product_listing.ProductListingScreen(),
+        '/customer-product-listing': (context) {
+          final arguments = ModalRoute.of(context)?.settings.arguments;
+          String? category;
+          if (arguments is String) {
+            category = arguments;
+          } else if (arguments is Map) {
+            category = arguments['category'] as String?;
+          }
+          return customer_product_listing.ProductListingScreen(
+            category: category,
+          );
+        },
 
         '/customer-product-details': (context) =>
             const customer_product_details.ProductDetailsScreen(),
@@ -164,6 +175,8 @@ class VyaparBandhuApp extends StatelessWidget {
         },
 
         '/product-details': (context) => const ProductDetailsScreen(),
+        '/sub-categories': (context) =>
+            const owner_sub_categories.SubCategoriesScreen(),
 
         // ========================================================
         // OWNER VENDORS

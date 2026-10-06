@@ -41,12 +41,14 @@ class _OwnerOrderDetailsScreenState extends State<OwnerOrderDetailsScreen> {
     ScaffoldMessenger.of(
       context,
     ).showSnackBar(const SnackBar(content: Text('Order cancelled')));
+    Navigator.pop(context);
   }
 
   void _completeOrder() {
     ScaffoldMessenger.of(
       context,
     ).showSnackBar(const SnackBar(content: Text('Order marked as completed')));
+    Navigator.pop(context);
   }
 
   void _onBottomNavTap(int index) {

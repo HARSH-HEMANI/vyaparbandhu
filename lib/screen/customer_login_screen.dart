@@ -93,7 +93,9 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/otp-verification');
+                  },
                   child: Text(
                     'Forgot Password?',
                     style: TextStyle(

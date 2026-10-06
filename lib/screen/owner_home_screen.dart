@@ -49,9 +49,9 @@ class _OwnerHomeScreenState extends State<OwnerHomeScreen> {
   ];
 
   void _onBottomNavTap(int index) {
-    setState(() {
-      currentIndex = index;
-    });
+    if (index == currentIndex) {
+      return;
+    }
 
     switch (index) {
       case 0:
@@ -182,8 +182,17 @@ class _OwnerHomeScreenState extends State<OwnerHomeScreen> {
         borderRadius: BorderRadius.circular(AppSizes.inputRadius),
         border: Border.all(color: AppColors.borderColor),
       ),
-      child: const TextField(
-        decoration: InputDecoration(
+      child: TextField(
+        onSubmitted: (query) {
+          if (query.trim().isNotEmpty) {
+            Navigator.pushNamed(
+              context,
+              '/product-listing',
+              arguments: {'category': query.trim(), 'isOwner': true},
+            );
+          }
+        },
+        decoration: const InputDecoration(
           hintText: 'Search products, brands or categories',
           hintStyle: TextStyle(
             color: AppColors.hintTextColor,

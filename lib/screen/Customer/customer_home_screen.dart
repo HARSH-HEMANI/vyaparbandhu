@@ -54,10 +54,14 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
   }
 
   void _openCategory(String category) {
-    if (category == 'Biscuits, Drinks &\nPacked Food') {
+    if (category.contains('Biscuits')) {
       Navigator.pushNamed(context, '/customer-sub-categories');
     } else {
-      Navigator.pushNamed(context, '/customer-product-listing');
+      Navigator.pushNamed(
+        context,
+        '/customer-product-listing',
+        arguments: category.replaceAll('\n', ' '),
+      );
     }
   }
 
@@ -136,13 +140,17 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
 
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, '/customer-product-listing');
+            },
             icon: const Icon(Icons.search, color: AppColors.whiteColor),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, '/customer-cart');
+            },
             icon: const Icon(
-              Icons.notifications_none,
+              Icons.shopping_cart_outlined,
               color: AppColors.whiteColor,
             ),
           ),
@@ -212,6 +220,15 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
         ],
       ),
       child: TextField(
+        onSubmitted: (query) {
+          if (query.trim().isNotEmpty) {
+            Navigator.pushNamed(
+              context,
+              '/customer-product-listing',
+              arguments: query.trim(),
+            );
+          }
+        },
         decoration: InputDecoration(
           hintText: 'Search products, brands or categories',
           hintStyle: TextStyle(

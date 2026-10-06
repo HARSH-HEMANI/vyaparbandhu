@@ -16,7 +16,7 @@ class ProfileScreen extends StatelessWidget {
         top: false,
         child: Column(
           children: [
-            _buildAppBar(),
+            _buildAppBar(context),
             Expanded(
               child: _buildContent(context),
             ),
@@ -36,7 +36,7 @@ class ProfileScreen extends StatelessWidget {
   // APP BAR
   // ============================================================
 
-  Widget _buildAppBar() {
+  Widget _buildAppBar(BuildContext context) {
     return Container(
       height: AppSizes.appBarHeight,
       width: double.infinity,
@@ -44,7 +44,9 @@ class ProfileScreen extends StatelessWidget {
       child: Row(
         children: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pop(context);
+            },
             icon: const Icon(
               Icons.arrow_back,
               color: AppColors.whiteColor,
@@ -196,10 +198,7 @@ class ProfileScreen extends StatelessWidget {
           icon: Icons.person_outline,
           title: AppStrings.manageProfile,
           onTap: () {
-            _showMessage(
-              context,
-              AppStrings.manageProfile,
-            );
+            Navigator.pushNamed(context, '/customer-manage-profile');
           },
         ),
 
@@ -211,10 +210,7 @@ class ProfileScreen extends StatelessWidget {
           icon: Icons.receipt_long_outlined,
           title: AppStrings.orderHistory,
           onTap: () {
-            _showMessage(
-              context,
-              AppStrings.orderHistory,
-            );
+            Navigator.pushNamed(context, '/customer-orders');
           },
         ),
 
@@ -226,10 +222,7 @@ class ProfileScreen extends StatelessWidget {
           icon: Icons.location_on_outlined,
           title: AppStrings.myAddress,
           onTap: () {
-            _showMessage(
-              context,
-              AppStrings.myAddress,
-            );
+            Navigator.pushNamed(context, '/customer-address');
           },
         ),
 
@@ -241,10 +234,7 @@ class ProfileScreen extends StatelessWidget {
           icon: Icons.info_outline,
           title: AppStrings.aboutVyaparBandhu,
           onTap: () {
-            _showMessage(
-              context,
-              AppStrings.aboutVyaparBandhu,
-            );
+            Navigator.pushNamed(context, '/about');
           },
         ),
 
@@ -256,10 +246,7 @@ class ProfileScreen extends StatelessWidget {
           icon: Icons.help_outline,
           title: AppStrings.helpSupport,
           onTap: () {
-            _showMessage(
-              context,
-              AppStrings.helpSupport,
-            );
+            Navigator.pushNamed(context, '/help-support');
           },
         ),
       ],
@@ -336,21 +323,11 @@ class ProfileScreen extends StatelessWidget {
             TextButton(
               onPressed: () {
                 Navigator.pop(dialogContext);
-
-                ScaffoldMessenger.of(context)
-                  ..hideCurrentSnackBar()
-                  ..showSnackBar(
-                    const SnackBar(
-                      content: Text(
-                        'Logged out successfully',
-                      ),
-                      duration: Duration(
-                        milliseconds: 1200,
-                      ),
-                      behavior:
-                          SnackBarBehavior.floating,
-                    ),
-                  );
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  '/customer-login',
+                  (route) => false,
+                );
               },
               child: const Text(
                 AppStrings.logOut,
@@ -367,29 +344,6 @@ class ProfileScreen extends StatelessWidget {
   }
 
   // ============================================================
-  // MESSAGE
-  // ============================================================
-
-  void _showMessage(
-    BuildContext context,
-    String message,
-  ) {
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(
-        SnackBar(
-          content: Text(
-            '$message screen will be connected next.',
-          ),
-          duration: const Duration(
-            milliseconds: 1200,
-          ),
-          behavior: SnackBarBehavior.floating,
-        ),
-      );
-  }
-
-  // ============================================================
   // BOTTOM NAVIGATION
   // ============================================================
 
@@ -401,8 +355,23 @@ class ProfileScreen extends StatelessWidget {
       return;
     }
 
-    // Other customer navigation screens
-    // will be connected with the main navigation flow.
+    switch (index) {
+      case 0:
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          '/customer-home',
+          (route) => false,
+        );
+        break;
+      case 1:
+        Navigator.pushReplacementNamed(context, '/customer-orders');
+        break;
+      case 2:
+        Navigator.pushReplacementNamed(context, '/customer-cart');
+        break;
+      case 3:
+        break;
+    }
   }
 }
 

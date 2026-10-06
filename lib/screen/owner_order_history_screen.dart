@@ -110,9 +110,20 @@ class _OwnerOrderHistoryScreenState extends State<OwnerOrderHistoryScreen> {
         currentIndex: currentIndex,
         isOwner: true,
         onTap: (index) {
-          setState(() {
-            currentIndex = index;
-          });
+          if (index == currentIndex) return;
+          switch (index) {
+            case 0:
+              Navigator.pushReplacementNamed(context, '/owner-home');
+              break;
+            case 1:
+              break;
+            case 2:
+              Navigator.pushReplacementNamed(context, '/vendor-list');
+              break;
+            case 3:
+              Navigator.pushReplacementNamed(context, '/owner-profile');
+              break;
+          }
         },
       ),
     );
@@ -356,7 +367,9 @@ class _OwnerOrderHistoryScreenState extends State<OwnerOrderHistoryScreen> {
             children: [
               Expanded(
                 child: OutlinedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/vendor-order');
+                  },
                   style: OutlinedButton.styleFrom(
                     foregroundColor: AppColors.primaryColor,
                     minimumSize: const Size(double.infinity, 40),
@@ -381,7 +394,9 @@ class _OwnerOrderHistoryScreenState extends State<OwnerOrderHistoryScreen> {
 
               Expanded(
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/order-details');
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primaryColor,
                     foregroundColor: AppColors.whiteColor,

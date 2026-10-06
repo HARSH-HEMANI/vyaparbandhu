@@ -25,16 +25,24 @@ class _ProductDetailsScreenState
   ];
 
   void _onBottomNavTap(int index) {
-    if (index == 0) {
-      Navigator.popUntil(
-        context,
-        (route) => route.isFirst,
-      );
-      return;
+    switch (index) {
+      case 0:
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          '/customer-home',
+          (route) => false,
+        );
+        break;
+      case 1:
+        Navigator.pushNamed(context, '/customer-orders');
+        break;
+      case 2:
+        Navigator.pushNamed(context, '/customer-cart');
+        break;
+      case 3:
+        Navigator.pushNamed(context, '/customer-profile');
+        break;
     }
-
-    // Orders, Cart and Profile navigation
-    // will be connected with the customer navigation flow.
   }
 
   @override
@@ -92,6 +100,17 @@ class _ProductDetailsScreenState
                 fontSize: AppSizes.headingText,
                 fontWeight: FontWeight.w600,
               ),
+            ),
+          ),
+
+          IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/customer-cart');
+            },
+            icon: const Icon(
+              Icons.shopping_cart_outlined,
+              color: AppColors.whiteColor,
+              size: AppSizes.iconMedium,
             ),
           ),
         ],
@@ -440,14 +459,21 @@ class _ProductDetailsScreenState
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
-              const SnackBar(
-                content: Text(
-                  'Good Day Cashew added to cart',
+              SnackBar(
+                content: const Text(
+                  'Item added to cart',
                 ),
-                duration: Duration(
-                  milliseconds: 1200,
+                duration: const Duration(
+                  milliseconds: 2000,
                 ),
                 behavior: SnackBarBehavior.floating,
+                action: SnackBarAction(
+                  label: 'VIEW CART',
+                  textColor: Colors.amber,
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/customer-cart');
+                  },
+                ),
               ),
             );
         },

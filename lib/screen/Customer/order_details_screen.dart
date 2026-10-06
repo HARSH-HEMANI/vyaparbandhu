@@ -404,8 +404,23 @@ class OrderDetailsScreen extends StatelessWidget {
       return;
     }
 
-    // Other customer navigation screens
-    // will be connected with the main navigation flow.
+    switch (index) {
+      case 0:
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          '/customer-home',
+          (route) => false,
+        );
+        break;
+      case 1:
+        break;
+      case 2:
+        Navigator.pushReplacementNamed(context, '/customer-cart');
+        break;
+      case 3:
+        Navigator.pushReplacementNamed(context, '/customer-profile');
+        break;
+    }
   }
 }
 

@@ -94,7 +94,7 @@ class OrderStatusScreen extends StatelessWidget {
             height: AppSizes.spacingExtraLarge,
           ),
 
-          _buildContinueShoppingButton(),
+          _buildContinueShoppingButton(context),
 
           const SizedBox(
             height: AppSizes.spacingExtraLarge,
@@ -236,15 +236,17 @@ class OrderStatusScreen extends StatelessWidget {
   // CONTINUE SHOPPING
   // ============================================================
 
-  Widget _buildContinueShoppingButton() {
+  Widget _buildContinueShoppingButton(BuildContext context) {
     return SizedBox(
       width: double.infinity,
       height: AppSizes.buttonHeight,
       child: OutlinedButton(
         onPressed: () {
-          // Shopping/home navigation will be connected
-          // when the complete customer navigation flow
-          // is wired together.
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            '/customer-home',
+            (route) => false,
+          );
         },
         style: OutlinedButton.styleFrom(
           foregroundColor: AppColors.primaryColor,

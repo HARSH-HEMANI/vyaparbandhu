@@ -49,7 +49,11 @@ class SubCategoriesScreen extends StatelessWidget {
   }
 
   void _openProductListing(BuildContext context, String category) {
-    Navigator.pushNamed(context, '/customer-product-listing');
+    Navigator.pushNamed(
+      context,
+      '/customer-product-listing',
+      arguments: category,
+    );
   }
 
   void _onBottomNavTap(BuildContext context, int index) {

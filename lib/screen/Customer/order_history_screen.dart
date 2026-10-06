@@ -60,8 +60,23 @@ class _OrderHistoryScreenState
       return;
     }
 
-    // Other customer navigation screens
-    // will be connected here.
+    switch (index) {
+      case 0:
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          '/customer-home',
+          (route) => false,
+        );
+        break;
+      case 1:
+        break;
+      case 2:
+        Navigator.pushReplacementNamed(context, '/customer-cart');
+        break;
+      case 3:
+        Navigator.pushReplacementNamed(context, '/customer-profile');
+        break;
+    }
   }
 
   @override
@@ -306,35 +321,27 @@ class _OrderHistoryScreenState
   // ============================================================
 
   void _handlePrimaryAction(_Order order) {
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(
-        SnackBar(
-          content: Text(
-            '${order.action}: ${order.orderNumber}',
-          ),
-          duration: const Duration(
-            milliseconds: 1200,
-          ),
-          behavior: SnackBarBehavior.floating,
-        ),
+    if (order.action == 'Track Order') {
+      Navigator.pushNamed(context, '/customer-order-status');
+    } else if (order.action == 'Reorder') {
+      Navigator.pushNamed(context, '/customer-cart');
+    } else if (order.action == 'Help') {
+      Navigator.pushNamed(context, '/help-support');
+    } else {
+      Navigator.pushNamed(
+        context,
+        '/customer-order-details',
+        arguments: order.orderNumber,
       );
+    }
   }
 
   void _viewOrderDetails(_Order order) {
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(
-        SnackBar(
-          content: Text(
-            'Opening ${order.orderNumber}',
-          ),
-          duration: const Duration(
-            milliseconds: 1200,
-          ),
-          behavior: SnackBarBehavior.floating,
-        ),
-      );
+    Navigator.pushNamed(
+      context,
+      '/customer-order-details',
+      arguments: order.orderNumber,
+    );
   }
 }
 
