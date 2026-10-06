@@ -57,6 +57,39 @@ class _CustomerManagementScreenState extends State<CustomerManagementScreen> {
     }).toList();
   }
 
+  void _viewCustomerDetails(Map<String, dynamic> customer) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Viewing details for ${customer['name']}')),
+    );
+  }
+
+  void _updateCustomerStatus(Map<String, dynamic> customer) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Update status for ${customer['name']}')),
+    );
+  }
+
+  void _onBottomNavTap(int index) {
+    if (index == currentIndex) {
+      return;
+    }
+
+    switch (index) {
+      case 0:
+        Navigator.pushReplacementNamed(context, '/owner-home');
+        break;
+      case 1:
+        Navigator.pushReplacementNamed(context, '/order-history');
+        break;
+      case 2:
+        Navigator.pushReplacementNamed(context, '/vendor-list');
+        break;
+      case 3:
+        Navigator.pushReplacementNamed(context, '/owner-profile');
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,11 +115,7 @@ class _CustomerManagementScreenState extends State<CustomerManagementScreen> {
       bottomNavigationBar: BottomNavBar(
         currentIndex: currentIndex,
         isOwner: true,
-        onTap: (index) {
-          setState(() {
-            currentIndex = index;
-          });
-        },
+        onTap: _onBottomNavTap,
       ),
     );
   }
@@ -271,7 +300,9 @@ class _CustomerManagementScreenState extends State<CustomerManagementScreen> {
             children: [
               Expanded(
                 child: OutlinedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    _viewCustomerDetails(customer);
+                  },
                   style: OutlinedButton.styleFrom(
                     foregroundColor: AppColors.primaryColor,
                     minimumSize: const Size(double.infinity, 40),
@@ -296,7 +327,9 @@ class _CustomerManagementScreenState extends State<CustomerManagementScreen> {
 
               Expanded(
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    _updateCustomerStatus(customer);
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primaryColor,
                     foregroundColor: AppColors.whiteColor,
