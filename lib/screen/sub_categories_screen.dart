@@ -12,7 +12,7 @@ class SubCategoriesScreen extends StatefulWidget {
 }
 
 class _SubCategoriesScreenState extends State<SubCategoriesScreen> {
-  int _currentIndex = 0;
+  final int _currentIndex = 0;
 
   final List<Map<String, dynamic>> _categories = [
     {'name': 'Biscuits & Cookies', 'icon': Icons.cookie_outlined},
@@ -28,15 +28,25 @@ class _SubCategoriesScreenState extends State<SubCategoriesScreen> {
   ];
 
   void _onBottomNavTap(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
+    if (index == _currentIndex) return;
+
+    switch (index) {
+      case 0:
+        break;
+      case 1:
+        setState(() {});
+        break;
+      case 2:
+        setState(() {});
+        break;
+      case 3:
+        setState(() {});
+        break;
+    }
   }
 
-  void _showMessage(String categoryName) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text('$categoryName selected')));
+  void _openProductListing(String categoryName) {
+    Navigator.pushNamed(context, '/product-listing', arguments: categoryName);
   }
 
   @override
@@ -134,7 +144,7 @@ class _SubCategoriesScreenState extends State<SubCategoriesScreen> {
       ),
       child: InkWell(
         onTap: () {
-          _showMessage(category['name'] as String);
+          _openProductListing(category['name'] as String);
         },
         borderRadius: BorderRadius.circular(AppSizes.radiusMedium),
         child: Padding(
