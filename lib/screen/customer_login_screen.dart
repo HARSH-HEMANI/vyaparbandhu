@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../resources/app_colors.dart';
 import '../resources/app_images.dart';
 import '../resources/app_text_size.dart';
@@ -23,11 +24,22 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
     super.dispose();
   }
 
+  void _login() {
+    Navigator.pushReplacementNamed(context, '/customer-home');
+  }
+
+  void _createAccount() {
+    Navigator.pushNamed(context, '/customer-create-account');
+  }
+
+  void _ownerLogin() {
+    Navigator.pushReplacementNamed(context, '/owner-login');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
-
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(
@@ -38,9 +50,7 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildLogo(),
-
               const SizedBox(height: AppSizes.spacingLarge),
-
               Text(
                 'Welcome Back!',
                 style: TextStyle(
@@ -49,9 +59,7 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
                   color: AppColors.primaryTextColor,
                 ),
               ),
-
               const SizedBox(height: AppSizes.spacingSmall),
-
               Text(
                 'Sign in to continue shopping',
                 style: TextStyle(
@@ -59,13 +67,9 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
                   color: AppColors.secondaryTextColor,
                 ),
               ),
-
               const SizedBox(height: AppSizes.spacingExtraLarge),
-
               _buildLoginForm(),
-
               const SizedBox(height: AppSizes.spacingSmall),
-
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
@@ -80,24 +84,16 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
                   ),
                 ),
               ),
-
               const SizedBox(height: AppSizes.spacingSmall),
-
               _buildLoginButton(),
-
               const SizedBox(height: AppSizes.spacingLarge),
-
               _buildOrDivider(),
-
               const SizedBox(height: AppSizes.spacingLarge),
-
               _buildCreateAccountButton(),
-
               const SizedBox(height: AppSizes.spacingLarge),
-
               Center(
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: _ownerLogin,
                   child: Text(
                     'Owner? Login',
                     style: TextStyle(
@@ -144,18 +140,14 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
               color: AppColors.secondaryTextColor,
             ),
           ),
-
           const SizedBox(height: AppSizes.spacingSmall),
-
           _buildTextField(
             controller: emailController,
             hintText: 'Enter your email',
             icon: Icons.email_outlined,
             keyboardType: TextInputType.emailAddress,
           ),
-
           const SizedBox(height: AppSizes.spacingMedium),
-
           Text(
             'Password',
             style: TextStyle(
@@ -163,9 +155,7 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
               color: AppColors.secondaryTextColor,
             ),
           ),
-
           const SizedBox(height: AppSizes.spacingSmall),
-
           _buildTextField(
             controller: passwordController,
             hintText: 'Enter your password',
@@ -205,45 +195,35 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
         controller: controller,
         keyboardType: keyboardType,
         obscureText: obscureText,
-
         style: TextStyle(
           fontSize: AppSizes.bodyText,
           color: AppColors.primaryTextColor,
         ),
-
         decoration: InputDecoration(
           filled: true,
           fillColor: AppColors.inputBackgroundColor,
-
           hintText: hintText,
-
           hintStyle: TextStyle(
             fontSize: AppSizes.bodyText,
             color: AppColors.hintTextColor,
           ),
-
           prefixIcon: Icon(
             icon,
             color: AppColors.secondaryTextColor,
             size: AppSizes.iconMedium,
           ),
-
           suffixIcon: suffixIcon,
-
           contentPadding: const EdgeInsets.symmetric(
             horizontal: AppSizes.paddingMedium,
           ),
-
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(AppSizes.inputRadius),
             borderSide: BorderSide(color: AppColors.borderColor),
           ),
-
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(AppSizes.inputRadius),
             borderSide: BorderSide(color: AppColors.borderColor),
           ),
-
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(AppSizes.inputRadius),
             borderSide: BorderSide(color: AppColors.primaryColor),
@@ -258,7 +238,7 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
       width: double.infinity,
       height: AppSizes.buttonHeight,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: _login,
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primaryColor,
           foregroundColor: AppColors.whiteColor,
@@ -277,9 +257,7 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
                 fontWeight: FontWeight.w600,
               ),
             ),
-
             const SizedBox(width: AppSizes.spacingMedium),
-
             const Icon(Icons.arrow_forward, size: AppSizes.iconMedium),
           ],
         ),
@@ -291,7 +269,6 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
     return Row(
       children: [
         Expanded(child: Divider(color: AppColors.borderColor)),
-
         Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: AppSizes.paddingMedium,
@@ -305,7 +282,6 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
             ),
           ),
         ),
-
         Expanded(child: Divider(color: AppColors.borderColor)),
       ],
     );
@@ -316,7 +292,7 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
       width: double.infinity,
       height: AppSizes.buttonHeight,
       child: OutlinedButton(
-        onPressed: () {},
+        onPressed: _createAccount,
         style: OutlinedButton.styleFrom(
           foregroundColor: AppColors.secondaryTextColor,
           side: BorderSide(color: AppColors.borderColor),
