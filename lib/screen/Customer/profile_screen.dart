@@ -13,13 +13,10 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       body: SafeArea(
-        top: false,
         child: Column(
           children: [
             _buildAppBar(context),
-            Expanded(
-              child: _buildContent(context),
-            ),
+            Expanded(child: _buildContent(context)),
           ],
         ),
       ),
@@ -84,15 +81,11 @@ class ProfileScreen extends StatelessWidget {
       children: [
         _buildProfileHeader(),
 
-        const SizedBox(
-          height: AppSizes.spacingLarge,
-        ),
+        const SizedBox(height: AppSizes.spacingLarge),
 
         _buildMenuItems(context),
 
-        const SizedBox(
-          height: AppSizes.spacingExtraLarge,
-        ),
+        const SizedBox(height: AppSizes.spacingExtraLarge),
 
         _buildLogoutButton(context),
       ],
@@ -106,22 +99,14 @@ class ProfileScreen extends StatelessWidget {
   Widget _buildProfileHeader() {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(
-        AppSizes.paddingMedium,
-      ),
+      padding: const EdgeInsets.all(AppSizes.paddingMedium),
       decoration: BoxDecoration(
         color: AppColors.cardColor,
-        borderRadius: BorderRadius.circular(
-          AppSizes.cardRadius,
-        ),
-        border: Border.all(
-          color: AppColors.borderColor,
-        ),
+        borderRadius: BorderRadius.circular(AppSizes.cardRadius),
+        border: Border.all(color: AppColors.borderColor),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(
-              alpha: 0.05,
-            ),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 5,
             offset: const Offset(0, 2),
           ),
@@ -131,14 +116,11 @@ class ProfileScreen extends StatelessWidget {
         children: [
           _buildProfileImage(),
 
-          const SizedBox(
-            width: AppSizes.spacingMedium,
-          ),
+          const SizedBox(width: AppSizes.spacingMedium),
 
           Expanded(
             child: Column(
-              crossAxisAlignment:
-                  CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
                   'SuperMart',
@@ -149,9 +131,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
 
-                const SizedBox(
-                  height: 4,
-                ),
+                const SizedBox(height: 4),
 
                 Text(
                   'jay.email@gmail.com',
@@ -175,9 +155,7 @@ class ProfileScreen extends StatelessWidget {
       decoration: BoxDecoration(
         color: const Color(0xFFF8F8F8),
         shape: BoxShape.circle,
-        border: Border.all(
-          color: AppColors.borderColor,
-        ),
+        border: Border.all(color: AppColors.borderColor),
       ),
       child: const Icon(
         Icons.person_outline,
@@ -202,9 +180,7 @@ class ProfileScreen extends StatelessWidget {
           },
         ),
 
-        const SizedBox(
-          height: AppSizes.spacingSmall,
-        ),
+        const SizedBox(height: AppSizes.spacingSmall),
 
         _ProfileMenuCard(
           icon: Icons.receipt_long_outlined,
@@ -214,9 +190,7 @@ class ProfileScreen extends StatelessWidget {
           },
         ),
 
-        const SizedBox(
-          height: AppSizes.spacingSmall,
-        ),
+        const SizedBox(height: AppSizes.spacingSmall),
 
         _ProfileMenuCard(
           icon: Icons.location_on_outlined,
@@ -226,9 +200,7 @@ class ProfileScreen extends StatelessWidget {
           },
         ),
 
-        const SizedBox(
-          height: AppSizes.spacingSmall,
-        ),
+        const SizedBox(height: AppSizes.spacingSmall),
 
         _ProfileMenuCard(
           icon: Icons.info_outline,
@@ -238,9 +210,7 @@ class ProfileScreen extends StatelessWidget {
           },
         ),
 
-        const SizedBox(
-          height: AppSizes.spacingSmall,
-        ),
+        const SizedBox(height: AppSizes.spacingSmall),
 
         _ProfileMenuCard(
           icon: Icons.help_outline,
@@ -304,9 +274,7 @@ class ProfileScreen extends StatelessWidget {
           ),
           content: const Text(
             'Are you sure you want to log out?',
-            style: TextStyle(
-              fontSize: AppSizes.bodyText,
-            ),
+            style: TextStyle(fontSize: AppSizes.bodyText),
           ),
           actions: [
             TextButton(
@@ -315,9 +283,7 @@ class ProfileScreen extends StatelessWidget {
               },
               child: const Text(
                 'Cancel',
-                style: TextStyle(
-                  color: AppColors.secondaryTextColor,
-                ),
+                style: TextStyle(color: AppColors.secondaryTextColor),
               ),
             ),
             TextButton(
@@ -347,10 +313,7 @@ class ProfileScreen extends StatelessWidget {
   // BOTTOM NAVIGATION
   // ============================================================
 
-  void _onBottomNavTap(
-    BuildContext context,
-    int index,
-  ) {
+  void _onBottomNavTap(BuildContext context, int index) {
     if (index == 3) {
       return;
     }
@@ -394,31 +357,21 @@ class _ProfileMenuCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: AppColors.cardColor,
-      borderRadius: BorderRadius.circular(
-        AppSizes.cardRadius,
-      ),
+      borderRadius: BorderRadius.circular(AppSizes.cardRadius),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(
-          AppSizes.cardRadius,
-        ),
+        borderRadius: BorderRadius.circular(AppSizes.cardRadius),
         child: Container(
           height: 52,
           padding: const EdgeInsets.symmetric(
             horizontal: AppSizes.paddingMedium,
           ),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(
-              AppSizes.cardRadius,
-            ),
-            border: Border.all(
-              color: AppColors.borderColor,
-            ),
+            borderRadius: BorderRadius.circular(AppSizes.cardRadius),
+            border: Border.all(color: AppColors.borderColor),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(
-                  alpha: 0.03,
-                ),
+                color: Colors.black.withValues(alpha: 0.03),
                 blurRadius: 3,
                 offset: const Offset(0, 1),
               ),
@@ -432,9 +385,7 @@ class _ProfileMenuCard extends StatelessWidget {
                 size: AppSizes.iconSmall,
               ),
 
-              const SizedBox(
-                width: AppSizes.spacingMedium,
-              ),
+              const SizedBox(width: AppSizes.spacingMedium),
 
               Expanded(
                 child: Text(

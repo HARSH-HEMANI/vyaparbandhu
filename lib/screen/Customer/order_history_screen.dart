@@ -9,20 +9,13 @@ class OrderHistoryScreen extends StatefulWidget {
   const OrderHistoryScreen({super.key});
 
   @override
-  State<OrderHistoryScreen> createState() =>
-      _OrderHistoryScreenState();
+  State<OrderHistoryScreen> createState() => _OrderHistoryScreenState();
 }
 
-class _OrderHistoryScreenState
-    extends State<OrderHistoryScreen> {
+class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
   int _selectedFilterIndex = 0;
 
-  final List<String> _filters = [
-    'All',
-    'Pending',
-    'Completed',
-    'Cancelled',
-  ];
+  final List<String> _filters = ['All', 'Pending', 'Completed', 'Cancelled'];
 
   final List<_Order> _orders = const [
     _Order(
@@ -49,8 +42,7 @@ class _OrderHistoryScreenState
       date: 'Oct 20, 2023 • 09:10 AM',
       total: '₹2,100.00',
       itemCount: '12 Items',
-      address:
-          'Hiranandani Gardens, Powai, Mumbai, 400076',
+      address: 'Hiranandani Gardens, Powai, Mumbai, 400076',
       action: 'Help',
     ),
   ];
@@ -84,13 +76,10 @@ class _OrderHistoryScreenState
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       body: SafeArea(
-        top: false,
         child: Column(
           children: [
             _buildAppBar(),
-            Expanded(
-              child: _buildScrollableContent(),
-            ),
+            Expanded(child: _buildScrollableContent()),
           ],
         ),
       ),
@@ -144,21 +133,15 @@ class _OrderHistoryScreenState
   Widget _buildScrollableContent() {
     return ListView(
       physics: const BouncingScrollPhysics(),
-      padding: const EdgeInsets.only(
-        bottom: AppSizes.paddingExtraLarge,
-      ),
+      padding: const EdgeInsets.only(bottom: AppSizes.paddingExtraLarge),
       children: [
         _buildSearchBar(),
 
-        const SizedBox(
-          height: AppSizes.spacingMedium,
-        ),
+        const SizedBox(height: AppSizes.spacingMedium),
 
         _buildFilters(),
 
-        const SizedBox(
-          height: AppSizes.spacingLarge,
-        ),
+        const SizedBox(height: AppSizes.spacingLarge),
 
         _buildOrderList(),
       ],
@@ -181,12 +164,8 @@ class _OrderHistoryScreenState
         height: 44,
         decoration: BoxDecoration(
           color: AppColors.backgroundColor,
-          borderRadius: BorderRadius.circular(
-            AppSizes.inputRadius,
-          ),
-          border: Border.all(
-            color: AppColors.borderColor,
-          ),
+          borderRadius: BorderRadius.circular(AppSizes.inputRadius),
+          border: Border.all(color: AppColors.borderColor),
         ),
         child: TextField(
           style: const TextStyle(
@@ -223,18 +202,13 @@ class _OrderHistoryScreenState
       height: 38,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSizes.paddingMedium,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: AppSizes.paddingMedium),
         itemCount: _filters.length,
         separatorBuilder: (_, _) {
-          return const SizedBox(
-            width: AppSizes.spacingSmall,
-          );
+          return const SizedBox(width: AppSizes.spacingSmall);
         },
         itemBuilder: (context, index) {
-          final bool isSelected =
-              _selectedFilterIndex == index;
+          final bool isSelected = _selectedFilterIndex == index;
 
           return GestureDetector(
             onTap: () {
@@ -243,9 +217,7 @@ class _OrderHistoryScreenState
               });
             },
             child: AnimatedContainer(
-              duration: const Duration(
-                milliseconds: 180,
-              ),
+              duration: const Duration(milliseconds: 180),
               height: 34,
               padding: const EdgeInsets.symmetric(
                 horizontal: AppSizes.paddingLarge,
@@ -255,9 +227,7 @@ class _OrderHistoryScreenState
                 color: isSelected
                     ? AppColors.primaryColor
                     : const Color(0xFFEAF0F6),
-                borderRadius: BorderRadius.circular(
-                  AppSizes.buttonRadius,
-                ),
+                borderRadius: BorderRadius.circular(AppSizes.buttonRadius),
               ),
               child: Text(
                 _filters[index],
@@ -266,9 +236,7 @@ class _OrderHistoryScreenState
                       ? AppColors.whiteColor
                       : AppColors.primaryTextColor,
                   fontSize: AppSizes.extraSmallText,
-                  fontWeight: isSelected
-                      ? FontWeight.w600
-                      : FontWeight.w400,
+                  fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
                 ),
               ),
             ),
@@ -284,32 +252,22 @@ class _OrderHistoryScreenState
 
   Widget _buildOrderList() {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSizes.paddingMedium,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: AppSizes.paddingMedium),
       child: Column(
         children: [
-          for (int index = 0;
-              index < _orders.length;
-              index++) ...[
+          for (int index = 0; index < _orders.length; index++) ...[
             _OrderCard(
               order: _orders[index],
               onPrimaryAction: () {
-                _handlePrimaryAction(
-                  _orders[index],
-                );
+                _handlePrimaryAction(_orders[index]);
               },
               onViewDetails: () {
-                _viewOrderDetails(
-                  _orders[index],
-                );
+                _viewOrderDetails(_orders[index]);
               },
             ),
 
             if (index != _orders.length - 1)
-              const SizedBox(
-                height: AppSizes.spacingLarge,
-              ),
+              const SizedBox(height: AppSizes.spacingLarge),
           ],
         ],
       ),
@@ -363,22 +321,14 @@ class _OrderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(
-        AppSizes.paddingMedium,
-      ),
+      padding: const EdgeInsets.all(AppSizes.paddingMedium),
       decoration: BoxDecoration(
         color: AppColors.cardColor,
-        borderRadius: BorderRadius.circular(
-          AppSizes.cardRadius,
-        ),
-        border: Border.all(
-          color: AppColors.borderColor,
-        ),
+        borderRadius: BorderRadius.circular(AppSizes.cardRadius),
+        border: Border.all(color: AppColors.borderColor),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(
-              alpha: 0.05,
-            ),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 5,
             offset: const Offset(0, 2),
           ),
@@ -389,27 +339,19 @@ class _OrderCard extends StatelessWidget {
         children: [
           _buildOrderHeader(),
 
-          const SizedBox(
-            height: AppSizes.spacingMedium,
-          ),
+          const SizedBox(height: AppSizes.spacingMedium),
 
           _buildDivider(),
 
-          const SizedBox(
-            height: AppSizes.spacingMedium,
-          ),
+          const SizedBox(height: AppSizes.spacingMedium),
 
           _buildOrderItem(),
 
-          const SizedBox(
-            height: AppSizes.spacingMedium,
-          ),
+          const SizedBox(height: AppSizes.spacingMedium),
 
           _buildDivider(),
 
-          const SizedBox(
-            height: AppSizes.spacingMedium,
-          ),
+          const SizedBox(height: AppSizes.spacingMedium),
 
           _buildActions(),
         ],
@@ -427,8 +369,7 @@ class _OrderCard extends StatelessWidget {
       children: [
         Expanded(
           child: Column(
-            crossAxisAlignment:
-                CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
@@ -441,19 +382,13 @@ class _OrderCard extends StatelessWidget {
                     ),
                   ),
 
-                  const SizedBox(
-                    width: AppSizes.spacingSmall,
-                  ),
+                  const SizedBox(width: AppSizes.spacingSmall),
 
-                  _StatusBadge(
-                    status: order.status,
-                  ),
+                  _StatusBadge(status: order.status),
                 ],
               ),
 
-              const SizedBox(
-                height: AppSizes.spacingSmall,
-              ),
+              const SizedBox(height: AppSizes.spacingSmall),
 
               Text(
                 order.date,
@@ -466,9 +401,7 @@ class _OrderCard extends StatelessWidget {
           ),
         ),
 
-        const SizedBox(
-          width: AppSizes.spacingSmall,
-        ),
+        const SizedBox(width: AppSizes.spacingSmall),
 
         Text(
           order.total,
@@ -494,14 +427,11 @@ class _OrderCard extends StatelessWidget {
       children: [
         _buildImagePlaceholder(),
 
-        const SizedBox(
-          width: AppSizes.spacingMedium,
-        ),
+        const SizedBox(width: AppSizes.spacingMedium),
 
         Expanded(
           child: Column(
-            crossAxisAlignment:
-                CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 order.itemCount,
@@ -512,9 +442,7 @@ class _OrderCard extends StatelessWidget {
                 ),
               ),
 
-              const SizedBox(
-                height: AppSizes.spacingSmall,
-              ),
+              const SizedBox(height: AppSizes.spacingSmall),
 
               Text(
                 order.address,
@@ -539,12 +467,8 @@ class _OrderCard extends StatelessWidget {
       height: 52,
       decoration: BoxDecoration(
         color: const Color(0xFFF8F8F8),
-        borderRadius: BorderRadius.circular(
-          AppSizes.radiusSmall,
-        ),
-        border: Border.all(
-          color: AppColors.borderColor,
-        ),
+        borderRadius: BorderRadius.circular(AppSizes.radiusSmall),
+        border: Border.all(color: AppColors.borderColor),
       ),
     );
   }
@@ -554,8 +478,7 @@ class _OrderCard extends StatelessWidget {
   // ============================================================
 
   Widget _buildActions() {
-    final bool isCancelled =
-        order.status == 'Cancelled';
+    final bool isCancelled = order.status == 'Cancelled';
 
     return Row(
       children: [
@@ -575,9 +498,7 @@ class _OrderCard extends StatelessWidget {
                 ),
                 padding: EdgeInsets.zero,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(
-                    AppSizes.radiusSmall,
-                  ),
+                  borderRadius: BorderRadius.circular(AppSizes.radiusSmall),
                 ),
               ),
               child: Text(
@@ -591,32 +512,22 @@ class _OrderCard extends StatelessWidget {
           ),
         ),
 
-        const SizedBox(
-          width: AppSizes.spacingMedium,
-        ),
+        const SizedBox(width: AppSizes.spacingMedium),
 
         Expanded(
           child: SizedBox(
             height: 38,
             child: ElevatedButton(
-              onPressed: isCancelled
-                  ? null
-                  : onViewDetails,
+              onPressed: isCancelled ? null : onViewDetails,
               style: ElevatedButton.styleFrom(
-                backgroundColor:
-                    AppColors.primaryColor,
-                disabledBackgroundColor:
-                    const Color(0xFFEAF0F6),
-                disabledForegroundColor:
-                    AppColors.secondaryTextColor,
-                foregroundColor:
-                    AppColors.whiteColor,
+                backgroundColor: AppColors.primaryColor,
+                disabledBackgroundColor: const Color(0xFFEAF0F6),
+                disabledForegroundColor: AppColors.secondaryTextColor,
+                foregroundColor: AppColors.whiteColor,
                 elevation: 0,
                 padding: EdgeInsets.zero,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(
-                    AppSizes.radiusSmall,
-                  ),
+                  borderRadius: BorderRadius.circular(AppSizes.radiusSmall),
                 ),
               ),
               child: const Text(
@@ -634,10 +545,7 @@ class _OrderCard extends StatelessWidget {
   }
 
   Widget _buildDivider() {
-    return Container(
-      height: 1,
-      color: const Color(0xFFF0F0F0),
-    );
+    return Container(height: 1, color: const Color(0xFFF0F0F0));
   }
 }
 
@@ -648,9 +556,7 @@ class _OrderCard extends StatelessWidget {
 class _StatusBadge extends StatelessWidget {
   final String status;
 
-  const _StatusBadge({
-    required this.status,
-  });
+  const _StatusBadge({required this.status});
 
   @override
   Widget build(BuildContext context) {
@@ -674,22 +580,15 @@ class _StatusBadge extends StatelessWidget {
         break;
 
       default:
-        backgroundColor =
-            AppColors.inputBackgroundColor;
-        textColor =
-            AppColors.secondaryTextColor;
+        backgroundColor = AppColors.inputBackgroundColor;
+        textColor = AppColors.secondaryTextColor;
     }
 
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 8,
-        vertical: 3,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       decoration: BoxDecoration(
         color: backgroundColor,
-        borderRadius: BorderRadius.circular(
-          AppSizes.buttonRadius,
-        ),
+        borderRadius: BorderRadius.circular(AppSizes.buttonRadius),
       ),
       child: Text(
         status,

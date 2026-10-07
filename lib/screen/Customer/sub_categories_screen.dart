@@ -86,7 +86,6 @@ class SubCategoriesScreen extends StatelessWidget {
       backgroundColor: AppColors.backgroundColor,
 
       body: SafeArea(
-        top: false,
         child: Column(
           children: [
             _buildAppBar(context),

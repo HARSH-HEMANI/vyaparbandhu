@@ -12,13 +12,10 @@ class OrderStatusScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       body: SafeArea(
-        top: false,
         child: Column(
           children: [
             _buildAppBar(context),
-            Expanded(
-              child: _buildContent(context),
-            ),
+            Expanded(child: _buildContent(context)),
           ],
         ),
       ),
@@ -78,27 +75,19 @@ class OrderStatusScreen extends StatelessWidget {
         children: [
           _buildSuccessIcon(),
 
-          const SizedBox(
-            height: AppSizes.spacingLarge,
-          ),
+          const SizedBox(height: AppSizes.spacingLarge),
 
           _buildSuccessMessage(),
 
-          const SizedBox(
-            height: AppSizes.spacingExtraLarge,
-          ),
+          const SizedBox(height: AppSizes.spacingExtraLarge),
 
           _buildOrderSummary(),
 
-          const SizedBox(
-            height: AppSizes.spacingExtraLarge,
-          ),
+          const SizedBox(height: AppSizes.spacingExtraLarge),
 
           _buildContinueShoppingButton(context),
 
-          const SizedBox(
-            height: AppSizes.spacingExtraLarge,
-          ),
+          const SizedBox(height: AppSizes.spacingExtraLarge),
 
           _buildFooterMessage(),
         ],
@@ -144,9 +133,7 @@ class OrderStatusScreen extends StatelessWidget {
           ),
         ),
 
-        const SizedBox(
-          height: AppSizes.spacingMedium,
-        ),
+        const SizedBox(height: AppSizes.spacingMedium),
 
         const Text(
           'Thank you for shopping with VyaparBandhu.\n'
@@ -170,22 +157,14 @@ class OrderStatusScreen extends StatelessWidget {
   Widget _buildOrderSummary() {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(
-        AppSizes.paddingMedium,
-      ),
+      padding: const EdgeInsets.all(AppSizes.paddingMedium),
       decoration: BoxDecoration(
         color: AppColors.cardColor,
-        borderRadius: BorderRadius.circular(
-          AppSizes.cardRadius,
-        ),
-        border: Border.all(
-          color: AppColors.borderColor,
-        ),
+        borderRadius: BorderRadius.circular(AppSizes.cardRadius),
+        border: Border.all(color: AppColors.borderColor),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(
-              alpha: 0.04,
-            ),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 5,
             offset: const Offset(0, 2),
           ),
@@ -193,14 +172,9 @@ class OrderStatusScreen extends StatelessWidget {
       ),
       child: Column(
         children: [
-          _SummaryRow(
-            label: '${AppStrings.totalItems} (3)',
-            value: '3 Items',
-          ),
+          _SummaryRow(label: '${AppStrings.totalItems} (3)', value: '3 Items'),
 
-          const SizedBox(
-            height: AppSizes.spacingMedium,
-          ),
+          const SizedBox(height: AppSizes.spacingMedium),
 
           _SummaryRow(
             label: 'Payment Status',
@@ -209,18 +183,11 @@ class OrderStatusScreen extends StatelessWidget {
             isPaid: true,
           ),
 
-          const SizedBox(
-            height: AppSizes.spacingMedium,
-          ),
+          const SizedBox(height: AppSizes.spacingMedium),
 
-          Container(
-            height: 1,
-            color: const Color(0xFFF0F0F0),
-          ),
+          Container(height: 1, color: const Color(0xFFF0F0F0)),
 
-          const SizedBox(
-            height: AppSizes.spacingMedium,
-          ),
+          const SizedBox(height: AppSizes.spacingMedium),
 
           _SummaryRow(
             label: AppStrings.grandTotal,
@@ -250,13 +217,9 @@ class OrderStatusScreen extends StatelessWidget {
         },
         style: OutlinedButton.styleFrom(
           foregroundColor: AppColors.primaryColor,
-          side: const BorderSide(
-            color: AppColors.primaryColor,
-          ),
+          side: const BorderSide(color: AppColors.primaryColor),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(
-              AppSizes.radiusSmall,
-            ),
+            borderRadius: BorderRadius.circular(AppSizes.radiusSmall),
           ),
         ),
         child: const Text(
@@ -283,18 +246,12 @@ class OrderStatusScreen extends StatelessWidget {
           fontSize: AppSizes.extraSmallText,
         ),
         children: [
-          TextSpan(
-            text: 'Thank you for choosing ',
-          ),
+          TextSpan(text: 'Thank you for choosing '),
           TextSpan(
             text: AppStrings.appName,
-            style: TextStyle(
-              color: AppColors.primaryColor,
-            ),
+            style: TextStyle(color: AppColors.primaryColor),
           ),
-          TextSpan(
-            text: '.',
-          ),
+          TextSpan(text: '.'),
         ],
       ),
     );
@@ -334,24 +291,17 @@ class _SummaryRow extends StatelessWidget {
               fontSize: isGrandTotal
                   ? AppSizes.bodyText
                   : AppSizes.extraSmallText,
-              fontWeight: isGrandTotal
-                  ? FontWeight.w600
-                  : FontWeight.w400,
+              fontWeight: isGrandTotal ? FontWeight.w600 : FontWeight.w400,
             ),
           ),
         ),
 
         if (isPaid)
           Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 9,
-              vertical: 3,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 3),
             decoration: BoxDecoration(
               color: AppColors.successColor,
-              borderRadius: BorderRadius.circular(
-                AppSizes.buttonRadius,
-              ),
+              borderRadius: BorderRadius.circular(AppSizes.buttonRadius),
             ),
             child: Text(
               value,
@@ -366,16 +316,15 @@ class _SummaryRow extends StatelessWidget {
           Text(
             value,
             style: TextStyle(
-              color: valueColor ??
+              color:
+                  valueColor ??
                   (isGrandTotal
                       ? AppColors.priceColor
                       : AppColors.primaryTextColor),
               fontSize: isGrandTotal
                   ? AppSizes.headingText
                   : AppSizes.extraSmallText,
-              fontWeight: isGrandTotal
-                  ? FontWeight.w600
-                  : FontWeight.w400,
+              fontWeight: isGrandTotal ? FontWeight.w600 : FontWeight.w400,
             ),
           ),
       ],

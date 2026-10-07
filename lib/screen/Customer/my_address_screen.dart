@@ -18,14 +18,12 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
   final List<_Address> _addresses = [
     _Address(
       title: 'Home',
-      address:
-          'Flat 402, xyz Apartment, Bangalore, Karnataka - 560102',
+      address: 'Flat 402, xyz Apartment, Bangalore, Karnataka - 560102',
       phone: '+91 98765 43210',
     ),
     _Address(
       title: 'Work',
-      address:
-          'Flat 402, xyz Apartment, Bangalore, Karnataka - 560102',
+      address: 'Flat 402, xyz Apartment, Bangalore, Karnataka - 560102',
       phone: '+91 98765 71111',
     ),
   ];
@@ -71,12 +69,8 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
       ..hideCurrentSnackBar()
       ..showSnackBar(
         SnackBar(
-          content: Text(
-            '${_addresses[index].title} set as default address',
-          ),
-          duration: const Duration(
-            milliseconds: 1200,
-          ),
+          content: Text('${_addresses[index].title} set as default address'),
+          duration: const Duration(milliseconds: 1200),
           behavior: SnackBarBehavior.floating,
         ),
       );
@@ -91,12 +85,8 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
       ..hideCurrentSnackBar()
       ..showSnackBar(
         SnackBar(
-          content: Text(
-            'Edit ${_addresses[index].title} address',
-          ),
-          duration: const Duration(
-            milliseconds: 1200,
-          ),
+          content: Text('Edit ${_addresses[index].title} address'),
+          duration: const Duration(milliseconds: 1200),
           behavior: SnackBarBehavior.floating,
         ),
       );
@@ -112,20 +102,15 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
         ..hideCurrentSnackBar()
         ..showSnackBar(
           const SnackBar(
-            content: Text(
-              'At least one address is required',
-            ),
-            duration: Duration(
-              milliseconds: 1200,
-            ),
+            content: Text('At least one address is required'),
+            duration: Duration(milliseconds: 1200),
             behavior: SnackBarBehavior.floating,
           ),
         );
       return;
     }
 
-    final String deletedAddress =
-        _addresses[index].title;
+    final String deletedAddress = _addresses[index].title;
 
     setState(() {
       _addresses.removeAt(index);
@@ -141,12 +126,8 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
       ..hideCurrentSnackBar()
       ..showSnackBar(
         SnackBar(
-          content: Text(
-            '$deletedAddress address deleted',
-          ),
-          duration: const Duration(
-            milliseconds: 1200,
-          ),
+          content: Text('$deletedAddress address deleted'),
+          duration: const Duration(milliseconds: 1200),
           behavior: SnackBarBehavior.floating,
         ),
       );
@@ -161,12 +142,8 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
       ..hideCurrentSnackBar()
       ..showSnackBar(
         const SnackBar(
-          content: Text(
-            'Add New Address screen will be connected next.',
-          ),
-          duration: Duration(
-            milliseconds: 1200,
-          ),
+          content: Text('Add New Address screen will be connected next.'),
+          duration: Duration(milliseconds: 1200),
           behavior: SnackBarBehavior.floating,
         ),
       );
@@ -181,13 +158,10 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       body: SafeArea(
-        top: false,
         child: Column(
           children: [
             _buildAppBar(),
-            Expanded(
-              child: _buildContent(),
-            ),
+            Expanded(child: _buildContent()),
           ],
         ),
       ),
@@ -257,15 +231,11 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
           ),
         ),
 
-        const SizedBox(
-          height: AppSizes.spacingLarge,
-        ),
+        const SizedBox(height: AppSizes.spacingLarge),
 
         _buildAddressList(),
 
-        const SizedBox(
-          height: AppSizes.spacingLarge,
-        ),
+        const SizedBox(height: AppSizes.spacingLarge),
 
         _buildAddAddressButton(),
       ],
@@ -279,9 +249,7 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
   Widget _buildAddressList() {
     return Column(
       children: [
-        for (int index = 0;
-            index < _addresses.length;
-            index++) ...[
+        for (int index = 0; index < _addresses.length; index++) ...[
           _AddressCard(
             address: _addresses[index],
             isDefault: _defaultAddressIndex == index,
@@ -297,9 +265,7 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
           ),
 
           if (index != _addresses.length - 1)
-            const SizedBox(
-              height: AppSizes.spacingLarge,
-            ),
+            const SizedBox(height: AppSizes.spacingLarge),
         ],
       ],
     );
@@ -316,10 +282,7 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
         height: 42,
         child: ElevatedButton.icon(
           onPressed: _addNewAddress,
-          icon: const Icon(
-            Icons.add,
-            size: AppSizes.iconSmall,
-          ),
+          icon: const Icon(Icons.add, size: AppSizes.iconSmall),
           label: const Text(
             AppStrings.addNewAddress,
             style: TextStyle(
@@ -335,9 +298,7 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
               horizontal: AppSizes.paddingMedium,
             ),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(
-                AppSizes.buttonRadius,
-              ),
+              borderRadius: BorderRadius.circular(AppSizes.buttonRadius),
             ),
           ),
         ),
@@ -369,24 +330,16 @@ class _AddressCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(
-        AppSizes.paddingMedium,
-      ),
+      padding: const EdgeInsets.all(AppSizes.paddingMedium),
       decoration: BoxDecoration(
         color: AppColors.cardColor,
-        borderRadius: BorderRadius.circular(
-          AppSizes.radiusSmall,
-        ),
+        borderRadius: BorderRadius.circular(AppSizes.radiusSmall),
         border: Border.all(
-          color: isDefault
-              ? AppColors.primaryColor
-              : AppColors.borderColor,
+          color: isDefault ? AppColors.primaryColor : AppColors.borderColor,
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(
-              alpha: 0.04,
-            ),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 4,
             offset: const Offset(0, 1),
           ),
@@ -395,39 +348,25 @@ class _AddressCard extends StatelessWidget {
       child: Column(
         children: [
           Row(
-            crossAxisAlignment:
-                CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildAddressIcon(),
 
-              const SizedBox(
-                width: AppSizes.spacingMedium,
-              ),
+              const SizedBox(width: AppSizes.spacingMedium),
 
-              Expanded(
-                child: _buildAddressInformation(),
-              ),
+              Expanded(child: _buildAddressInformation()),
 
-              const SizedBox(
-                width: AppSizes.spacingSmall,
-              ),
+              const SizedBox(width: AppSizes.spacingSmall),
 
               _buildActions(),
             ],
           ),
 
-          const SizedBox(
-            height: AppSizes.spacingLarge,
-          ),
+          const SizedBox(height: AppSizes.spacingLarge),
 
-          Container(
-            height: 1,
-            color: const Color(0xFFEAEAEA),
-          ),
+          Container(height: 1, color: const Color(0xFFEAEAEA)),
 
-          const SizedBox(
-            height: AppSizes.spacingMedium,
-          ),
+          const SizedBox(height: AppSizes.spacingMedium),
 
           _buildDefaultSelector(),
         ],
@@ -444,15 +383,11 @@ class _AddressCard extends StatelessWidget {
       width: 38,
       height: 38,
       decoration: BoxDecoration(
-        color: isDefault
-            ? const Color(0xFFE6F3F9)
-            : const Color(0xFFF1F1F1),
+        color: isDefault ? const Color(0xFFE6F3F9) : const Color(0xFFF1F1F1),
         shape: BoxShape.circle,
       ),
       child: Icon(
-        address.title == 'Home'
-            ? Icons.home_outlined
-            : Icons.work_outline,
+        address.title == 'Home' ? Icons.home_outlined : Icons.work_outline,
         color: AppColors.secondaryTextColor,
         size: AppSizes.iconSmall,
       ),
@@ -465,8 +400,7 @@ class _AddressCard extends StatelessWidget {
 
   Widget _buildAddressInformation() {
     return Column(
-      crossAxisAlignment:
-          CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
@@ -482,20 +416,13 @@ class _AddressCard extends StatelessWidget {
             ),
 
             if (isDefault) ...[
-              const SizedBox(
-                width: AppSizes.spacingSmall,
-              ),
+              const SizedBox(width: AppSizes.spacingSmall),
 
               Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 7,
-                  vertical: 3,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
                 decoration: BoxDecoration(
                   color: const Color(0xFFE7F5EB),
-                  borderRadius: BorderRadius.circular(
-                    AppSizes.buttonRadius,
-                  ),
+                  borderRadius: BorderRadius.circular(AppSizes.buttonRadius),
                 ),
                 child: const Text(
                   AppStrings.defaultAddress,
@@ -510,9 +437,7 @@ class _AddressCard extends StatelessWidget {
           ],
         ),
 
-        const SizedBox(
-          height: AppSizes.spacingSmall,
-        ),
+        const SizedBox(height: AppSizes.spacingSmall),
 
         Text(
           address.address,
@@ -525,9 +450,7 @@ class _AddressCard extends StatelessWidget {
           ),
         ),
 
-        const SizedBox(
-          height: AppSizes.spacingSmall,
-        ),
+        const SizedBox(height: AppSizes.spacingSmall),
 
         Row(
           children: [
@@ -537,9 +460,7 @@ class _AddressCard extends StatelessWidget {
               color: AppColors.secondaryTextColor,
             ),
 
-            const SizedBox(
-              width: 4,
-            ),
+            const SizedBox(width: 4),
 
             Text(
               address.phone,
@@ -565,10 +486,7 @@ class _AddressCard extends StatelessWidget {
         IconButton(
           onPressed: onEdit,
           padding: EdgeInsets.zero,
-          constraints: const BoxConstraints(
-            minWidth: 32,
-            minHeight: 32,
-          ),
+          constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
           icon: const Icon(
             Icons.edit_outlined,
             color: AppColors.primaryTextColor,
@@ -579,10 +497,7 @@ class _AddressCard extends StatelessWidget {
         IconButton(
           onPressed: onDelete,
           padding: EdgeInsets.zero,
-          constraints: const BoxConstraints(
-            minWidth: 32,
-            minHeight: 32,
-          ),
+          constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
           icon: const Icon(
             Icons.delete_outline,
             color: AppColors.errorColor,
@@ -612,9 +527,7 @@ class _AddressCard extends StatelessWidget {
             size: AppSizes.iconSmall,
           ),
 
-          const SizedBox(
-            width: AppSizes.spacingSmall,
-          ),
+          const SizedBox(width: AppSizes.spacingSmall),
 
           Text(
             AppStrings.setAsDefaultAddress,
@@ -623,9 +536,7 @@ class _AddressCard extends StatelessWidget {
                   ? AppColors.primaryTextColor
                   : AppColors.secondaryTextColor,
               fontSize: AppSizes.smallText,
-              fontWeight: isDefault
-                  ? FontWeight.w500
-                  : FontWeight.w400,
+              fontWeight: isDefault ? FontWeight.w500 : FontWeight.w400,
             ),
           ),
         ],

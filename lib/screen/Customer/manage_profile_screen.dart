@@ -9,25 +9,23 @@ class ManageProfileScreen extends StatefulWidget {
   const ManageProfileScreen({super.key});
 
   @override
-  State<ManageProfileScreen> createState() =>
-      _ManageProfileScreenState();
+  State<ManageProfileScreen> createState() => _ManageProfileScreenState();
 }
 
-class _ManageProfileScreenState
-    extends State<ManageProfileScreen> {
-  final TextEditingController _firstNameController =
-      TextEditingController(text: 'Jay');
+class _ManageProfileScreenState extends State<ManageProfileScreen> {
+  final TextEditingController _firstNameController = TextEditingController(
+    text: 'Jay',
+  );
 
-  final TextEditingController _lastNameController =
-      TextEditingController(text: 'Sharma');
+  final TextEditingController _lastNameController = TextEditingController(
+    text: 'Sharma',
+  );
 
-  final TextEditingController _emailController =
-      TextEditingController(
+  final TextEditingController _emailController = TextEditingController(
     text: 'jay.email@gmail.com',
   );
 
-  final TextEditingController _phoneController =
-      TextEditingController(
+  final TextEditingController _phoneController = TextEditingController(
     text: '+91 xxxxx xxxxx',
   );
 
@@ -71,12 +69,8 @@ class _ManageProfileScreenState
       ..hideCurrentSnackBar()
       ..showSnackBar(
         const SnackBar(
-          content: Text(
-            'Profile updated successfully',
-          ),
-          duration: Duration(
-            milliseconds: 1200,
-          ),
+          content: Text('Profile updated successfully'),
+          duration: Duration(milliseconds: 1200),
           behavior: SnackBarBehavior.floating,
         ),
       );
@@ -87,13 +81,10 @@ class _ManageProfileScreenState
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       body: SafeArea(
-        top: false,
         child: Column(
           children: [
             _buildAppBar(),
-            Expanded(
-              child: _buildContent(),
-            ),
+            Expanded(child: _buildContent()),
           ],
         ),
       ),
@@ -157,15 +148,11 @@ class _ManageProfileScreenState
         children: [
           _buildProfileImage(),
 
-          const SizedBox(
-            height: AppSizes.spacingLarge,
-          ),
+          const SizedBox(height: AppSizes.spacingLarge),
 
           _buildPersonalDetails(),
 
-          const SizedBox(
-            height: AppSizes.spacingExtraLarge,
-          ),
+          const SizedBox(height: AppSizes.spacingExtraLarge),
 
           _buildSaveButton(),
         ],
@@ -184,14 +171,10 @@ class _ManageProfileScreenState
       decoration: BoxDecoration(
         color: AppColors.inputBackgroundColor,
         shape: BoxShape.circle,
-        border: Border.all(
-          color: AppColors.borderColor,
-        ),
+        border: Border.all(color: AppColors.borderColor),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(
-              alpha: 0.04,
-            ),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 5,
             offset: const Offset(0, 2),
           ),
@@ -212,22 +195,14 @@ class _ManageProfileScreenState
   Widget _buildPersonalDetails() {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(
-        AppSizes.paddingSmall,
-      ),
+      padding: const EdgeInsets.all(AppSizes.paddingSmall),
       decoration: BoxDecoration(
         color: AppColors.cardColor,
-        borderRadius: BorderRadius.circular(
-          AppSizes.cardRadius,
-        ),
-        border: Border.all(
-          color: AppColors.borderColor,
-        ),
+        borderRadius: BorderRadius.circular(AppSizes.cardRadius),
+        border: Border.all(color: AppColors.borderColor),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(
-              alpha: 0.04,
-            ),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 4,
             offset: const Offset(0, 1),
           ),
@@ -237,10 +212,7 @@ class _ManageProfileScreenState
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Padding(
-            padding: EdgeInsets.only(
-              left: 2,
-              bottom: AppSizes.spacingMedium,
-            ),
+            padding: EdgeInsets.only(left: 2, bottom: AppSizes.spacingMedium),
             child: Text(
               AppStrings.personalDetails,
               style: TextStyle(
@@ -260,9 +232,7 @@ class _ManageProfileScreenState
                 ),
               ),
 
-              const SizedBox(
-                width: AppSizes.spacingMedium,
-              ),
+              const SizedBox(width: AppSizes.spacingMedium),
 
               Expanded(
                 child: _buildTextField(
@@ -273,9 +243,7 @@ class _ManageProfileScreenState
             ],
           ),
 
-          const SizedBox(
-            height: AppSizes.spacingMedium,
-          ),
+          const SizedBox(height: AppSizes.spacingMedium),
 
           _buildTextField(
             label: AppStrings.emailAddress,
@@ -284,9 +252,7 @@ class _ManageProfileScreenState
             keyboardType: TextInputType.emailAddress,
           ),
 
-          const SizedBox(
-            height: AppSizes.spacingMedium,
-          ),
+          const SizedBox(height: AppSizes.spacingMedium),
 
           _buildTextField(
             label: 'Phone Number',
@@ -320,9 +286,7 @@ class _ManageProfileScreenState
           ),
         ),
 
-        const SizedBox(
-          height: 4,
-        ),
+        const SizedBox(height: 4),
 
         SizedBox(
           height: 40,
@@ -339,39 +303,25 @@ class _ManageProfileScreenState
                   : Icon(
                       prefixIcon,
                       size: AppSizes.iconSmall,
-                      color:
-                          AppColors.secondaryTextColor,
+                      color: AppColors.secondaryTextColor,
                     ),
               filled: true,
               fillColor: AppColors.inputBackgroundColor,
-              contentPadding:
-                  const EdgeInsets.symmetric(
+              contentPadding: const EdgeInsets.symmetric(
                 horizontal: AppSizes.paddingSmall,
                 vertical: AppSizes.paddingSmall,
               ),
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(
-                  AppSizes.radiusSmall,
-                ),
-                borderSide: const BorderSide(
-                  color: AppColors.borderColor,
-                ),
+                borderRadius: BorderRadius.circular(AppSizes.radiusSmall),
+                borderSide: const BorderSide(color: AppColors.borderColor),
               ),
               enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(
-                  AppSizes.radiusSmall,
-                ),
-                borderSide: const BorderSide(
-                  color: AppColors.borderColor,
-                ),
+                borderRadius: BorderRadius.circular(AppSizes.radiusSmall),
+                borderSide: const BorderSide(color: AppColors.borderColor),
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(
-                  AppSizes.radiusSmall,
-                ),
-                borderSide: const BorderSide(
-                  color: AppColors.primaryColor,
-                ),
+                borderRadius: BorderRadius.circular(AppSizes.radiusSmall),
+                borderSide: const BorderSide(color: AppColors.primaryColor),
               ),
             ),
           ),
@@ -390,10 +340,7 @@ class _ManageProfileScreenState
       height: AppSizes.buttonHeight,
       child: ElevatedButton.icon(
         onPressed: _saveChanges,
-        icon: const Icon(
-          Icons.check_circle,
-          size: AppSizes.iconSmall,
-        ),
+        icon: const Icon(Icons.check_circle, size: AppSizes.iconSmall),
         label: const Text(
           AppStrings.saveChanges,
           style: TextStyle(
@@ -406,9 +353,7 @@ class _ManageProfileScreenState
           foregroundColor: AppColors.whiteColor,
           elevation: 0,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(
-              AppSizes.radiusSmall,
-            ),
+            borderRadius: BorderRadius.circular(AppSizes.radiusSmall),
           ),
         ),
       ),

@@ -9,20 +9,13 @@ class ProductDetailsScreen extends StatefulWidget {
   const ProductDetailsScreen({super.key});
 
   @override
-  State<ProductDetailsScreen> createState() =>
-      _ProductDetailsScreenState();
+  State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
 }
 
-class _ProductDetailsScreenState
-    extends State<ProductDetailsScreen> {
+class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   int _selectedVariantIndex = 0;
 
-  final List<String> _variants = [
-    '50g',
-    '100g',
-    '200g',
-    '400g',
-  ];
+  final List<String> _variants = ['50g', '100g', '200g', '400g'];
 
   void _onBottomNavTap(int index) {
     switch (index) {
@@ -51,14 +44,11 @@ class _ProductDetailsScreenState
       backgroundColor: AppColors.backgroundColor,
 
       body: SafeArea(
-        top: false,
         child: Column(
           children: [
             _buildAppBar(),
 
-            Expanded(
-              child: _buildContent(),
-            ),
+            Expanded(child: _buildContent()),
           ],
         ),
       ),
@@ -136,33 +126,23 @@ class _ProductDetailsScreenState
         children: [
           _buildProductImage(),
 
-          const SizedBox(
-            height: AppSizes.spacingSmall,
-          ),
+          const SizedBox(height: AppSizes.spacingSmall),
 
           _buildProductInformation(),
 
-          const SizedBox(
-            height: AppSizes.spacingSmall,
-          ),
+          const SizedBox(height: AppSizes.spacingSmall),
 
           _buildVariantSection(),
 
-          const SizedBox(
-            height: AppSizes.spacingSmall,
-          ),
+          const SizedBox(height: AppSizes.spacingSmall),
 
           _buildPriceSection(),
 
-          const SizedBox(
-            height: AppSizes.spacingSmall,
-          ),
+          const SizedBox(height: AppSizes.spacingSmall),
 
           _buildDescriptionSection(),
 
-          const SizedBox(
-            height: AppSizes.spacingSmall,
-          ),
+          const SizedBox(height: AppSizes.spacingSmall),
 
           _buildAddToCartButton(),
         ],
@@ -184,12 +164,8 @@ class _ProductDetailsScreenState
           height: 135,
           decoration: BoxDecoration(
             color: const Color(0xFFF8F8F8),
-            borderRadius: BorderRadius.circular(
-              AppSizes.radiusMedium,
-            ),
-            border: Border.all(
-              color: AppColors.borderColor,
-            ),
+            borderRadius: BorderRadius.circular(AppSizes.radiusMedium),
+            border: Border.all(color: AppColors.borderColor),
           ),
         ),
       ),
@@ -214,9 +190,7 @@ class _ProductDetailsScreenState
             ),
           ),
 
-          const SizedBox(
-            height: 2,
-          ),
+          const SizedBox(height: 2),
 
           const Text(
             'Good Day Cashew',
@@ -227,9 +201,7 @@ class _ProductDetailsScreenState
             ),
           ),
 
-          const SizedBox(
-            height: 2,
-          ),
+          const SizedBox(height: 2),
 
           const Text(
             'Britannia',
@@ -262,9 +234,7 @@ class _ProductDetailsScreenState
             ),
           ),
 
-          const SizedBox(
-            height: AppSizes.spacingSmall,
-          ),
+          const SizedBox(height: AppSizes.spacingSmall),
 
           SizedBox(
             height: 32,
@@ -272,13 +242,10 @@ class _ProductDetailsScreenState
               scrollDirection: Axis.horizontal,
               itemCount: _variants.length,
               separatorBuilder: (_, _) {
-                return const SizedBox(
-                  width: AppSizes.spacingSmall,
-                );
+                return const SizedBox(width: AppSizes.spacingSmall);
               },
               itemBuilder: (context, index) {
-                final bool isSelected =
-                    _selectedVariantIndex == index;
+                final bool isSelected = _selectedVariantIndex == index;
 
                 return GestureDetector(
                   onTap: () {
@@ -287,9 +254,7 @@ class _ProductDetailsScreenState
                     });
                   },
                   child: AnimatedContainer(
-                    duration: const Duration(
-                      milliseconds: 160,
-                    ),
+                    duration: const Duration(milliseconds: 160),
                     padding: const EdgeInsets.symmetric(
                       horizontal: AppSizes.paddingMedium,
                     ),
@@ -301,9 +266,7 @@ class _ProductDetailsScreenState
                       borderRadius: BorderRadius.circular(
                         AppSizes.buttonRadius,
                       ),
-                      border: Border.all(
-                        color: AppColors.primaryColor,
-                      ),
+                      border: Border.all(color: AppColors.primaryColor),
                     ),
                     child: Text(
                       _variants[index],
@@ -343,9 +306,7 @@ class _ProductDetailsScreenState
             ),
           ),
 
-          const SizedBox(
-            height: 2,
-          ),
+          const SizedBox(height: 2),
 
           const Text(
             '₹45.00',
@@ -356,9 +317,7 @@ class _ProductDetailsScreenState
             ),
           ),
 
-          const SizedBox(
-            height: 1,
-          ),
+          const SizedBox(height: 1),
 
           const Text(
             '₹50.00',
@@ -391,9 +350,7 @@ class _ProductDetailsScreenState
             ),
           ),
 
-          const SizedBox(
-            height: AppSizes.spacingSmall,
-          ),
+          const SizedBox(height: AppSizes.spacingSmall),
 
           RichText(
             text: const TextSpan(
@@ -405,9 +362,7 @@ class _ProductDetailsScreenState
               children: [
                 TextSpan(
                   text: 'Key Ingredients: ',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: TextStyle(fontWeight: FontWeight.w600),
                 ),
                 TextSpan(
                   text:
@@ -418,9 +373,7 @@ class _ProductDetailsScreenState
             ),
           ),
 
-          const SizedBox(
-            height: AppSizes.spacingSmall,
-          ),
+          const SizedBox(height: AppSizes.spacingSmall),
 
           RichText(
             text: const TextSpan(
@@ -431,13 +384,9 @@ class _ProductDetailsScreenState
               children: [
                 TextSpan(
                   text: 'Expiry Date: ',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: TextStyle(fontWeight: FontWeight.w600),
                 ),
-                TextSpan(
-                  text: '02/2027.',
-                ),
+                TextSpan(text: '02/2027.'),
               ],
             ),
           ),
@@ -460,12 +409,8 @@ class _ProductDetailsScreenState
             ..hideCurrentSnackBar()
             ..showSnackBar(
               SnackBar(
-                content: const Text(
-                  'Item added to cart',
-                ),
-                duration: const Duration(
-                  milliseconds: 2000,
-                ),
+                content: const Text('Item added to cart'),
+                duration: const Duration(milliseconds: 2000),
                 behavior: SnackBarBehavior.floating,
                 action: SnackBarAction(
                   label: 'VIEW CART',
@@ -482,9 +427,7 @@ class _ProductDetailsScreenState
           foregroundColor: AppColors.whiteColor,
           elevation: 0,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(
-              AppSizes.buttonRadius,
-            ),
+            borderRadius: BorderRadius.circular(AppSizes.buttonRadius),
           ),
         ),
         child: const Text(
@@ -506,30 +449,20 @@ class _ProductDetailsScreenState
 class _SectionCard extends StatelessWidget {
   final Widget child;
 
-  const _SectionCard({
-    required this.child,
-  });
+  const _SectionCard({required this.child});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(
-        AppSizes.paddingMedium,
-      ),
+      padding: const EdgeInsets.all(AppSizes.paddingMedium),
       decoration: BoxDecoration(
         color: AppColors.cardColor,
-        borderRadius: BorderRadius.circular(
-          AppSizes.cardRadius,
-        ),
-        border: Border.all(
-          color: AppColors.borderColor,
-        ),
+        borderRadius: BorderRadius.circular(AppSizes.cardRadius),
+        border: Border.all(color: AppColors.borderColor),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(
-              alpha: 0.04,
-            ),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 3,
             offset: const Offset(0, 1),
           ),
