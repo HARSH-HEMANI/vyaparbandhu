@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // ============================================================
 // OWNER SCREENS
@@ -62,10 +63,23 @@ class VyaparBandhuApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'VyaparBandhu',
 
+      // ========================================================
+      // THEME
+      // ========================================================
       theme: ThemeData(
         useMaterial3: true,
         fontFamily: 'Roboto',
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF1688C7)),
+
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xFF1688C7),
+          foregroundColor: Colors.white,
+          systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarColor: Color(0xFF1688C7),
+            statusBarIconBrightness: Brightness.light,
+            statusBarBrightness: Brightness.dark,
+          ),
+        ),
       ),
 
       // ========================================================
@@ -74,9 +88,9 @@ class VyaparBandhuApp extends StatelessWidget {
       initialRoute: '/customer-login',
 
       routes: {
-        // ========================================================
+        // ======================================================
         // CUSTOMER AUTHENTICATION
-        // ========================================================
+        // ======================================================
         '/customer-login': (context) => const CustomerLoginScreen(),
 
         '/customer-create-account': (context) =>
@@ -86,25 +100,28 @@ class VyaparBandhuApp extends StatelessWidget {
 
         '/create-new-password': (context) => const CreateNewPasswordScreen(),
 
-        // ========================================================
+        // ======================================================
         // CUSTOMER DASHBOARD
-        // ========================================================
+        // ======================================================
         '/customer-home': (context) => const customer_home.CustomerHomeScreen(),
 
-        // ========================================================
+        // ======================================================
         // CUSTOMER PRODUCT FLOW
-        // ========================================================
+        // ======================================================
         '/customer-sub-categories': (context) =>
             const customer_sub_categories.SubCategoriesScreen(),
 
         '/customer-product-listing': (context) {
           final arguments = ModalRoute.of(context)?.settings.arguments;
+
           String? category;
+
           if (arguments is String) {
             category = arguments;
           } else if (arguments is Map) {
             category = arguments['category'] as String?;
           }
+
           return customer_product_listing.ProductListingScreen(
             category: category,
           );
@@ -113,14 +130,14 @@ class VyaparBandhuApp extends StatelessWidget {
         '/customer-product-details': (context) =>
             const customer_product_details.ProductDetailsScreen(),
 
-        // ========================================================
+        // ======================================================
         // CUSTOMER CART
-        // ========================================================
+        // ======================================================
         '/customer-cart': (context) => const customer_cart.CartScreen(),
 
-        // ========================================================
+        // ======================================================
         // CUSTOMER ORDERS
-        // ========================================================
+        // ======================================================
         '/customer-orders': (context) =>
             const customer_order_history.OrderHistoryScreen(),
 
@@ -130,9 +147,9 @@ class VyaparBandhuApp extends StatelessWidget {
         '/customer-order-status': (context) =>
             const customer_order_status.OrderStatusScreen(),
 
-        // ========================================================
+        // ======================================================
         // CUSTOMER PROFILE
-        // ========================================================
+        // ======================================================
         '/customer-profile': (context) =>
             const customer_profile.ProfileScreen(),
 
@@ -142,19 +159,19 @@ class VyaparBandhuApp extends StatelessWidget {
         '/customer-address': (context) =>
             const customer_address.MyAddressScreen(),
 
-        // ========================================================
+        // ======================================================
         // OWNER AUTHENTICATION
-        // ========================================================
+        // ======================================================
         '/owner-login': (context) => const OwnerLoginScreen(),
 
-        // ========================================================
+        // ======================================================
         // OWNER HOME
-        // ========================================================
+        // ======================================================
         '/owner-home': (context) => const OwnerHomeScreen(),
 
-        // ========================================================
+        // ======================================================
         // OWNER PRODUCTS
-        // ========================================================
+        // ======================================================
         '/add-product': (context) => const AddProductScreen(),
 
         '/product-listing': (context) {
@@ -175,12 +192,13 @@ class VyaparBandhuApp extends StatelessWidget {
         },
 
         '/product-details': (context) => const ProductDetailsScreen(),
+
         '/sub-categories': (context) =>
             const owner_sub_categories.SubCategoriesScreen(),
 
-        // ========================================================
+        // ======================================================
         // OWNER VENDORS
-        // ========================================================
+        // ======================================================
         '/add-vendor': (context) => const AddVendorScreen(),
 
         '/vendor-list': (context) => const VendorListScreen(),
@@ -194,28 +212,28 @@ class VyaparBandhuApp extends StatelessWidget {
 
         '/vendor-order': (context) => const VendorOrderGenerationScreen(),
 
-        // ========================================================
+        // ======================================================
         // OWNER ORDERS
-        // ========================================================
+        // ======================================================
         '/order-history': (context) => const OwnerOrderHistoryScreen(),
 
         '/order-details': (context) => const OwnerOrderDetailsScreen(),
 
         '/order-success': (context) => const OwnerOrderSuccessScreen(),
 
-        // ========================================================
+        // ======================================================
         // OWNER CUSTOMER MANAGEMENT
-        // ========================================================
+        // ======================================================
         '/customer-management': (context) => const CustomerManagementScreen(),
 
-        // ========================================================
+        // ======================================================
         // OWNER PROFILE
-        // ========================================================
+        // ======================================================
         '/owner-profile': (context) => const OwnerProfileScreen(),
 
-        // ========================================================
+        // ======================================================
         // OWNER OTHER SCREENS
-        // ========================================================
+        // ======================================================
         '/about': (context) => const AboutScreen(),
 
         '/help-support': (context) => const HelpSupportScreen(),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../resources/app_colors.dart';
 import '../../resources/app_strings.dart';
@@ -46,6 +47,10 @@ class _CartScreenState extends State<CartScreen> {
     ),
   ];
 
+  // ============================================================
+  // CART CALCULATIONS
+  // ============================================================
+
   double get _subtotal {
     double total = 0;
 
@@ -74,6 +79,10 @@ class _CartScreenState extends State<CartScreen> {
     return total;
   }
 
+  // ============================================================
+  // CUSTOMER BOTTOM NAVIGATION
+  // ============================================================
+
   void _onBottomNavTap(int index) {
     if (index == 2) {
       return;
@@ -87,16 +96,23 @@ class _CartScreenState extends State<CartScreen> {
           (route) => false,
         );
         break;
+
       case 1:
         Navigator.pushReplacementNamed(context, '/customer-orders');
         break;
+
       case 2:
         break;
+
       case 3:
         Navigator.pushReplacementNamed(context, '/customer-profile');
         break;
     }
   }
+
+  // ============================================================
+  // QUANTITY
+  // ============================================================
 
   void _increaseQuantity(int index) {
     setState(() {
@@ -111,6 +127,10 @@ class _CartScreenState extends State<CartScreen> {
       }
     });
   }
+
+  // ============================================================
+  // REMOVE ITEM
+  // ============================================================
 
   void _removeItem(int index) {
     final removedItem = _cartItems[index];
@@ -130,21 +150,46 @@ class _CartScreenState extends State<CartScreen> {
       );
   }
 
+  // ============================================================
+  // BUILD
+  // ============================================================
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
-      body: SafeArea(
-        child: Column(
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: const SystemUiOverlayStyle(
+        statusBarColor: AppColors.primaryColor,
+        statusBarIconBrightness: Brightness.light,
+        statusBarBrightness: Brightness.dark,
+      ),
+      child: Scaffold(
+        backgroundColor: AppColors.backgroundColor,
+
+        body: Column(
           children: [
-            _buildAppBar(),
+            // ==================================================
+            // BLUE STATUS BAR + APP BAR
+            // ==================================================
+            Container(
+              width: double.infinity,
+              color: AppColors.primaryColor,
+              child: SafeArea(bottom: false, child: _buildAppBar()),
+            ),
+
+            // ==================================================
+            // CART CONTENT
+            // ==================================================
             Expanded(child: _buildScrollableContent()),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavBar(
-        currentIndex: 2,
-        onTap: _onBottomNavTap,
+
+        // ======================================================
+        // BOTTOM NAVIGATION
+        // ======================================================
+        bottomNavigationBar: BottomNavBar(
+          currentIndex: 2,
+          onTap: _onBottomNavTap,
+        ),
       ),
     );
   }
@@ -154,10 +199,9 @@ class _CartScreenState extends State<CartScreen> {
   // ============================================================
 
   Widget _buildAppBar() {
-    return Container(
+    return SizedBox(
       height: AppSizes.appBarHeight,
       width: double.infinity,
-      color: AppColors.primaryColor,
       child: Row(
         children: [
           IconButton(
@@ -170,6 +214,7 @@ class _CartScreenState extends State<CartScreen> {
               size: AppSizes.iconMedium,
             ),
           ),
+
           const Expanded(
             child: Text(
               AppStrings.cart,
@@ -339,6 +384,7 @@ class _CartScreenState extends State<CartScreen> {
                 _removeItem(index);
               },
             ),
+
             if (index != _cartItems.length - 1)
               const SizedBox(height: AppSizes.spacingMedium),
           ],
@@ -361,7 +407,9 @@ class _CartScreenState extends State<CartScreen> {
             size: 48,
             color: AppColors.secondaryTextColor,
           ),
+
           const SizedBox(height: AppSizes.spacingMedium),
+
           const Text(
             'Your cart is empty',
             style: TextStyle(
@@ -370,7 +418,9 @@ class _CartScreenState extends State<CartScreen> {
               fontWeight: FontWeight.w600,
             ),
           ),
+
           const SizedBox(height: AppSizes.spacingSmall),
+
           const Text(
             'Add some products to place an order.',
             textAlign: TextAlign.center,
@@ -497,9 +547,9 @@ class _CartScreenState extends State<CartScreen> {
   }
 }
 
-// =================================================================
+// ================================================================
 // CART ITEM CARD
-// =================================================================
+// ================================================================
 
 class _CartItemCard extends StatelessWidget {
   final _CartItem item;
@@ -654,9 +704,9 @@ class _CartItemCard extends StatelessWidget {
   }
 }
 
-// =================================================================
+// ================================================================
 // QUANTITY BUTTON
-// =================================================================
+// ================================================================
 
 class _QuantityButton extends StatelessWidget {
   final IconData icon;
@@ -686,9 +736,9 @@ class _QuantityButton extends StatelessWidget {
   }
 }
 
-// =================================================================
+// ================================================================
 // SUMMARY ROW
-// =================================================================
+// ================================================================
 
 class _SummaryRow extends StatelessWidget {
   final String label;
@@ -721,6 +771,7 @@ class _SummaryRow extends StatelessWidget {
             ),
           ),
         ),
+
         Text(
           value,
           style: TextStyle(
@@ -740,9 +791,9 @@ class _SummaryRow extends StatelessWidget {
   }
 }
 
-// =================================================================
+// ================================================================
 // CART ITEM MODEL
-// =================================================================
+// ================================================================
 
 class _CartItem {
   final String name;
