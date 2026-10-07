@@ -68,7 +68,9 @@ class _OwnerLoginScreenState extends State<OwnerLoginScreen> {
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/otp-verification');
+                  },
                   child: Text(
                     'Forgot Password?',
                     style: TextStyle(
@@ -83,6 +85,24 @@ class _OwnerLoginScreenState extends State<OwnerLoginScreen> {
               const SizedBox(height: AppSizes.spacingSmall),
 
               _buildLoginButton(),
+
+              const SizedBox(height: AppSizes.spacingLarge),
+
+              Center(
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, '/customer-login');
+                  },
+                  child: Text(
+                    'Customer? Login',
+                    style: TextStyle(
+                      fontSize: AppSizes.bodyText,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.secondaryTextColor,
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

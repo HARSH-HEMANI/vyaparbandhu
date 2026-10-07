@@ -75,6 +75,18 @@ class _VendorDetailsScreenState extends State<VendorDetailsScreen> {
             fontWeight: FontWeight.w600,
           ),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/vendor-order');
+            },
+            icon: const Icon(
+              Icons.add_shopping_cart,
+              color: AppColors.whiteColor,
+            ),
+            tooltip: 'Create Order',
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(AppSizes.paddingLarge),
@@ -261,6 +273,32 @@ class _VendorDetailsScreenState extends State<VendorDetailsScreen> {
         ),
         const SizedBox(height: AppSizes.spacingLarge),
         ...products.map((product) => _buildProductCard(product)),
+        const SizedBox(height: AppSizes.spacingMedium),
+        SizedBox(
+          width: double.infinity,
+          height: AppSizes.buttonHeight,
+          child: ElevatedButton.icon(
+            onPressed: () {
+              Navigator.pushNamed(context, '/vendor-order');
+            },
+            icon: const Icon(Icons.add_shopping_cart, size: AppSizes.iconMedium),
+            label: const Text(
+              'Create Vendor Order',
+              style: TextStyle(
+                fontSize: AppSizes.mediumText,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.primaryColor,
+              foregroundColor: AppColors.whiteColor,
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(AppSizes.buttonRadius),
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }

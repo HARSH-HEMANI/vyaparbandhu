@@ -13,13 +13,10 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       body: SafeArea(
-        top: false,
         child: Column(
           children: [
-            _buildAppBar(),
-            Expanded(
-              child: _buildContent(context),
-            ),
+            _buildAppBar(context),
+            Expanded(child: _buildContent(context)),
           ],
         ),
       ),
@@ -36,7 +33,7 @@ class ProfileScreen extends StatelessWidget {
   // APP BAR
   // ============================================================
 
-  Widget _buildAppBar() {
+  Widget _buildAppBar(BuildContext context) {
     return Container(
       height: AppSizes.appBarHeight,
       width: double.infinity,
@@ -44,7 +41,9 @@ class ProfileScreen extends StatelessWidget {
       child: Row(
         children: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pop(context);
+            },
             icon: const Icon(
               Icons.arrow_back,
               color: AppColors.whiteColor,
@@ -82,15 +81,11 @@ class ProfileScreen extends StatelessWidget {
       children: [
         _buildProfileHeader(),
 
-        const SizedBox(
-          height: AppSizes.spacingLarge,
-        ),
+        const SizedBox(height: AppSizes.spacingLarge),
 
         _buildMenuItems(context),
 
-        const SizedBox(
-          height: AppSizes.spacingExtraLarge,
-        ),
+        const SizedBox(height: AppSizes.spacingExtraLarge),
 
         _buildLogoutButton(context),
       ],
@@ -104,22 +99,14 @@ class ProfileScreen extends StatelessWidget {
   Widget _buildProfileHeader() {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(
-        AppSizes.paddingMedium,
-      ),
+      padding: const EdgeInsets.all(AppSizes.paddingMedium),
       decoration: BoxDecoration(
         color: AppColors.cardColor,
-        borderRadius: BorderRadius.circular(
-          AppSizes.cardRadius,
-        ),
-        border: Border.all(
-          color: AppColors.borderColor,
-        ),
+        borderRadius: BorderRadius.circular(AppSizes.cardRadius),
+        border: Border.all(color: AppColors.borderColor),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(
-              alpha: 0.05,
-            ),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 5,
             offset: const Offset(0, 2),
           ),
@@ -129,14 +116,11 @@ class ProfileScreen extends StatelessWidget {
         children: [
           _buildProfileImage(),
 
-          const SizedBox(
-            width: AppSizes.spacingMedium,
-          ),
+          const SizedBox(width: AppSizes.spacingMedium),
 
           Expanded(
             child: Column(
-              crossAxisAlignment:
-                  CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
                   'SuperMart',
@@ -147,9 +131,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
 
-                const SizedBox(
-                  height: 4,
-                ),
+                const SizedBox(height: 4),
 
                 Text(
                   'jay.email@gmail.com',
@@ -173,9 +155,7 @@ class ProfileScreen extends StatelessWidget {
       decoration: BoxDecoration(
         color: const Color(0xFFF8F8F8),
         shape: BoxShape.circle,
-        border: Border.all(
-          color: AppColors.borderColor,
-        ),
+        border: Border.all(color: AppColors.borderColor),
       ),
       child: const Icon(
         Icons.person_outline,
@@ -196,70 +176,47 @@ class ProfileScreen extends StatelessWidget {
           icon: Icons.person_outline,
           title: AppStrings.manageProfile,
           onTap: () {
-            _showMessage(
-              context,
-              AppStrings.manageProfile,
-            );
+            Navigator.pushNamed(context, '/customer-manage-profile');
           },
         ),
 
-        const SizedBox(
-          height: AppSizes.spacingSmall,
-        ),
+        const SizedBox(height: AppSizes.spacingSmall),
 
         _ProfileMenuCard(
           icon: Icons.receipt_long_outlined,
           title: AppStrings.orderHistory,
           onTap: () {
-            _showMessage(
-              context,
-              AppStrings.orderHistory,
-            );
+            Navigator.pushNamed(context, '/customer-orders');
           },
         ),
 
-        const SizedBox(
-          height: AppSizes.spacingSmall,
-        ),
+        const SizedBox(height: AppSizes.spacingSmall),
 
         _ProfileMenuCard(
           icon: Icons.location_on_outlined,
           title: AppStrings.myAddress,
           onTap: () {
-            _showMessage(
-              context,
-              AppStrings.myAddress,
-            );
+            Navigator.pushNamed(context, '/customer-address');
           },
         ),
 
-        const SizedBox(
-          height: AppSizes.spacingSmall,
-        ),
+        const SizedBox(height: AppSizes.spacingSmall),
 
         _ProfileMenuCard(
           icon: Icons.info_outline,
           title: AppStrings.aboutVyaparBandhu,
           onTap: () {
-            _showMessage(
-              context,
-              AppStrings.aboutVyaparBandhu,
-            );
+            Navigator.pushNamed(context, '/about');
           },
         ),
 
-        const SizedBox(
-          height: AppSizes.spacingSmall,
-        ),
+        const SizedBox(height: AppSizes.spacingSmall),
 
         _ProfileMenuCard(
           icon: Icons.help_outline,
           title: AppStrings.helpSupport,
           onTap: () {
-            _showMessage(
-              context,
-              AppStrings.helpSupport,
-            );
+            Navigator.pushNamed(context, '/help-support');
           },
         ),
       ],
@@ -317,9 +274,7 @@ class ProfileScreen extends StatelessWidget {
           ),
           content: const Text(
             'Are you sure you want to log out?',
-            style: TextStyle(
-              fontSize: AppSizes.bodyText,
-            ),
+            style: TextStyle(fontSize: AppSizes.bodyText),
           ),
           actions: [
             TextButton(
@@ -328,29 +283,17 @@ class ProfileScreen extends StatelessWidget {
               },
               child: const Text(
                 'Cancel',
-                style: TextStyle(
-                  color: AppColors.secondaryTextColor,
-                ),
+                style: TextStyle(color: AppColors.secondaryTextColor),
               ),
             ),
             TextButton(
               onPressed: () {
                 Navigator.pop(dialogContext);
-
-                ScaffoldMessenger.of(context)
-                  ..hideCurrentSnackBar()
-                  ..showSnackBar(
-                    const SnackBar(
-                      content: Text(
-                        'Logged out successfully',
-                      ),
-                      duration: Duration(
-                        milliseconds: 1200,
-                      ),
-                      behavior:
-                          SnackBarBehavior.floating,
-                    ),
-                  );
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  '/customer-login',
+                  (route) => false,
+                );
               },
               child: const Text(
                 AppStrings.logOut,
@@ -367,42 +310,31 @@ class ProfileScreen extends StatelessWidget {
   }
 
   // ============================================================
-  // MESSAGE
-  // ============================================================
-
-  void _showMessage(
-    BuildContext context,
-    String message,
-  ) {
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(
-        SnackBar(
-          content: Text(
-            '$message screen will be connected next.',
-          ),
-          duration: const Duration(
-            milliseconds: 1200,
-          ),
-          behavior: SnackBarBehavior.floating,
-        ),
-      );
-  }
-
-  // ============================================================
   // BOTTOM NAVIGATION
   // ============================================================
 
-  void _onBottomNavTap(
-    BuildContext context,
-    int index,
-  ) {
+  void _onBottomNavTap(BuildContext context, int index) {
     if (index == 3) {
       return;
     }
 
-    // Other customer navigation screens
-    // will be connected with the main navigation flow.
+    switch (index) {
+      case 0:
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          '/customer-home',
+          (route) => false,
+        );
+        break;
+      case 1:
+        Navigator.pushReplacementNamed(context, '/customer-orders');
+        break;
+      case 2:
+        Navigator.pushReplacementNamed(context, '/customer-cart');
+        break;
+      case 3:
+        break;
+    }
   }
 }
 
@@ -425,31 +357,21 @@ class _ProfileMenuCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: AppColors.cardColor,
-      borderRadius: BorderRadius.circular(
-        AppSizes.cardRadius,
-      ),
+      borderRadius: BorderRadius.circular(AppSizes.cardRadius),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(
-          AppSizes.cardRadius,
-        ),
+        borderRadius: BorderRadius.circular(AppSizes.cardRadius),
         child: Container(
           height: 52,
           padding: const EdgeInsets.symmetric(
             horizontal: AppSizes.paddingMedium,
           ),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(
-              AppSizes.cardRadius,
-            ),
-            border: Border.all(
-              color: AppColors.borderColor,
-            ),
+            borderRadius: BorderRadius.circular(AppSizes.cardRadius),
+            border: Border.all(color: AppColors.borderColor),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(
-                  alpha: 0.03,
-                ),
+                color: Colors.black.withValues(alpha: 0.03),
                 blurRadius: 3,
                 offset: const Offset(0, 1),
               ),
@@ -463,9 +385,7 @@ class _ProfileMenuCard extends StatelessWidget {
                 size: AppSizes.iconSmall,
               ),
 
-              const SizedBox(
-                width: AppSizes.spacingMedium,
-              ),
+              const SizedBox(width: AppSizes.spacingMedium),
 
               Expanded(
                 child: Text(

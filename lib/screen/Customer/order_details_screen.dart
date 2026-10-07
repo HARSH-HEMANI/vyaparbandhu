@@ -34,13 +34,10 @@ class OrderDetailsScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       body: SafeArea(
-        top: false,
         child: Column(
           children: [
             _buildAppBar(context),
-            Expanded(
-              child: _buildContent(context),
-            ),
+            Expanded(child: _buildContent(context)),
           ],
         ),
       ),
@@ -105,14 +102,10 @@ class OrderDetailsScreen extends StatelessWidget {
       children: [
         _buildOrderSummary(),
 
-        const SizedBox(
-          height: AppSizes.spacingLarge,
-        ),
+        const SizedBox(height: AppSizes.spacingLarge),
 
         const Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: AppSizes.paddingSmall,
-          ),
+          padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingSmall),
           child: Text(
             'Items in your order',
             style: TextStyle(
@@ -123,21 +116,15 @@ class OrderDetailsScreen extends StatelessWidget {
           ),
         ),
 
-        const SizedBox(
-          height: AppSizes.spacingMedium,
-        ),
+        const SizedBox(height: AppSizes.spacingMedium),
 
         _buildOrderItems(),
 
-        const SizedBox(
-          height: AppSizes.spacingLarge,
-        ),
+        const SizedBox(height: AppSizes.spacingLarge),
 
         _buildBillingDetails(),
 
-        const SizedBox(
-          height: AppSizes.spacingLarge,
-        ),
+        const SizedBox(height: AppSizes.spacingLarge),
 
         _buildDownloadInvoiceButton(),
       ],
@@ -150,9 +137,7 @@ class OrderDetailsScreen extends StatelessWidget {
 
   Widget _buildOrderSummary() {
     return _SectionCard(
-      padding: const EdgeInsets.all(
-        AppSizes.paddingMedium,
-      ),
+      padding: const EdgeInsets.all(AppSizes.paddingMedium),
       child: Column(
         children: [
           Row(
@@ -173,9 +158,7 @@ class OrderDetailsScreen extends StatelessWidget {
             ],
           ),
 
-          const SizedBox(
-            height: AppSizes.spacingMedium,
-          ),
+          const SizedBox(height: AppSizes.spacingMedium),
 
           Row(
             children: [
@@ -186,9 +169,7 @@ class OrderDetailsScreen extends StatelessWidget {
                 textColor: AppColors.successColor,
               ),
 
-              const SizedBox(
-                width: AppSizes.spacingSmall,
-              ),
+              const SizedBox(width: AppSizes.spacingSmall),
 
               _StatusBadge(
                 icon: Icons.lock,
@@ -221,16 +202,12 @@ class OrderDetailsScreen extends StatelessWidget {
             fontSize: AppSizes.extraSmallText,
           ),
         ),
-        const SizedBox(
-          height: 3,
-        ),
+        const SizedBox(height: 3),
         Text(
           value,
-          textAlign:
-              alignEnd ? TextAlign.end : TextAlign.start,
+          textAlign: alignEnd ? TextAlign.end : TextAlign.start,
           style: TextStyle(
-            color:
-                valueColor ?? AppColors.primaryTextColor,
+            color: valueColor ?? AppColors.primaryTextColor,
             fontSize: AppSizes.smallText,
             fontWeight: FontWeight.w500,
           ),
@@ -246,16 +223,10 @@ class OrderDetailsScreen extends StatelessWidget {
   Widget _buildOrderItems() {
     return Column(
       children: [
-        for (int index = 0;
-            index < _items.length;
-            index++) ...[
-          _OrderItemCard(
-            item: _items[index],
-          ),
+        for (int index = 0; index < _items.length; index++) ...[
+          _OrderItemCard(item: _items[index]),
           if (index != _items.length - 1)
-            const SizedBox(
-              height: AppSizes.spacingMedium,
-            ),
+            const SizedBox(height: AppSizes.spacingMedium),
         ],
       ],
     );
@@ -267,9 +238,7 @@ class OrderDetailsScreen extends StatelessWidget {
 
   Widget _buildBillingDetails() {
     return _SectionCard(
-      padding: const EdgeInsets.all(
-        AppSizes.paddingMedium,
-      ),
+      padding: const EdgeInsets.all(AppSizes.paddingMedium),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -282,24 +251,15 @@ class OrderDetailsScreen extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(
-            height: AppSizes.spacingMedium,
-          ),
+          const SizedBox(height: AppSizes.spacingMedium),
 
           _buildBillingDivider(),
 
-          const SizedBox(
-            height: AppSizes.spacingSmall,
-          ),
+          const SizedBox(height: AppSizes.spacingSmall),
 
-          _BillingRow(
-            label: 'Subtotal',
-            value: '₹520.00',
-          ),
+          _BillingRow(label: 'Subtotal', value: '₹520.00'),
 
-          const SizedBox(
-            height: AppSizes.spacingSmall,
-          ),
+          const SizedBox(height: AppSizes.spacingSmall),
 
           _BillingRow(
             label: 'Discount',
@@ -307,9 +267,7 @@ class OrderDetailsScreen extends StatelessWidget {
             valueColor: AppColors.successColor,
           ),
 
-          const SizedBox(
-            height: AppSizes.spacingSmall,
-          ),
+          const SizedBox(height: AppSizes.spacingSmall),
 
           _BillingRow(
             label: 'Delivery Fee',
@@ -317,24 +275,15 @@ class OrderDetailsScreen extends StatelessWidget {
             valueColor: AppColors.successColor,
           ),
 
-          const SizedBox(
-            height: AppSizes.spacingSmall,
-          ),
+          const SizedBox(height: AppSizes.spacingSmall),
 
-          _BillingRow(
-            label: 'Tax (GST)',
-            value: '₹23.50',
-          ),
+          _BillingRow(label: 'Tax (GST)', value: '₹23.50'),
 
-          const SizedBox(
-            height: AppSizes.spacingMedium,
-          ),
+          const SizedBox(height: AppSizes.spacingMedium),
 
           _buildBillingDivider(),
 
-          const SizedBox(
-            height: AppSizes.spacingMedium,
-          ),
+          const SizedBox(height: AppSizes.spacingMedium),
 
           _BillingRow(
             label: 'Grand Total',
@@ -347,10 +296,7 @@ class OrderDetailsScreen extends StatelessWidget {
   }
 
   Widget _buildBillingDivider() {
-    return Container(
-      height: 1,
-      color: const Color(0xFFF0F0F0),
-    );
+    return Container(height: 1, color: const Color(0xFFF0F0F0));
   }
 
   // ============================================================
@@ -366,10 +312,7 @@ class OrderDetailsScreen extends StatelessWidget {
           // Invoice download functionality
           // will be connected later.
         },
-        icon: const Icon(
-          Icons.download_outlined,
-          size: AppSizes.iconSmall,
-        ),
+        icon: const Icon(Icons.download_outlined, size: AppSizes.iconSmall),
         label: const Text(
           AppStrings.downloadInvoice,
           style: TextStyle(
@@ -379,13 +322,9 @@ class OrderDetailsScreen extends StatelessWidget {
         ),
         style: OutlinedButton.styleFrom(
           foregroundColor: AppColors.primaryColor,
-          side: const BorderSide(
-            color: AppColors.primaryColor,
-          ),
+          side: const BorderSide(color: AppColors.primaryColor),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(
-              AppSizes.radiusSmall,
-            ),
+            borderRadius: BorderRadius.circular(AppSizes.radiusSmall),
           ),
         ),
       ),
@@ -396,16 +335,28 @@ class OrderDetailsScreen extends StatelessWidget {
   // BOTTOM NAVIGATION
   // ============================================================
 
-  void _onBottomNavTap(
-    BuildContext context,
-    int index,
-  ) {
+  void _onBottomNavTap(BuildContext context, int index) {
     if (index == 1) {
       return;
     }
 
-    // Other customer navigation screens
-    // will be connected with the main navigation flow.
+    switch (index) {
+      case 0:
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          '/customer-home',
+          (route) => false,
+        );
+        break;
+      case 1:
+        break;
+      case 2:
+        Navigator.pushReplacementNamed(context, '/customer-cart');
+        break;
+      case 3:
+        Navigator.pushReplacementNamed(context, '/customer-profile');
+        break;
+    }
   }
 }
 
@@ -416,28 +367,21 @@ class OrderDetailsScreen extends StatelessWidget {
 class _OrderItemCard extends StatelessWidget {
   final _OrderItem item;
 
-  const _OrderItemCard({
-    required this.item,
-  });
+  const _OrderItemCard({required this.item});
 
   @override
   Widget build(BuildContext context) {
     return _SectionCard(
-      padding: const EdgeInsets.all(
-        AppSizes.paddingSmall,
-      ),
+      padding: const EdgeInsets.all(AppSizes.paddingSmall),
       child: Row(
         children: [
           _buildImagePlaceholder(),
 
-          const SizedBox(
-            width: AppSizes.spacingMedium,
-          ),
+          const SizedBox(width: AppSizes.spacingMedium),
 
           Expanded(
             child: Column(
-              crossAxisAlignment:
-                  CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   item.name,
@@ -450,9 +394,7 @@ class _OrderItemCard extends StatelessWidget {
                   ),
                 ),
 
-                const SizedBox(
-                  height: 3,
-                ),
+                const SizedBox(height: 3),
 
                 Text(
                   'Size: ${item.size}',
@@ -462,9 +404,7 @@ class _OrderItemCard extends StatelessWidget {
                   ),
                 ),
 
-                const SizedBox(
-                  height: 3,
-                ),
+                const SizedBox(height: 3),
 
                 Text(
                   'Qty: ${item.quantity}',
@@ -477,9 +417,7 @@ class _OrderItemCard extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(
-            width: AppSizes.spacingSmall,
-          ),
+          const SizedBox(width: AppSizes.spacingSmall),
 
           Text(
             item.price,
@@ -500,12 +438,8 @@ class _OrderItemCard extends StatelessWidget {
       height: 52,
       decoration: BoxDecoration(
         color: const Color(0xFFF8F8F8),
-        borderRadius: BorderRadius.circular(
-          AppSizes.radiusSmall,
-        ),
-        border: Border.all(
-          color: AppColors.borderColor,
-        ),
+        borderRadius: BorderRadius.circular(AppSizes.radiusSmall),
+        border: Border.all(color: AppColors.borderColor),
       ),
     );
   }
@@ -519,32 +453,20 @@ class _SectionCard extends StatelessWidget {
   final Widget child;
   final EdgeInsetsGeometry? padding;
 
-  const _SectionCard({
-    required this.child,
-    this.padding,
-  });
+  const _SectionCard({required this.child, this.padding});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: padding ??
-          const EdgeInsets.all(
-            AppSizes.paddingMedium,
-          ),
+      padding: padding ?? const EdgeInsets.all(AppSizes.paddingMedium),
       decoration: BoxDecoration(
         color: AppColors.cardColor,
-        borderRadius: BorderRadius.circular(
-          AppSizes.cardRadius,
-        ),
-        border: Border.all(
-          color: AppColors.borderColor,
-        ),
+        borderRadius: BorderRadius.circular(AppSizes.cardRadius),
+        border: Border.all(color: AppColors.borderColor),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(
-              alpha: 0.04,
-            ),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 4,
             offset: const Offset(0, 1),
           ),
@@ -575,27 +497,16 @@ class _StatusBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 8,
-        vertical: 4,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
         color: backgroundColor,
-        borderRadius: BorderRadius.circular(
-          AppSizes.buttonRadius,
-        ),
+        borderRadius: BorderRadius.circular(AppSizes.buttonRadius),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            icon,
-            size: 7,
-            color: textColor,
-          ),
-          const SizedBox(
-            width: 4,
-          ),
+          Icon(icon, size: 7, color: textColor),
+          const SizedBox(width: 4),
           Text(
             text,
             style: TextStyle(
@@ -641,25 +552,22 @@ class _BillingRow extends StatelessWidget {
               fontSize: isGrandTotal
                   ? AppSizes.bodyText
                   : AppSizes.extraSmallText,
-              fontWeight: isGrandTotal
-                  ? FontWeight.w600
-                  : FontWeight.w400,
+              fontWeight: isGrandTotal ? FontWeight.w600 : FontWeight.w400,
             ),
           ),
         ),
         Text(
           value,
           style: TextStyle(
-            color: valueColor ??
+            color:
+                valueColor ??
                 (isGrandTotal
                     ? AppColors.priceColor
                     : AppColors.primaryTextColor),
             fontSize: isGrandTotal
                 ? AppSizes.headingText
                 : AppSizes.extraSmallText,
-            fontWeight: isGrandTotal
-                ? FontWeight.w600
-                : FontWeight.w400,
+            fontWeight: isGrandTotal ? FontWeight.w600 : FontWeight.w400,
           ),
         ),
       ],

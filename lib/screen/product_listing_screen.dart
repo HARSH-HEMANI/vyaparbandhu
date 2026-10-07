@@ -73,6 +73,24 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
     }
 
     if (!widget.isOwner) {
+      switch (index) {
+        case 0:
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            '/customer-home',
+            (route) => false,
+          );
+          break;
+        case 1:
+          Navigator.pushReplacementNamed(context, '/customer-orders');
+          break;
+        case 2:
+          Navigator.pushReplacementNamed(context, '/customer-cart');
+          break;
+        case 3:
+          Navigator.pushReplacementNamed(context, '/customer-profile');
+          break;
+      }
       return;
     }
 
@@ -162,6 +180,17 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
             fontWeight: FontWeight.w600,
           ),
         ),
+        actions: widget.isOwner
+            ? [
+                IconButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/add-product');
+                  },
+                  icon: const Icon(Icons.add, color: AppColors.whiteColor),
+                  tooltip: 'Add Product',
+                ),
+              ]
+            : null,
       ),
       body: Column(
         children: [
