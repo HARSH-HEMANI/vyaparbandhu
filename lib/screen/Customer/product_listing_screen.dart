@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../resources/app_colors.dart';
 import '../../resources/app_strings.dart';
@@ -7,16 +8,27 @@ import '../../widgets/bottom_nav_bar.dart';
 
 class ProductListingScreen extends StatefulWidget {
   final String? category;
-  const ProductListingScreen({super.key, this.category});
+
+  const ProductListingScreen({
+    super.key,
+    this.category,
+  });
 
   @override
-  State<ProductListingScreen> createState() => _ProductListingScreenState();
+  State<ProductListingScreen> createState() =>
+      _ProductListingScreenState();
 }
 
-class _ProductListingScreenState extends State<ProductListingScreen> {
+class _ProductListingScreenState
+    extends State<ProductListingScreen> {
   int _selectedBrandIndex = 0;
 
-  final List<String> _brands = ['All', 'Sunfeast', 'Britannia', 'Parle'];
+  final List<String> _brands = [
+    'All',
+    'Sunfeast',
+    'Britannia',
+    'Parle',
+  ];
 
   final List<_Product> _products = const [
     _Product(
@@ -72,33 +84,52 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
           (route) => false,
         );
         break;
+
       case 1:
-        Navigator.pushNamed(context, '/customer-orders');
+        Navigator.pushNamed(
+          context,
+          '/customer-orders',
+        );
         break;
+
       case 2:
-        Navigator.pushNamed(context, '/customer-cart');
+        Navigator.pushNamed(
+          context,
+          '/customer-cart',
+        );
         break;
+
       case 3:
-        Navigator.pushNamed(context, '/customer-profile');
+        Navigator.pushNamed(
+          context,
+          '/customer-profile',
+        );
         break;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
-      body: SafeArea(
-        child: Column(
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: const SystemUiOverlayStyle(
+        statusBarColor: AppColors.primaryColor,
+        statusBarIconBrightness: Brightness.light,
+        statusBarBrightness: Brightness.dark,
+      ),
+      child: Scaffold(
+        backgroundColor: AppColors.backgroundColor,
+        body: Column(
           children: [
             _buildAppBar(),
-            Expanded(child: _buildScrollableContent()),
+            Expanded(
+              child: _buildScrollableContent(),
+            ),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavBar(
-        currentIndex: 0,
-        onTap: _onBottomNavTap,
+        bottomNavigationBar: BottomNavBar(
+          currentIndex: 0,
+          onTap: _onBottomNavTap,
+        ),
       ),
     );
   }
@@ -110,46 +141,57 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
   Widget _buildAppBar() {
     final String title =
         widget.category ??
-        (ModalRoute.of(context)?.settings.arguments as String?) ??
+        (ModalRoute.of(context)?.settings.arguments
+                as String?) ??
         'Biscuits & Cookies';
 
     return Container(
-      height: AppSizes.appBarHeight,
       width: double.infinity,
       color: AppColors.primaryColor,
-      child: Row(
-        children: [
-          IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(
-              Icons.arrow_back,
-              color: AppColors.whiteColor,
-              size: AppSizes.iconMedium,
-            ),
-          ),
-          Expanded(
-            child: Text(
-              title,
-              style: const TextStyle(
-                color: AppColors.whiteColor,
-                fontSize: AppSizes.headingText,
-                fontWeight: FontWeight.w600,
+      child: SafeArea(
+        bottom: false,
+        child: SizedBox(
+          height: AppSizes.appBarHeight,
+          child: Row(
+            children: [
+              IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(
+                  Icons.arrow_back,
+                  color: AppColors.whiteColor,
+                  size: AppSizes.iconMedium,
+                ),
               ),
-            ),
+
+              Expanded(
+                child: Text(
+                  title,
+                  style: const TextStyle(
+                    color: AppColors.whiteColor,
+                    fontSize: AppSizes.headingText,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+
+              IconButton(
+                onPressed: () {
+                  Navigator.pushNamed(
+                    context,
+                    '/customer-cart',
+                  );
+                },
+                icon: const Icon(
+                  Icons.shopping_cart_outlined,
+                  color: AppColors.whiteColor,
+                  size: AppSizes.iconMedium,
+                ),
+              ),
+            ],
           ),
-          IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/customer-cart');
-            },
-            icon: const Icon(
-              Icons.shopping_cart_outlined,
-              color: AppColors.whiteColor,
-              size: AppSizes.iconMedium,
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -162,7 +204,11 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
     return ListView(
       physics: const BouncingScrollPhysics(),
       padding: EdgeInsets.zero,
-      children: [_buildSearchBar(), _buildBrandFilters(), _buildProductList()],
+      children: [
+        _buildSearchBar(),
+        _buildBrandFilters(),
+        _buildProductList(),
+      ],
     );
   }
 
@@ -182,8 +228,12 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
         height: AppSizes.inputHeight,
         decoration: BoxDecoration(
           color: AppColors.backgroundColor,
-          borderRadius: BorderRadius.circular(AppSizes.inputRadius),
-          border: Border.all(color: AppColors.borderColor),
+          borderRadius: BorderRadius.circular(
+            AppSizes.inputRadius,
+          ),
+          border: Border.all(
+            color: AppColors.borderColor,
+          ),
         ),
         child: TextField(
           style: const TextStyle(
@@ -220,13 +270,18 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
       height: 42,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: AppSizes.paddingSmall),
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSizes.paddingSmall,
+        ),
         itemCount: _brands.length,
         separatorBuilder: (_, _) {
-          return const SizedBox(width: AppSizes.spacingSmall);
+          return const SizedBox(
+            width: AppSizes.spacingSmall,
+          );
         },
         itemBuilder: (context, index) {
-          final bool isSelected = _selectedBrandIndex == index;
+          final bool isSelected =
+              _selectedBrandIndex == index;
 
           return GestureDetector(
             onTap: () {
@@ -235,7 +290,9 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
               });
             },
             child: AnimatedContainer(
-              duration: const Duration(milliseconds: 180),
+              duration: const Duration(
+                milliseconds: 180,
+              ),
               height: 36,
               padding: const EdgeInsets.symmetric(
                 horizontal: AppSizes.paddingLarge,
@@ -245,7 +302,9 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                 color: isSelected
                     ? AppColors.primaryColor
                     : const Color(0xFFEAF0F6),
-                borderRadius: BorderRadius.circular(AppSizes.buttonRadius),
+                borderRadius: BorderRadius.circular(
+                  AppSizes.buttonRadius,
+                ),
               ),
               child: Text(
                 _brands[index],
@@ -254,7 +313,9 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                       ? AppColors.whiteColor
                       : AppColors.primaryTextColor,
                   fontSize: AppSizes.smallText,
-                  fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
+                  fontWeight: isSelected
+                      ? FontWeight.w600
+                      : FontWeight.w400,
                 ),
               ),
             ),
@@ -278,15 +339,24 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
       ),
       child: Column(
         children: [
-          for (int index = 0; index < _products.length; index++) ...[
+          for (
+            int index = 0;
+            index < _products.length;
+            index++
+          ) ...[
             _ProductCard(
               product: _products[index],
               onAdd: () {
-                _showAddedMessage(_products[index]);
+                _showAddedMessage(
+                  _products[index],
+                );
               },
             ),
+
             if (index != _products.length - 1)
-              const SizedBox(height: AppSizes.spacingSmall),
+              const SizedBox(
+                height: AppSizes.spacingSmall,
+              ),
           ],
         ],
       ),
@@ -302,8 +372,12 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
       ..hideCurrentSnackBar()
       ..showSnackBar(
         SnackBar(
-          content: Text('${product.name} added to cart'),
-          duration: const Duration(milliseconds: 1200),
+          content: Text(
+            '${product.name} added to cart',
+          ),
+          duration: const Duration(
+            milliseconds: 1200,
+          ),
           behavior: SnackBarBehavior.floating,
         ),
       );
@@ -318,17 +392,26 @@ class _ProductCard extends StatelessWidget {
   final _Product product;
   final VoidCallback onAdd;
 
-  const _ProductCard({required this.product, required this.onAdd});
+  const _ProductCard({
+    required this.product,
+    required this.onAdd,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Material(
       color: AppColors.cardColor,
       elevation: AppSizes.cardElevation,
-      shadowColor: Colors.black.withValues(alpha: 0.08),
-      borderRadius: BorderRadius.circular(AppSizes.cardRadius),
+      shadowColor: Colors.black.withValues(
+        alpha: 0.08,
+      ),
+      borderRadius: BorderRadius.circular(
+        AppSizes.cardRadius,
+      ),
       child: InkWell(
-        borderRadius: BorderRadius.circular(AppSizes.cardRadius),
+        borderRadius: BorderRadius.circular(
+          AppSizes.cardRadius,
+        ),
         onTap: () {
           Navigator.pushNamed(
             context,
@@ -338,21 +421,33 @@ class _ProductCard extends StatelessWidget {
         },
         child: Container(
           height: 106,
-          padding: const EdgeInsets.all(AppSizes.paddingSmall),
+          padding: const EdgeInsets.all(
+            AppSizes.paddingSmall,
+          ),
           decoration: BoxDecoration(
             color: AppColors.cardColor,
-            borderRadius: BorderRadius.circular(AppSizes.cardRadius),
-            border: Border.all(color: AppColors.borderColor),
+            borderRadius: BorderRadius.circular(
+              AppSizes.cardRadius,
+            ),
+            border: Border.all(
+              color: AppColors.borderColor,
+            ),
           ),
           child: Row(
             children: [
               _buildPlaceholderImage(),
 
-              const SizedBox(width: AppSizes.spacingMedium),
+              const SizedBox(
+                width: AppSizes.spacingMedium,
+              ),
 
-              Expanded(child: _buildProductInformation()),
+              Expanded(
+                child: _buildProductInformation(),
+              ),
 
-              const SizedBox(width: AppSizes.spacingSmall),
+              const SizedBox(
+                width: AppSizes.spacingSmall,
+              ),
 
               _buildAddButton(),
             ],
@@ -372,8 +467,12 @@ class _ProductCard extends StatelessWidget {
       height: 80,
       decoration: BoxDecoration(
         color: const Color(0xFFF8F8F8),
-        borderRadius: BorderRadius.circular(AppSizes.radiusSmall),
-        border: Border.all(color: AppColors.borderColor),
+        borderRadius: BorderRadius.circular(
+          AppSizes.radiusSmall,
+        ),
+        border: Border.all(
+          color: AppColors.borderColor,
+        ),
       ),
     );
   }
@@ -410,7 +509,9 @@ class _ProductCard extends StatelessWidget {
           ),
         ),
 
-        const SizedBox(height: AppSizes.spacingSmall),
+        const SizedBox(
+          height: AppSizes.spacingSmall,
+        ),
 
         Row(
           children: [
@@ -423,7 +524,9 @@ class _ProductCard extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(width: AppSizes.spacingSmall),
+            const SizedBox(
+              width: AppSizes.spacingSmall,
+            ),
 
             Text(
               product.mrp,
@@ -460,7 +563,9 @@ class _ProductCard extends StatelessWidget {
                 elevation: 0,
                 padding: EdgeInsets.zero,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(AppSizes.radiusSmall),
+                  borderRadius: BorderRadius.circular(
+                    AppSizes.radiusSmall,
+                  ),
                 ),
               ),
               child: const Text(
@@ -473,7 +578,9 @@ class _ProductCard extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: AppSizes.spacingSmall),
+          const SizedBox(
+            height: AppSizes.spacingSmall,
+          ),
 
           GestureDetector(
             onTap: () {

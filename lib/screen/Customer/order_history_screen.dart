@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../resources/app_colors.dart';
 import '../../resources/app_strings.dart';
@@ -73,19 +74,34 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
-      body: SafeArea(
-        child: Column(
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: const SystemUiOverlayStyle(
+        statusBarColor: AppColors.primaryColor,
+        statusBarIconBrightness: Brightness.light,
+        statusBarBrightness: Brightness.dark,
+      ),
+      child: Scaffold(
+        backgroundColor: AppColors.backgroundColor,
+        body: Column(
           children: [
-            _buildAppBar(),
+            // ==================================================
+            // BLUE STATUS BAR + APP BAR
+            // ==================================================
+            Container(
+              width: double.infinity,
+              color: AppColors.primaryColor,
+              child: SafeArea(
+                bottom: false,
+                child: _buildAppBar(),
+              ),
+            ),
             Expanded(child: _buildScrollableContent()),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavBar(
-        currentIndex: 1,
-        onTap: _onBottomNavTap,
+        bottomNavigationBar: BottomNavBar(
+          currentIndex: 1,
+          onTap: _onBottomNavTap,
+        ),
       ),
     );
   }
@@ -95,10 +111,9 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
   // ============================================================
 
   Widget _buildAppBar() {
-    return Container(
+    return SizedBox(
       height: AppSizes.appBarHeight,
       width: double.infinity,
-      color: AppColors.primaryColor,
       child: Row(
         children: [
           IconButton(
