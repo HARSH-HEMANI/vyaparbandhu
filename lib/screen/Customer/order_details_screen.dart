@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../resources/app_colors.dart';
 import '../../resources/app_strings.dart';
@@ -31,21 +32,36 @@ class OrderDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
-      body: SafeArea(
-        child: Column(
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: const SystemUiOverlayStyle(
+        statusBarColor: AppColors.primaryColor,
+        statusBarIconBrightness: Brightness.light,
+        statusBarBrightness: Brightness.dark,
+      ),
+      child: Scaffold(
+        backgroundColor: AppColors.backgroundColor,
+        body: Column(
           children: [
-            _buildAppBar(context),
+            // ==================================================
+            // BLUE STATUS BAR + APP BAR
+            // ==================================================
+            Container(
+              width: double.infinity,
+              color: AppColors.primaryColor,
+              child: SafeArea(
+                bottom: false,
+                child: _buildAppBar(context),
+              ),
+            ),
             Expanded(child: _buildContent(context)),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavBar(
-        currentIndex: 1,
-        onTap: (index) {
-          _onBottomNavTap(context, index);
-        },
+        bottomNavigationBar: BottomNavBar(
+          currentIndex: 1,
+          onTap: (index) {
+            _onBottomNavTap(context, index);
+          },
+        ),
       ),
     );
   }
@@ -55,10 +71,9 @@ class OrderDetailsScreen extends StatelessWidget {
   // ============================================================
 
   Widget _buildAppBar(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: AppSizes.appBarHeight,
       width: double.infinity,
-      color: AppColors.primaryColor,
       child: Row(
         children: [
           IconButton(
